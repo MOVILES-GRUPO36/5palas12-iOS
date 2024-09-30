@@ -12,6 +12,7 @@ struct LoginScreen: View {
     @State var password: String = ""
     @State var showPassword: Bool = false
     @FocusState private var inFocus: Field?
+    @State private var loginResponse: String = ""
     
     enum Field {
         case email, plain, secure
@@ -22,27 +23,34 @@ struct LoginScreen: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing:15) {
+        VStack(alignment: .leading, spacing:12) {
             
             
             Spacer()
             Text("Hi! Welcome")
                 .padding()
                 .font(.system(size: 60))
-                .padding(.bottom, -50)
+                .padding(.bottom, -20)
                 .frame(maxWidth: .infinity, alignment: .center)
             
-            Text("to 5 pa' las 12!")
-                .padding()
-                .font(.system(size: 30))
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.bottom, 60)
+            
+            HStack {
+                Text("to ")
+                    .font(.system(size: 30))
+                    .foregroundColor(.black) // Change color if needed
+                Text("5 pa' las 12")
+                    .font(.custom("Fascinate Inline", size: 30))
+                    .fontWeight(.bold)
+                    .foregroundStyle(Color(hex: "#588157"))
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.bottom, 80)
             
             
             TextField("E-mail", text:$email)
                 .padding(10)
                 .overlay{
-                    RoundedRectangle(cornerRadius: 5)
+                    RoundedRectangle(cornerRadius: 8)
                         .stroke(.gray,lineWidth: 2)
                 }
                 .padding(.horizontal)
@@ -69,29 +77,32 @@ struct LoginScreen: View {
                 .padding(.trailing, 10)
             }
             .overlay {
-                RoundedRectangle(cornerRadius: 5)
+                RoundedRectangle(cornerRadius: 8)
                     .stroke(.gray, lineWidth: 2)
             }
             .padding(.horizontal)
             
-            Button{
-                print("user is trying to log in.")
+            Button {
+                login()
             } label: {
                 Text("Log in")
                     .font(.title2)
                     .bold()
-                    .foregroundStyle(.white)
+                    .foregroundColor(.white)
             }
-            .frame(height:50)
-            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-            .background(
-                isLogInDisabled ?
-                    .gray :
-                    Color(hex: "#588157")
-            )
-            .cornerRadius(5)
+            .frame(height: 46)
+            .frame(maxWidth: .infinity)
+            .background(isLogInDisabled ? .gray : Color(hex: "#588157"))
+            .cornerRadius(8)
             .disabled(isLogInDisabled)
             .padding()
+            
+            if !loginResponse.isEmpty {
+                Text(loginResponse)
+                    .foregroundColor(.red)
+                    .padding()
+            }
+            
             
             Button {
                 print("Navigate to the registration page.")
@@ -100,15 +111,21 @@ struct LoginScreen: View {
                 Text("Register")
                     .fontWeight(.heavy)
                 
+                
             }
             .font(.caption)
             .foregroundStyle(.black)
             .frame(maxWidth: .infinity, alignment: .center)
+            .padding(.top,-20)
             
             Spacer()
         }
         .background(Color(hex: "#E6E1DB"))
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    private func login() {
+        
     }
 }
 
