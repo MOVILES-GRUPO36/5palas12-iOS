@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */; };
-		DE035ED82C87950E00627F34 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED72C87950E00627F34 /* ContentView.swift */; };
+		DE035ED82C87950E00627F34 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED72C87950E00627F34 /* LoginScreen.swift */; };
 		DE035EDA2C87951000627F34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE035ED92C87951000627F34 /* Assets.xcassets */; };
 		DE035EDD2C87951000627F34 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE035EDC2C87951000627F34 /* Preview Assets.xcassets */; };
 		DE035EE72C87951000627F34 /* _palas12_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035EE62C87951000627F34 /* _palas12_iOSTests.swift */; };
@@ -36,7 +36,7 @@
 /* Begin PBXFileReference section */
 		DE035ED22C87950E00627F34 /* 5palas12-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "5palas12-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSApp.swift; sourceTree = "<group>"; };
-		DE035ED72C87950E00627F34 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		DE035ED72C87950E00627F34 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		DE035ED92C87951000627F34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE035EDC2C87951000627F34 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DE035EE22C87951000627F34 /* 5palas12-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "5palas12-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,7 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */,
-				DE035ED72C87950E00627F34 /* ContentView.swift */,
+				DE035ED72C87950E00627F34 /* LoginScreen.swift */,
 				DE035ED92C87951000627F34 /* Assets.xcassets */,
 				DE035EDB2C87951000627F34 /* Preview Content */,
 			);
@@ -257,7 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE035ED82C87950E00627F34 /* ContentView.swift in Sources */,
+				DE035ED82C87950E00627F34 /* LoginScreen.swift in Sources */,
 				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
