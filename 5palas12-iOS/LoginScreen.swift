@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct LoginScreen: View {
     @State var email: String = ""
@@ -48,6 +49,8 @@ struct LoginScreen: View {
             
             
             TextField("E-mail", text:$email)
+                .autocapitalization(.none)
+                .keyboardType(.emailAddress)
                 .padding(10)
                 .overlay{
                     RoundedRectangle(cornerRadius: 8)
@@ -82,6 +85,13 @@ struct LoginScreen: View {
             }
             .padding(.horizontal)
             
+            if !loginResponse.isEmpty {
+                Text(loginResponse)
+                    .foregroundColor(.red)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
+            
             Button {
                 login()
             } label: {
@@ -96,12 +106,6 @@ struct LoginScreen: View {
             .cornerRadius(8)
             .disabled(isLogInDisabled)
             .padding()
-            
-            if !loginResponse.isEmpty {
-                Text(loginResponse)
-                    .foregroundColor(.red)
-                    .padding()
-            }
             
             
             Button {
@@ -125,8 +129,17 @@ struct LoginScreen: View {
     }
     
     private func login() {
-        
-    }
+            Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
+                if let error = error {
+                    loginResponse = "Error: \(error.localizedDescription)"
+                    return
+                }
+                
+                // Successfully logged in
+                loginResponse = "Login successful!"
+                // You can navigate to another view or perform other actions here
+            }
+        }
 }
 
 extension Color {
@@ -144,6 +157,8 @@ extension Color {
         self.init(red: red, green: green, blue: blue)
     }
 }
+
+
 
 
 #Preview {
