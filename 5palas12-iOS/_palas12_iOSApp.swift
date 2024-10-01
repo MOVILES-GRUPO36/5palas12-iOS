@@ -23,7 +23,7 @@ struct _palas12_iOSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginScreen()
+            RestaurantsCloseToYou()
         }
     }
 }
