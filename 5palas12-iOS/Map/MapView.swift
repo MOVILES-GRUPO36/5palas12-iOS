@@ -17,15 +17,16 @@ struct MapView: View {
         center: CLLocationCoordinate2D(latitude: 4.7110, longitude: -74.0721),
         span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
     )
+    @State private var selectedRestaurant: Restaurant? = nil
 
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
+            VStack(spacing: 0){
                 LogoView()
                     .frame(width: geometry.size.width, height: geometry.size.height * 0.08)
                     .padding(0)
-                
-                Map(coordinateRegion: $region, annotationItems: restaurantsVM.restaurants) { restaurant in
+            ZStack {
+                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: restaurantsVM.restaurants) { restaurant in
                     MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
                         VStack {
                             Image(systemName: "mappin") // Usar un ícono de pin
@@ -35,7 +36,10 @@ struct MapView: View {
                                 .foregroundColor(.red)
                             Text(restaurant.name) // Muestra el nombre del restaurante
                                 .font(.caption)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("FernGreen"))
+                        }
+                        .onTapGesture {
+                            selectedRestaurant = restaurant
                         }
                     }
                 }
@@ -52,7 +56,26 @@ struct MapView: View {
                         hasCenteredOnUser = true
                     }
                 }
+                
+                if let restaurant = selectedRestaurant {
+                    VStack {
+                        Spacer()
+                        RestaurantDetailView(restaurant: restaurant)
+                            .frame(width: geometry.size.width * 0.9, height: geometry.size.height * 0.4)
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .padding()
+                            .onTapGesture {
+                                selectedRestaurant = nil
+                            }
+                    }
+                }
             }
+            .onTapGesture {
+                selectedRestaurant = nil
+            }
+        }
         }
     }
 }

@@ -7,14 +7,22 @@
 
 import Foundation
 
-struct Restaurant: Codable, Identifiable {
+struct Restaurant: Decodable, Identifiable {
     var id = UUID()
     var name : String
     var latitude : Double
     var longitude : Double
     var photo : String
-    var description : String
-    var rating : Float
     var categories : [String]
-    
+    var description : String
+    var rating : Double
+    enum CodingKeys : String, CodingKey{
+        case name
+        case latitude
+        case longitude
+        case photo
+        case categories
+        case description
+        case rating
+    }
 }
