@@ -11,11 +11,13 @@ struct TabBarView: View {
     @Binding var selectedTab: Int
     
     let tabBarHeight: CGFloat = 100 
+
     let cornerRadius: CGFloat = 8
     
     var body: some View {
         VStack {
             Spacer() 
+
             switch selectedTab {
             case 0:
                 Text("Home")
@@ -49,6 +51,7 @@ struct TabBarView: View {
                         .background(Color(hex: "#584C3F"))
                         .cornerRadius(cornerRadius) 
                         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: -2)
+
                         
         }
         .edgesIgnoringSafeArea(.bottom)
