@@ -15,9 +15,11 @@
 		DE035EF12C87951000627F34 /* _palas12_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035EF02C87951000627F34 /* _palas12_iOSUITests.swift */; };
 		DE035EF32C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035EF22C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift */; };
 		DE294FF12CAB3BE70045044A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE294FF02CAB3BE70045044A /* FirebaseAuth */; };
+		DE294FF72CACB9390045044A /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE294FF62CACB9370045044A /* TabBarView.swift */; };
 		DED92B162CAB21CD000ED341 /* FascinateInline-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DED92B152CAB21CD000ED341 /* FascinateInline-Regular.ttf */; };
 		DED92B192CAB319F000ED341 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DED92B182CAB319F000ED341 /* GoogleService-Info.plist */; };
 		DED92B1C2CAB329F000ED341 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DED92B1B2CAB329F000ED341 /* FirebaseAnalytics */; };
+		DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE457792CACC0F000F810DD /* HexColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,9 +50,11 @@
 		DE035EEC2C87951000627F34 /* 5palas12-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "5palas12-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE035EF02C87951000627F34 /* _palas12_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSUITests.swift; sourceTree = "<group>"; };
 		DE035EF22C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DE294FF62CACB9370045044A /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		DED92B152CAB21CD000ED341 /* FascinateInline-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FascinateInline-Regular.ttf"; sourceTree = "<group>"; };
 		DED92B172CAB23D0000ED341 /* -palas12-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "-palas12-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		DED92B182CAB319F000ED341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DEE457792CACC0F000F810DD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,8 @@
 		DE035ED42C87950E00627F34 /* 5palas12-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DE294FF62CACB9370045044A /* TabBarView.swift */,
+				DEE457792CACC0F000F810DD /* HexColorExtension.swift */,
 				DED92B172CAB23D0000ED341 /* -palas12-iOS-Info.plist */,
 				DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */,
 				DE035ED72C87950E00627F34 /* LoginScreen.swift */,
@@ -283,7 +289,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE035ED82C87950E00627F34 /* LoginScreen.swift in Sources */,
+				DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */,
 				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
+				DE294FF72CACB9390045044A /* TabBarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
