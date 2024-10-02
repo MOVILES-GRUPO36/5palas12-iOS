@@ -1,8 +1,13 @@
 import Foundation
+import CoreLocation
 
 struct Restaurant: Identifiable {
     let id = UUID()
     let name: String
     let address: String
-    let distance: Double
+    let latitude: Double
+    let longitude: Double
+    var distance: Double?
+    let imageURL: String
 }
+

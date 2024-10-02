@@ -8,11 +8,11 @@ struct RestaurantsCloseToYou: View {
         NavigationView {
             VStack {
                 // App Bar Title
-                Text("Restaurants Near You")
+                Text("Close To You")
                     .font(.largeTitle)
-                    .padding()
+                    .padding(.top)
                 
-                // List of restaurant cards
+                // List of restaurant cards in a ScrollView
                 ScrollView {
                     VStack(spacing: 16) {
                         ForEach(locationManager.nearbyRestaurants) { restaurant in
@@ -24,13 +24,11 @@ struct RestaurantsCloseToYou: View {
                 
                 Spacer()
                 
-                // Use the new BottomTabBar component
-                BottomTabBar(selectedTab: $selectedTab)
+                TabBarView(selectedTab: $selectedTab)
             }
         }
         .onAppear {
-            locationManager.fetchNearbyRestaurants()
+            locationManager.fetchNearbyRestaurants() // Fetch restaurants on view appearance
         }
     }
 }
-

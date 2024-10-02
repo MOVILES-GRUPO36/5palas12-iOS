@@ -8,22 +8,6 @@ struct TabBarView: View {
     
     var body: some View {
         VStack {
-            Spacer()
-            switch selectedTab {
-            case 0:
-                Text("Home")
-            case 1:
-                Text("Search")
-            case 2:
-                Text("Maps")
-            case 3:
-                Text("Profile")
-            default:
-                Text("Home")
-            }
-            Spacer()
-            
-
             HStack {
                 TabBarButton(icon: "house.fill", title: "Home", isSelected: selectedTab == 0) {
                     selectedTab = 0
@@ -71,8 +55,3 @@ struct TabBarButton: View {
     }
 }
 
-#Preview {
-    @Previewable
-    @State var selectedTab = 0
-    return TabBarView(selectedTab: $selectedTab)
-}
