@@ -3,10 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D4702722CAB0D39003FDB87 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4702712CAB0D39003FDB87 /* LogoView.swift */; };
+		9D884D102CAC882B00C79E5A /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D884D0F2CAC882100C79E5A /* RestaurantDetailView.swift */; };
+		9DA4D00F2CAB5CAD00107CD2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D00D2CAB5CAD00107CD2 /* LocationManager.swift */; };
+		9DA4D0102CAB5CAD00107CD2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */; };
+		9DA4D0142CABA0B600107CD2 /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D0132CABA0B600107CD2 /* RestaurantModel.swift */; };
+		9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D0172CABA5DC00107CD2 /* RestaurantViewModel.swift */; };
+		9DA4D01E2CABAC1B00107CD2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */; };
 		DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */; };
 		DE035ED82C87950E00627F34 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED72C87950E00627F34 /* LoginScreen.swift */; };
 		DE035EDA2C87951000627F34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE035ED92C87951000627F34 /* Assets.xcassets */; };
@@ -40,6 +47,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D4702712CAB0D39003FDB87 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
+		9D4702792CAB13AF003FDB87 /* -palas12-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "-palas12-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
+		9D884D0F2CAC882100C79E5A /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
+		9DA4D00D2CAB5CAD00107CD2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		9DA4D0132CABA0B600107CD2 /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
+		9DA4D0172CABA5DC00107CD2 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
+		9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DE035ED22C87950E00627F34 /* 5palas12-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "5palas12-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSApp.swift; sourceTree = "<group>"; };
 		DE035ED72C87950E00627F34 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
@@ -56,6 +71,20 @@
 		DED92B182CAB319F000ED341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DEE457792CACC0F000F810DD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9D4702782CAB136B003FDB87 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"FascinateInline-Regular.ttf",
+			);
+			target = DE035ED12C87950E00627F34 /* 5palas12-iOS */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		9D4702752CAB1345003FDB87 /* Fonts */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9D4702782CAB136B003FDB87 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Fonts; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		DE035ECF2C87950E00627F34 /* Frameworks */ = {
@@ -84,6 +113,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9DA4D0152CABA56300107CD2 /* Restaurant */ = {
+			isa = PBXGroup;
+			children = (
+				9D884D0F2CAC882100C79E5A /* RestaurantDetailView.swift */,
+				9DA4D0132CABA0B600107CD2 /* RestaurantModel.swift */,
+				9DA4D0172CABA5DC00107CD2 /* RestaurantViewModel.swift */,
+			);
+			path = Restaurant;
+			sourceTree = "<group>";
+		};
+		9DA4D0162CABA5AA00107CD2 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				9DA4D00D2CAB5CAD00107CD2 /* LocationManager.swift */,
+				9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		DE035EC92C87950E00627F34 = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +140,7 @@
 				DE035EEF2C87951000627F34 /* 5palas12-iOSUITests */,
 				DE294FEF2CAB3BE70045044A /* Frameworks */,
 				DE035ED32C87950E00627F34 /* Products */,
+				9D4702752CAB1345003FDB87 /* Fonts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,7 +160,12 @@
 				DE294FF62CACB9370045044A /* TabBarView.swift */,
 				DEE457792CACC0F000F810DD /* HexColorExtension.swift */,
 				DED92B172CAB23D0000ED341 /* -palas12-iOS-Info.plist */,
+				9DA4D0162CABA5AA00107CD2 /* Map */,
+				9DA4D0152CABA56300107CD2 /* Restaurant */,
+				9D4702792CAB13AF003FDB87 /* -palas12-iOS-Info.plist */,
 				DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */,
+				9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */,
+				9D4702712CAB0D39003FDB87 /* LogoView.swift */,
 				DE035ED72C87950E00627F34 /* LoginScreen.swift */,
 				DED92B152CAB21CD000ED341 /* FascinateInline-Regular.ttf */,
 				DE035ED92C87951000627F34 /* Assets.xcassets */,
@@ -292,6 +346,14 @@
 				DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */,
 				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
 				DE294FF72CACB9390045044A /* TabBarView.swift in Sources */,
+				9DA4D00F2CAB5CAD00107CD2 /* LocationManager.swift in Sources */,
+				9DA4D01E2CABAC1B00107CD2 /* ContentView.swift in Sources */,
+				9DA4D0102CAB5CAD00107CD2 /* MapView.swift in Sources */,
+				9D4702722CAB0D39003FDB87 /* LogoView.swift in Sources */,
+				9D884D102CAC882B00C79E5A /* RestaurantDetailView.swift in Sources */,
+				9DA4D0142CABA0B600107CD2 /* RestaurantModel.swift in Sources */,
+				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
+				9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,10 +517,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 6U6UWM69SL;
+				DEVELOPMENT_TEAM = YYACA4789Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Se necesita acceder a su ubicación para mostrar su posición en el mapa.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -485,10 +549,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 6U6UWM69SL;
+				DEVELOPMENT_TEAM = YYACA4789Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Se necesita acceder a su ubicación para mostrar su posición en el mapa.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
