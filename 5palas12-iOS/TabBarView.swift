@@ -10,12 +10,14 @@ import SwiftUI
 struct TabBarView: View {
     @Binding var selectedTab: Int
     
-    let tabBarHeight: CGFloat = 100 // Custom tab bar height
+    let tabBarHeight: CGFloat = 100 
+
     let cornerRadius: CGFloat = 8
     
     var body: some View {
         VStack {
-            Spacer() // Main content area
+            Spacer() 
+
             switch selectedTab {
             case 0:
                 Text("Home")
@@ -30,7 +32,7 @@ struct TabBarView: View {
             }
             Spacer()
             
-            // Custom Tab Bar
+
             HStack {
                 TabBarButton(icon: "house.fill", title: "Home", isSelected: selectedTab == 0) {
                     selectedTab = 0
@@ -47,8 +49,9 @@ struct TabBarView: View {
             }
             .frame(height: tabBarHeight)
                         .background(Color(hex: "#584C3F"))
-                        .cornerRadius(cornerRadius) // Rounded edges
-                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: -2) // Optional shadow effect
+                        .cornerRadius(cornerRadius) 
+                        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: -2)
+
                         
         }
         .edgesIgnoringSafeArea(.bottom)

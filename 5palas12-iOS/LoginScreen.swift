@@ -138,9 +138,12 @@ struct LoginScreen: View {
                 
                 // Successfully logged in
                 loginResponse = "Login successful!"
-                // You can navigate to another view or perform other actions here
-            }
         }
+    }
+}
+
+
+
 }
 
 
