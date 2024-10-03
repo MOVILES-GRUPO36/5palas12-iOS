@@ -3,6 +3,7 @@ import SwiftUI
 struct RestaurantsCloseToYou: View {
     @StateObject private var locationManager = LocationManager()
     @State private var selectedTab = 0
+    @State private var enterTime: Date? = nil // Variable to store the time the view appears
     
     var body: some View {
         GeometryReader{ geometry in
