@@ -4,6 +4,7 @@ import CoreLocation
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var nearbyRestaurants: [Restaurant] = []
     private var locationManager = CLLocationManager()
+    private var didCalculateDistance = false // Variable para verificar si ya se calculó la distancia
 
     override init() {
         super.init()
@@ -35,10 +36,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         let dummyRestaurants = [
             Restaurant(name: "Pizza House", address: "123 Main St", latitude: 37.78584, longitude: -122.406417, distance: nil, imageURL: "https://picsum.photos/200/300"),
             Restaurant(name: "Sushi Place", address: "456 Ocean Ave", latitude: 37.78583, longitude: -122.406417, distance: nil, imageURL: "https://picsum.photos/200/300"),
-            Restaurant(name: "Burger Joint", address: "789 Park Blvd", latitude: 4.651446, longitude: -74.0897262, distance: nil, imageURL: "https://picsum.photos/200/300")
+            Restaurant(name: "Burger Joint", address: "789 Park Blvd", latitude: 4.132000732235207, longitude: -73.64607088361214, distance: nil, imageURL: "https://picsum.photos/200/300")
         ]
         
-        if let userLocation = locationManager.location {
+        if let userLocation = locationManager.location, !didCalculateDistance {
             print("Ubicación del usuario disponible: \(userLocation.coordinate.latitude), \(userLocation.coordinate.longitude)")
             
             let filteredRestaurants = dummyRestaurants.map { restaurant -> Restaurant in
@@ -65,8 +66,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             DispatchQueue.main.async {
                 self.nearbyRestaurants = filteredRestaurants
             }
+            
+            // Detener actualizaciones de ubicación después de calcular la distancia
+            locationManager.stopUpdatingLocation()
+            didCalculateDistance = true // Marcar que ya se calculó la distancia
         } else {
-            print("La localización del usuario es nil. No se pueden obtener restaurantes cercanos.")
+            print("La localización del usuario es nil o ya se calculó la distancia.")
         }
     }
 

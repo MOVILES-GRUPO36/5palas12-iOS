@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 class RestaurantViewModel: ObservableObject {
-    @Published var restaurants: [Restaurant] = []
+    @Published var restaurants: [RestaurantModel] = []
     @Published var errorMessage: String? = nil
     private var cancellables = Set<AnyCancellable>()
 
@@ -33,7 +33,7 @@ class RestaurantViewModel: ObservableObject {
                 }
                 return result.data
             }
-            .decode(type: [Restaurant].self, decoder: JSONDecoder())
+            .decode(type: [RestaurantModel].self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {

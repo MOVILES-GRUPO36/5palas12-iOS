@@ -5,31 +5,32 @@ struct RestaurantsCloseToYou: View {
     @State private var selectedTab = 0
     
     var body: some View {
-        NavigationView {
-            VStack {
-                // App Bar Title
-                Text("Close To You")
-                    .font(.largeTitle)
-                    .padding(.top)
-                
-                // List of restaurant cards in a ScrollView
-                ScrollView {
-                    VStack(spacing: 16) {
-                        ForEach(locationManager.nearbyRestaurants) { restaurant in
-                            RestaurantCardView(restaurant: restaurant)
+        GeometryReader{ geometry in
+            NavigationView {
+                VStack {
+                    // App Bar Title
+                    VStack(spacing: 0){
+                        LogoView()
+                            .frame(width: geometry.size.width, height: geometry.size.height * 0.15)
+                            .padding(0)
+                        // List of restaurant cards in a ScrollView
+                        ScrollView {
+                            VStack(spacing: 16) {
+                                ForEach(locationManager.nearbyRestaurants) { restaurant in
+                                    RestaurantCardView(restaurant: restaurant)
+                                }
+                            }
+                            .padding()
                         }
+                        
+                        
                     }
-                    .padding()
                 }
-                
-                Spacer()
-                
-                TabBarView(selectedTab: $selectedTab)
+                .onAppear {
+                    locationManager.fetchNearbyRestaurants() // Fetch restaurants on view appearance
+                }
             }
         }
-        .onAppear {
-            locationManager.fetchNearbyRestaurants() // Fetch restaurants on view appearance
-        }
     }
+    
 }
-

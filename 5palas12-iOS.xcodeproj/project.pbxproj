@@ -9,11 +9,15 @@
 /* Begin PBXBuildFile section */
 		9D4702722CAB0D39003FDB87 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4702712CAB0D39003FDB87 /* LogoView.swift */; };
 		9D884D102CAC882B00C79E5A /* RestaurantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D884D0F2CAC882100C79E5A /* RestaurantDetailView.swift */; };
-		9DA4D00F2CAB5CAD00107CD2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D00D2CAB5CAD00107CD2 /* LocationManager.swift */; };
+		9DA4D00F2CAB5CAD00107CD2 /* LocationMapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D00D2CAB5CAD00107CD2 /* LocationMapManager.swift */; };
 		9DA4D0102CAB5CAD00107CD2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */; };
 		9DA4D0142CABA0B600107CD2 /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D0132CABA0B600107CD2 /* RestaurantModel.swift */; };
 		9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D0172CABA5DC00107CD2 /* RestaurantViewModel.swift */; };
 		9DA4D01E2CABAC1B00107CD2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */; };
+		9DE937122CAE35160061CD33 /* RestaurantCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE937102CAE35160061CD33 /* RestaurantCardView.swift */; };
+		9DE937132CAE35160061CD33 /* RestaurantsCloseToYou.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE937112CAE35160061CD33 /* RestaurantsCloseToYou.swift */; };
+		9DE937142CAE35160061CD33 /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE9370F2CAE35160061CD33 /* Restaurant.swift */; };
+		9DE937162CAE35210061CD33 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE937152CAE35210061CD33 /* LocationManager.swift */; };
 		DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */; };
 		DE035ED82C87950E00627F34 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED72C87950E00627F34 /* LoginScreen.swift */; };
 		DE035EDA2C87951000627F34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE035ED92C87951000627F34 /* Assets.xcassets */; };
@@ -47,13 +51,16 @@
 
 /* Begin PBXFileReference section */
 		9D4702712CAB0D39003FDB87 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
-		9D4702792CAB13AF003FDB87 /* -palas12-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "-palas12-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		9D884D0F2CAC882100C79E5A /* RestaurantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantDetailView.swift; sourceTree = "<group>"; };
-		9DA4D00D2CAB5CAD00107CD2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		9DA4D00D2CAB5CAD00107CD2 /* LocationMapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMapManager.swift; sourceTree = "<group>"; };
 		9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		9DA4D0132CABA0B600107CD2 /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		9DA4D0172CABA5DC00107CD2 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
 		9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9DE9370F2CAE35160061CD33 /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		9DE937102CAE35160061CD33 /* RestaurantCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardView.swift; sourceTree = "<group>"; };
+		9DE937112CAE35160061CD33 /* RestaurantsCloseToYou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsCloseToYou.swift; sourceTree = "<group>"; };
+		9DE937152CAE35210061CD33 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		DE035ED22C87950E00627F34 /* 5palas12-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "5palas12-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSApp.swift; sourceTree = "<group>"; };
 		DE035ED72C87950E00627F34 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
@@ -65,7 +72,6 @@
 		DE035EF02C87951000627F34 /* _palas12_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSUITests.swift; sourceTree = "<group>"; };
 		DE035EF22C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DE294FF62CACB9370045044A /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
-		DED92B172CAB23D0000ED341 /* -palas12-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "-palas12-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		DED92B182CAB319F000ED341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DEE457792CACC0F000F810DD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,7 +130,7 @@
 		9DA4D0162CABA5AA00107CD2 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				9DA4D00D2CAB5CAD00107CD2 /* LocationManager.swift */,
+				9DA4D00D2CAB5CAD00107CD2 /* LocationMapManager.swift */,
 				9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */,
 			);
 			path = Map;
@@ -157,11 +163,13 @@
 			children = (
 				DE294FF62CACB9370045044A /* TabBarView.swift */,
 				DEE457792CACC0F000F810DD /* HexColorExtension.swift */,
-				DED92B172CAB23D0000ED341 /* -palas12-iOS-Info.plist */,
 				9DA4D0162CABA5AA00107CD2 /* Map */,
 				9DA4D0152CABA56300107CD2 /* Restaurant */,
-				9D4702792CAB13AF003FDB87 /* -palas12-iOS-Info.plist */,
 				DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */,
+				9DE9370F2CAE35160061CD33 /* Restaurant.swift */,
+				9DE937152CAE35210061CD33 /* LocationManager.swift */,
+				9DE937102CAE35160061CD33 /* RestaurantCardView.swift */,
+				9DE937112CAE35160061CD33 /* RestaurantsCloseToYou.swift */,
 				9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */,
 				9D4702712CAB0D39003FDB87 /* LogoView.swift */,
 				DE035ED72C87950E00627F34 /* LoginScreen.swift */,
@@ -342,7 +350,11 @@
 				DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */,
 				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
 				DE294FF72CACB9390045044A /* TabBarView.swift in Sources */,
-				9DA4D00F2CAB5CAD00107CD2 /* LocationManager.swift in Sources */,
+				9DE937162CAE35210061CD33 /* LocationManager.swift in Sources */,
+				9DE937122CAE35160061CD33 /* RestaurantCardView.swift in Sources */,
+				9DE937132CAE35160061CD33 /* RestaurantsCloseToYou.swift in Sources */,
+				9DE937142CAE35160061CD33 /* Restaurant.swift in Sources */,
+				9DA4D00F2CAB5CAD00107CD2 /* LocationMapManager.swift in Sources */,
 				9DA4D01E2CABAC1B00107CD2 /* ContentView.swift in Sources */,
 				9DA4D0102CAB5CAD00107CD2 /* MapView.swift in Sources */,
 				9D4702722CAB0D39003FDB87 /* LogoView.swift in Sources */,
