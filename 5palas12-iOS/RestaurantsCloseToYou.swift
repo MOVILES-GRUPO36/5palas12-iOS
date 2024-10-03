@@ -27,8 +27,16 @@ struct RestaurantsCloseToYou: View {
                     }
                 }
                 .onAppear {
+                    // Store the time the view appears
+                    enterTime = Date()
                     locationManager.fetchNearbyRestaurants() // Fetch restaurants on view appearance
                 }
+                .onDisappear {
+                    // Calculate how long the user stayed on the view
+                    if let enterTime = enterTime {
+                        let elapsedTime = Date().timeIntervalSince(enterTime)
+                        print("User stayed in the view for \(elapsedTime) seconds.")
+                    }
             }
         }
     }
