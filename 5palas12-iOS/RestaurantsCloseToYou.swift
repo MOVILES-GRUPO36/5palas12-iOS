@@ -38,8 +38,9 @@ struct RestaurantsCloseToYou: View {
                         let elapsedTime = Date().timeIntervalSince(enterTime)
                         print("User stayed in the view for \(elapsedTime) seconds.")
                     }
+                }
             }
         }
+        
     }
-    
 }
