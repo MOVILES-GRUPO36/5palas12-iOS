@@ -18,6 +18,7 @@ struct MapView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
     )
     @State private var selectedRestaurant: RestaurantModel? = nil
+    @State private var enterTime: Date? = nil // Variable to store the time the view appears
 
     var body: some View {
         GeometryReader { geometry in
@@ -45,8 +46,16 @@ struct MapView: View {
                 }
                 .edgesIgnoringSafeArea(.all)
                 .onAppear {
+                    enterTime = Date() // Almacenar el tiempo de entrada
                     locationManager.requestLocation()
                 }
+                .onDisappear {
+                        // Calcular cuánto tiempo ha estado el usuario en la vista
+                        if let enterTime = enterTime {
+                            let elapsedTime = Date().timeIntervalSince(enterTime)
+                            print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                        }
+                    }
                 .onReceive(locationManager.$lastLocation) { newLocation in
                     if let location = newLocation, !hasCenteredOnUser {
                         region = MKCoordinateRegion(
