@@ -20,6 +20,7 @@ struct RegisterView: View {
     @State var showPassword: Bool = false
     @FocusState private var inFocus: Field?
     @State private var navigateToAdditionalInfo = false
+    @State private var registerResponse: String = ""
     
     enum Field {
         case email, plain, secure
@@ -108,38 +109,63 @@ struct RegisterView: View {
                 }
                 .padding(.horizontal)
                 
-                Button {
-                    register() // Call the register function
-                } label: {
-                    Text("Register")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.white)
+//                Button {
+//                    register() // Call the register function
+//                } label: {
+//                    Text("Register")
+//                        .font(.title2)
+//                        .bold()
+//                        .foregroundColor(.white)
+//                }
+//                .frame(height: 46)
+//                .frame(maxWidth: .infinity)
+//                .background(isRegisterDisabled ? .gray : Color(hex: "#588157"))
+//                .cornerRadius(8)
+//                .disabled(isRegisterDisabled)
+//                .padding()
+                
+                NavigationLink(destination: AdditionalInfoView(name: name, surname: surname, email: email)) {
+                    Button {
+                        register() // Call the register function
+                    } label: {
+                        Text("Register")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+                    .frame(height: 46)
+                    .frame(maxWidth: .infinity)
+                    .background(isRegisterDisabled ? .gray : Color(hex: "#588157"))
+                    .cornerRadius(8)
+                    .disabled(isRegisterDisabled)
+                    .padding()
                 }
-                .frame(height: 46)
-                .frame(maxWidth: .infinity)
-                .background(isRegisterDisabled ? .gray : Color(hex: "#588157"))
-                .cornerRadius(8)
-                .disabled(isRegisterDisabled)
-                .padding()
+                
+                if !registerResponse.isEmpty {
+                    Text(registerResponse)
+                        .foregroundColor(.red)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
                 
                 Spacer()
             }
-            NavigationLink(destination: AdditionalInfoView(), isActive: $navigateToAdditionalInfo) {
-                EmptyView() // No muestra nada visual, solo se usa para navegar
-            }
+//            NavigationLink(destination: AdditionalInfoView(name: name, surname: surname, email: email), isActive: $navigateToAdditionalInfo) {
+//                EmptyView()
+//            }
+            
         }
     }
     private func register() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                print("Error during registration: \(error.localizedDescription)")
+                registerResponse = "Error during registration: \(error.localizedDescription)"
                 return
             }
 
             // Si el registro fue exitoso, redirigimos a la pantalla adicional
             if let user = authResult?.user {
-                print("User \(user.uid) registered successfully!")
+                registerResponse = "User \(user.uid) registered successfully!"
                 navigateToAdditionalInfo = true // Activa la navegación
             }
         }
@@ -147,4 +173,6 @@ struct RegisterView: View {
 
 }
 
-
+//#Preview {
+//    RegisterView()
+//}

@@ -30,7 +30,6 @@ struct TabBarView: View {
             case 2:
                 MapView(restaurantsVM: viewModel)
                     .padding(.all,0)
-
             case 3:
                 Text("Profile")
             default:

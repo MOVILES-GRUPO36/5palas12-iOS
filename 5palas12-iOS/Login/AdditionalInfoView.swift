@@ -10,6 +10,9 @@ import FirebaseAuth
 import FirebaseAnalytics
 
 struct AdditionalInfoView: View {
+    @State var name: String
+    @State var surname: String
+    @State var email: String
     @State private var selectedImage: UIImage?
     @State private var birthDate = Date()
     @State private var showImagePicker = false
@@ -135,9 +138,7 @@ func uploadImageToGCP(image: UIImage, completion: @escaping (URL?) -> Void) {
         }
         task.resume()
     }
-}
 
 
-#Preview {
-    AdditionalInfoView()
-}
+
+
