@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseAnalytics
 
 
 struct LoginScreen: View {
@@ -15,6 +16,7 @@ struct LoginScreen: View {
     @State var showPassword: Bool = false
     @FocusState private var inFocus: Field?
     @State private var loginResponse: String = ""
+    @Binding var isLoggedIn: Bool
     
     enum Field {
         case email, plain, secure
@@ -138,17 +140,17 @@ struct LoginScreen: View {
                 
                 // Successfully logged in
                 loginResponse = "Login successful!"
+                Analytics.logEvent("login", parameters: [
+                                                "method": "email"
+                                            ])
+                isLoggedIn = true
         }
     }
 }
 
 
 
-}
 
 
 
-#Preview {
-    LoginScreen()
-}
 

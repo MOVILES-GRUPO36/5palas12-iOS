@@ -13,9 +13,13 @@ struct LogoView:View    {
         ZStack{
             Rectangle().fill(Color("FernGreen"))
                 .ignoresSafeArea()
-            Text("5 pa' las 12")
-                .font(.custom("FascinateInline-Regular", size: 24))
-                .foregroundColor(Color("Timberwolf"))
+            VStack {
+                            Spacer()
+                            Text("5 pa' las 12")
+                                .font(.custom("FascinateInline-Regular", size: 24))
+                                .foregroundColor(Color("Timberwolf"))
+                                .padding(.bottom,20)
+                        }
         }
         }
 }

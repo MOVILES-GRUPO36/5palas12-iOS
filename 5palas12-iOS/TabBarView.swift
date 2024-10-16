@@ -9,22 +9,24 @@ import SwiftUI
 
 struct TabBarView: View {
     @Binding var selectedTab: Int
+    @StateObject var viewModel = RestaurantViewModel()
+
     
     let tabBarHeight: CGFloat = 100 
 
     let cornerRadius: CGFloat = 8
     
     var body: some View {
-        VStack {
-            Spacer() 
+        VStack(spacing: 0) {
+            Spacer()
 
             switch selectedTab {
             case 0:
-                Text("Home")
+                RestaurantsCloseToYou()
             case 1:
                 Text("Search")
             case 2:
-                Text("Maps")
+                MapView(restaurantsVM: viewModel)
             case 3:
                 Text("Profile")
             default:
@@ -54,7 +56,9 @@ struct TabBarView: View {
 
                         
         }
-        .edgesIgnoringSafeArea(.bottom)
+        .edgesIgnoringSafeArea(.vertical)
+        .onAppear {
+            viewModel.loadRestaurants()             }
     }
 }
 

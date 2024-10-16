@@ -8,7 +8,7 @@ import Foundation
 import SwiftUI
 
 struct RestaurantDetailView: View {
-    let restaurant: Restaurant
+    let restaurant: RestaurantModel
 
     var body: some View {
         GeometryReader{geometry in

@@ -20,10 +20,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct _palas12_iOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
+    @State var selectedTab = 0
+    @State var isLoggedIn: Bool = false
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if isLoggedIn {
+                TabBarView(selectedTab: $selectedTab)
+            } else {
+                LoginScreen(isLoggedIn: $isLoggedIn)
+            }
+            
         }
     }
 }
