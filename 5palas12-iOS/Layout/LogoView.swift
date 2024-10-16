@@ -20,8 +20,8 @@ struct LogoView:View    {
                                 .foregroundColor(Color("Timberwolf"))
                                 .padding(.bottom,20)
                         }
-        }
-        }
+        }.frame( height:  60)
+    }
 }
 
 #Preview {
