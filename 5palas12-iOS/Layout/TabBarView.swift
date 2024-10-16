@@ -13,26 +13,29 @@ struct TabBarView: View {
 
     
     let tabBarHeight: CGFloat = 100 
-
     let cornerRadius: CGFloat = 8
     
     var body: some View {
+        
         VStack(spacing: 0) {
-            Spacer()
+            
 
             switch selectedTab {
             case 0:
-                RestaurantsCloseToYou()
+                RestaurantsListView(restaurantsVM: viewModel)
+                    .padding(.all,0)
+
             case 1:
                 Text("Search")
             case 2:
                 MapView(restaurantsVM: viewModel)
+                    .padding(.all,0)
+
             case 3:
                 Text("Profile")
             default:
                 Text("Home")
             }
-            Spacer()
             
 
             HStack {
@@ -62,28 +65,7 @@ struct TabBarView: View {
     }
 }
 
-struct TabBarButton: View {
-    var icon: String
-    var title: String
-    var isSelected: Bool
-    var action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            VStack {
-                Image(systemName: icon)
-                    .font(.system(size: 24))
-                    .foregroundColor(isSelected ? .white : .gray)
-                Text(title)
-                    .font(.caption)
-                    .foregroundColor(isSelected ? .white : .gray)
-            }
-            .padding(.vertical, 10)
-            .padding(.horizontal, 20)
-            .frame(maxWidth: .infinity)
-        }
-    }
-}
+
 
 #Preview {
     @Previewable

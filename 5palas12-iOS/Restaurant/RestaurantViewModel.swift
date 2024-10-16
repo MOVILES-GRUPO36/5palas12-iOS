@@ -9,44 +9,53 @@ import Foundation
 import Combine
 
 class RestaurantViewModel: ObservableObject {
+    
     @Published var restaurants: [RestaurantModel] = []
     @Published var errorMessage: String? = nil
     private var cancellables = Set<AnyCancellable>()
-
-    private let urlString = "https://raw.githubusercontent.com/jmontenegroc/datos/refs/heads/main/restaurants.json"
-
+    private let locationManager = LocationManager()
+    private let restaurantDAO = RestaurantDAO()
+        
     func loadRestaurants() {
-        guard let url = URL(string: urlString) else {
-            errorMessage = "URL inválida."
-            print(errorMessage ?? "Error desconocido")
+
+        restaurantDAO.getAllRestaurants { [weak self] result in
+            switch result {
+            case .success(let restaurants):
+                self?.restaurants = restaurants
+                self?.calculateDistances()
+                print("Restaurantes cargados desde Firestore correctamente")
+            case .failure(let error):
+                self?.errorMessage = "Error al cargar restaurantes desde Firestore: \(error.localizedDescription)"
+                print(self?.errorMessage ?? "Error desconocido")
+            }
+        }
+    }
+    
+    private func calculateDistances() {
+        guard let userLocation = locationManager.lastLocation else {
+            print("No se pudo obtener la ubicación del usuario")
             return
         }
-
-        URLSession.shared.dataTaskPublisher(for: url)
-            .tryMap { result -> Data in
-                guard let httpResponse = result.response as? HTTPURLResponse else {
-                    throw URLError(.badServerResponse)
-                }
-                print("Código de estado HTTP: \(httpResponse.statusCode)")
-                guard httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
-                }
-                return result.data
-            }
-            .decode(type: [RestaurantModel].self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    print("Datos cargados correctamente")
-                case .failure(let error):
-                    self.errorMessage = "Error al cargar datos: \(error.localizedDescription)"
-                    print(self.errorMessage ?? "Error desconocido")
-                }
-            }, receiveValue: { [weak self] restaurants in
-                self?.restaurants = restaurants
-            })
-            .store(in: &cancellables)
+        
+        let userLatitude = userLocation.coordinate.latitude
+        let userLongitude = userLocation.coordinate.longitude
+        
+        for i in 0..<restaurants.count {
+            let restaurant = restaurants[i]
+            let distance = haversineDistance(lat1: userLatitude, lon1: userLongitude, lat2: restaurant.latitude, lon2: restaurant.longitude)
+            restaurants[i].distance = distance
+        }
+    }
+    
+    private func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
+        let R = 6371.0 // Radio de la Tierra en kilómetros
+        let dLat = (lat2 - lat1) * .pi / 180.0
+        let dLon = (lon2 - lon1) * .pi / 180.0
+        let a = sin(dLat / 2) * sin(dLat / 2) +
+                cos(lat1 * .pi / 180.0) * cos(lat2 * .pi / 180.0) *
+                sin(dLon / 2) * sin(dLon / 2)
+        let c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        let distance = R * c
+        return distance
     }
 }
-

@@ -9,7 +9,7 @@ import Foundation
 import MapKit
 import CoreLocation
 
-class LocationMapManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
     
     @Published var lastLocation: CLLocation?

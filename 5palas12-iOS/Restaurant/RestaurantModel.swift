@@ -16,6 +16,8 @@ struct RestaurantModel: Decodable, Identifiable {
     var categories : [String]
     var description : String
     var rating : Double
+    var address : String
+    var distance : Double?
     enum CodingKeys : String, CodingKey{
         case name
         case latitude
@@ -24,5 +26,6 @@ struct RestaurantModel: Decodable, Identifiable {
         case categories
         case description
         case rating
+        case address
     }
 }
