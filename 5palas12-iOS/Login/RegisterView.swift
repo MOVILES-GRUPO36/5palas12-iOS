@@ -31,7 +31,7 @@ struct RegisterView: View {
         }
     
     var body : some View {
-        NavigationView{
+        NavigationStack{
             VStack(alignment: .leading, spacing:12) {
                 
                 
@@ -124,7 +124,7 @@ struct RegisterView: View {
 //                .disabled(isRegisterDisabled)
 //                .padding()
                 
-                NavigationLink(destination: AdditionalInfoView(name: name, surname: surname, email: email)) {
+                
                     Button {
                         register() // Call the register function
                     } label: {
@@ -139,7 +139,7 @@ struct RegisterView: View {
                     .cornerRadius(8)
                     .disabled(isRegisterDisabled)
                     .padding()
-                }
+                
                 
                 if !registerResponse.isEmpty {
                     Text(registerResponse)
@@ -150,9 +150,10 @@ struct RegisterView: View {
                 
                 Spacer()
             }
-//            NavigationLink(destination: AdditionalInfoView(name: name, surname: surname, email: email), isActive: $navigateToAdditionalInfo) {
-//                EmptyView()
-//            }
+            NavigationLink(destination: AdditionalInfoView(name: name, surname: surname, email: email), isActive: $navigateToAdditionalInfo) {
+                Text("")
+            }
+            .hidden()
             
         }
     }
@@ -167,6 +168,7 @@ struct RegisterView: View {
             if let user = authResult?.user {
                 registerResponse = "User \(user.uid) registered successfully!"
                 navigateToAdditionalInfo = true // Activa la navegación
+                print(navigateToAdditionalInfo)
             }
         }
     }

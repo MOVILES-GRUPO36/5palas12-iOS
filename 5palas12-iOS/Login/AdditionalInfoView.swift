@@ -55,20 +55,34 @@ struct AdditionalInfoView: View {
             Spacer()
             
             Button("Save User Info") {
-                            guard let image = selectedImage else { return }
-                            isLoading = true
-                            uploadImageToGCP(image: image) { url in
-                                isLoading = false
-                                if let url = url {
-                                    imageURL = url
-                                    print("Image uploaded successfully: \(url.absoluteString)")
-                                    saveUserDataToPostgres(imageURL: url.absoluteString)
-                                } else {
-                                    print("Failed to upload image")
-                                }
-                            }
+                guard let image = selectedImage else { return }
+                
+                // Show loading spinner while the upload is in progress
+                isLoading = true
+                
+                // Use the GCS upload function with completion handler
+                uploadImageToGCS(image: image) { url in
+                    // Ensure UI updates happen on the main thread
+                    DispatchQueue.main.async {
+                        // Hide loading spinner after upload is complete
+                        isLoading = false
+                        
+                        if let url = url {
+                            // Update the UI with the image URL
+                            imageURL = url
+                            print("Image uploaded successfully: \(url.absoluteString)")
+                            
+                            // Save user data to Postgres with the image URL
+                            saveUserDataToPostgres(imageURL: url.absoluteString)
+                        } else {
+                            // Handle the error case
+                            print("Failed to upload image")
                         }
-                        .disabled(isLoading || selectedImage == nil)
+                    }
+                }
+            }
+            .disabled(isLoading || selectedImage == nil)
+
                 
                 
         }
@@ -76,34 +90,67 @@ struct AdditionalInfoView: View {
         }
     }
 
-func uploadImageToGCP(image: UIImage, completion: @escaping (URL?) -> Void) {
+    func uploadImageToGCS(image: UIImage, completion: @escaping (URL?) -> Void) {
+        // Convert the image to JPEG data
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            completion(nil)
+            print("Error: Could not convert image to data.")
+            completion(nil)  // Signal an error by returning nil
             return
         }
 
-        // Tu URL del bucket de GCP
-        let bucketURL = "https://storage.googleapis.com/YOUR_BUCKET_NAME"
-        let fileName = UUID().uuidString + ".jpg"
-        let url = URL(string: "\(bucketURL)/\(fileName)")!
+        // 1. Get the signed URL from your backend
+        let backendURL = URL(string: "https://your-backend-server.com/getSignedUrl")!  // Your backend endpoint for getting the signed URL
+        var request = URLRequest(url: backendURL)
+        request.httpMethod = "POST"
+        
+        // 2. Prepare the body with userId and objectName
+        let userId = Auth.auth().currentUser?.uid ?? "unknown-user"
+        let objectName = UUID().uuidString + ".jpg"  // Generate a unique file name
+        
+        let body = ["userId": userId, "objectName": objectName]
+        
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // 3. Make the request to get the signed URL from the backend
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Failed to get signed URL: \(error?.localizedDescription ?? "Unknown error")")
+                completion(nil)  // Signal an error by returning nil
+                return
+            }
 
-        var request = URLRequest(url: url)
-        request.httpMethod = "PUT"
-        request.addValue("image/jpeg", forHTTPHeaderField: "Content-Type")
+            // 4. Parse the signed URL from the backend response
+            if let signedUrlString = String(data: data, encoding: .utf8),
+               let signedUrl = URL(string: signedUrlString) {
 
-        // Reemplazar por tu token de acceso si estás usando autenticación
-        // request.addValue("Bearer YOUR_ACCESS_TOKEN", forHTTPHeaderField: "Authorization")
+                // 5. Upload the image to GCS using the signed URL
+                var uploadRequest = URLRequest(url: signedUrl)
+                uploadRequest.httpMethod = "PUT"
+                uploadRequest.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
+                uploadRequest.httpBody = imageData
 
-        let task = URLSession.shared.uploadTask(with: request, from: imageData) { data, response, error in
-            if let error = error {
-                print("Error uploading image: \(error)")
-                completion(nil)
+                let uploadTask = URLSession.shared.dataTask(with: uploadRequest) { data, response, error in
+                    if let error = error {
+                        print("Upload error: \(error.localizedDescription)")
+                        completion(nil)  // Signal an error by returning nil
+                        return
+                    }
+                    
+                    // 6. If upload is successful, return the signed URL (the file's public URL)
+                    print("File uploaded successfully!")
+                    completion(signedUrl)  // Return the signed URL via completion
+                }
+                uploadTask.resume()
             } else {
-                completion(url)
+                print("Failed to parse signed URL")
+                completion(nil)  // Signal an error by returning nil
             }
         }
         task.resume()
     }
+
+
 
     // Función para guardar los datos del usuario en PostgreSQL
     func saveUserDataToPostgres(imageURL: String) {
