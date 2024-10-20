@@ -24,7 +24,6 @@
 		9DE937122CAE35160061CD33 /* RestaurantCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE937102CAE35160061CD33 /* RestaurantCardView.swift */; };
 		9DE937132CAE35160061CD33 /* RestaurantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE937112CAE35160061CD33 /* RestaurantsListView.swift */; };
 		DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */; };
-		DE035ED82C87950E00627F34 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED72C87950E00627F34 /* LoginScreen.swift */; };
 		DE035EDA2C87951000627F34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE035ED92C87951000627F34 /* Assets.xcassets */; };
 		DE035EDD2C87951000627F34 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE035EDC2C87951000627F34 /* Preview Assets.xcassets */; };
 		DE035EE72C87951000627F34 /* _palas12_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035EE62C87951000627F34 /* _palas12_iOSTests.swift */; };
@@ -70,7 +69,6 @@
 		9DE937112CAE35160061CD33 /* RestaurantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsListView.swift; sourceTree = "<group>"; };
 		DE035ED22C87950E00627F34 /* 5palas12-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "5palas12-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSApp.swift; sourceTree = "<group>"; };
-		DE035ED72C87950E00627F34 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		DE035ED92C87951000627F34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE035EDC2C87951000627F34 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DE035EE22C87951000627F34 /* 5palas12-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "5palas12-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +93,8 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9D4702752CAB1345003FDB87 /* Fonts */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9D4702782CAB136B003FDB87 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Fonts; sourceTree = "<group>"; };
+		DE4772D32CBFFD8C0078DBB7 /* Login */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Login; sourceTree = "<group>"; };
+		DE4772D42CBFFDF60078DBB7 /* User */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = User; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +184,8 @@
 		DE035ED42C87950E00627F34 /* 5palas12-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DE4772D42CBFFDF60078DBB7 /* User */,
+				DE4772D32CBFFD8C0078DBB7 /* Login */,
 				9D7173E02CBB694C00E4B524 /* Layout */,
 				9DA4D0162CABA5AA00107CD2 /* Map */,
 				9DA4D0152CABA56300107CD2 /* Restaurant */,
@@ -191,7 +193,6 @@
 				9D51D2F12CBC6750005B7827 /* FirestoreManager.swift */,
 				9D51D2E92CBC64FA005B7827 /* AppDelegate.swift */,
 				9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */,
-				DE035ED72C87950E00627F34 /* LoginScreen.swift */,
 				DEE457792CACC0F000F810DD /* HexColorExtension.swift */,
 				DE035ED92C87951000627F34 /* Assets.xcassets */,
 				DE035EDB2C87951000627F34 /* Preview Content */,
@@ -246,6 +247,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				DE4772D32CBFFD8C0078DBB7 /* Login */,
+				DE4772D42CBFFDF60078DBB7 /* User */,
 			);
 			name = "5palas12-iOS";
 			productName = "5palas12-iOS";
@@ -366,7 +371,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE035ED82C87950E00627F34 /* LoginScreen.swift in Sources */,
 				DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */,
 				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
 				DE294FF72CACB9390045044A /* TabBarView.swift in Sources */,
@@ -547,7 +551,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = YYACA4789Q;
+				DEVELOPMENT_TEAM = 6U6UWM69SL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -579,7 +583,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = YYACA4789Q;
+				DEVELOPMENT_TEAM = 6U6UWM69SL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";

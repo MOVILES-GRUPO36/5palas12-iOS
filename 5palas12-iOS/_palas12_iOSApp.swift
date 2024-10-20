@@ -17,7 +17,7 @@ struct _palas12_iOSApp: App {
             if isLoggedIn {
                 TabBarView(selectedTab: $selectedTab)
             } else {
-                TabBarView(selectedTab: $selectedTab)
+                LoginScreen(isLoggedIn: $isLoggedIn)
             }
             
         }
