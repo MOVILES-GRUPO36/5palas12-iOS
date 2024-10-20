@@ -23,6 +23,9 @@ struct RegisterView: View {
     @State private var navigateToAdditionalInfo = false
     @State private var registerResponse: String = ""
     @State private var birthday = Date()
+    @Binding var isLoggedIn: Bool 
+    @State private var isSuccesful: Bool = false
+    @State private var isBusinessError : Bool = false
     private let userDAO = UserDAO()
     
     enum Field {
@@ -135,29 +138,36 @@ struct RegisterView: View {
                 .cornerRadius(8)
                 .disabled(isRegisterDisabled)
                 .padding()
-                
-                
-                if !registerResponse.isEmpty {
-                    Text(registerResponse)
-                        .foregroundColor(.red)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .center)
+                .alert("User created", isPresented: $isSuccesful) {
+                    Button("Ok", role: .cancel) {}
+                } message : {
+                    Text("User created successfully")
                 }
+                .alert("Error", isPresented: $isBusinessError) {
+                    Button("Ok", role: .cancel) {}
+                } message : {
+                    Text(registerResponse)
+                }
+
+                    
+                
+                
                 
                 Spacer()
             }
-            NavigationLink(destination: TabBarView(selectedTab: $home), isActive: $navigateToAdditionalInfo) {
+            NavigationLink(destination:LoginScreen(isLoggedIn:$isLoggedIn), isActive: $navigateToAdditionalInfo) {
                 Text("")
             }
             .hidden()
-            .navigationBarBackButtonHidden(true)
+            .navigationBarBackButtonHidden()
             
-        }
+        }.navigationBarBackButtonHidden()
     }
     private func register() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                registerResponse = "Error: \(error.localizedDescription)"
+                isBusinessError = true
+                registerResponse = "\(error.localizedDescription)"
                 return
             }
             
@@ -176,16 +186,14 @@ struct RegisterView: View {
                 switch result {
                 case .success():
                     navigateToAdditionalInfo = true
+                    isSuccesful = true
                 case .failure(let error):
                     registerResponse = "Firestore Error: \(error.localizedDescription)"
+                    isBusinessError = true
                 }
             }
         }
     }
     
     
-}
-
-#Preview {
-    RegisterView()
 }
