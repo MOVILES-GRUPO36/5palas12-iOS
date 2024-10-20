@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabBarView: View {
     @Binding var selectedTab: Int
-    @StateObject var viewModel = RestaurantViewModel()
+    @EnvironmentObject var restaurantsVM: RestaurantViewModel
     
 
     
@@ -26,13 +26,13 @@ struct TabBarView: View {
                 
                 switch selectedTab {
                 case 0:
-                    RestaurantsListView(restaurantsVM: viewModel)
+                    RestaurantsListView()
                         .padding(.all,0)
                     
                 case 1:
                     Text("Search")
                 case 2:
-                    MapView(restaurantsVM: viewModel)
+                    MapView()
                         .padding(.all,0)
                 case 3:
                     Text("Profile")
@@ -64,7 +64,8 @@ struct TabBarView: View {
             }
             .edgesIgnoringSafeArea(.vertical)
             .onAppear {
-                viewModel.loadRestaurants()             }
+                restaurantsVM.loadRestaurants()
+            }
         }
         .navigationBarBackButtonHidden(true)
     }
