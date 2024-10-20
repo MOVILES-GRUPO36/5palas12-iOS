@@ -28,50 +28,30 @@ struct RestaurantDetailView: View {
                             ProgressView()
                                 .progressViewStyle(LinearProgressViewStyle())
                         }
-                        ZStack{
-                            Rectangle()
-                                .foregroundColor(Color("Timberwolf") )
-                                .scaledToFill()
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(restaurant.name)
-                                    .font(.system(size:32))
-                                    .fontWeight(.bold)
-                                Text("\(restaurant.categories.joined(separator: " - "))")
-                                    .opacity(0.5)
-                                HStack(spacing: 2) {
-                                    ForEach(0..<5) { index in
-                                        if index < Int(restaurant.rating) {
-                                            Image(systemName: "star.fill")
-                                                .foregroundColor(.white)
-                                                .padding(4)
-                                                .background(Color("FernGreen"))
-                                                .cornerRadius(4)
-                                        } else if index < Int(restaurant.rating + 0.5) {
-                                            Image(systemName: "star.leadinghalf.filled")
-                                                .foregroundColor(.white)
-                                                .padding(4)
-                                                .background(Color("FernGreen"))
-                                                .cornerRadius(4)
-                                        } else {
-                                            Image(systemName: "star")
-                                                .foregroundColor(.white)
-                                                .padding(4)
-                                                .background(Color("FernGreen"))
-                                                .cornerRadius(4)
-                                        }
-                                    }
-                                }
-                                
-                                Text(restaurant.description)
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.black)
-                                    .padding(.vertical, 10)
-                                Spacer()
-                            }.padding(.top, 10)
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(restaurant.name)
+                                .font(.system(size:32))
+                                .fontWeight(.bold)
+                            Text("\(restaurant.categories.joined(separator: " - "))")
+                                .opacity(0.5)
+                            RatingView(rating: restaurant.rating)
+                            Text(restaurant.description)
+                                .font(.system(size: 16))
+                                .foregroundColor(.black)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.vertical, 10)
+                            Divider()
+                            ProductListView(restaurant: restaurant)
+                                .padding(.vertical, 15)
+                            Spacer()
                             
-                        }
+                            
+                        }.padding([.top,.horizontal], 10)
+                        
+                        
                     }
-                }
+                    .background(Color("Timberwolf"))
+                }.background(Color("Timberwolf"))
             }
         }.navigationBarBackButtonHidden(true)
             .overlay(alignment: .topLeading){
@@ -86,8 +66,8 @@ struct RestaurantDetailView: View {
                             .foregroundColor(Color("Timberwolf"))
                     }
                 }.offset(x: 10,y: 18)
-
-        }
+                
+            }
     }}
-    
+
 
