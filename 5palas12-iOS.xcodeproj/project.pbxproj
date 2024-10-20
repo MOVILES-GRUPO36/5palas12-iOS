@@ -20,9 +20,15 @@
 		9DA4D0102CAB5CAD00107CD2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */; };
 		9DA4D0142CABA0B600107CD2 /* RestaurantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D0132CABA0B600107CD2 /* RestaurantModel.swift */; };
 		9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D0172CABA5DC00107CD2 /* RestaurantViewModel.swift */; };
-		9DA4D01E2CABAC1B00107CD2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */; };
 		9DE937122CAE35160061CD33 /* RestaurantCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE937102CAE35160061CD33 /* RestaurantCardView.swift */; };
 		9DE937132CAE35160061CD33 /* RestaurantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE937112CAE35160061CD33 /* RestaurantsListView.swift */; };
+		9DFED6C22CC558A5004348A2 /* ProductModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFED6C12CC558A5004348A2 /* ProductModel.swift */; };
+		9DFED6C42CC559E5004348A2 /* ProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFED6C32CC559E5004348A2 /* ProductViewModel.swift */; };
+		9DFED6C62CC55CB4004348A2 /* ProductDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFED6C52CC55CA7004348A2 /* ProductDAO.swift */; };
+		9DFED6C82CC56416004348A2 /* ProductCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFED6C72CC56416004348A2 /* ProductCardView.swift */; };
+		9DFED6CA2CC564EE004348A2 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFED6C92CC564EE004348A2 /* ProductListView.swift */; };
+		9DFED6CC2CC58017004348A2 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFED6CB2CC58017004348A2 /* RatingView.swift */; };
+		9DFED6D02CC5A6DD004348A2 /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFED6CF2CC5A6DD004348A2 /* MapAnnotationView.swift */; };
 		DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */; };
 		DE035EDA2C87951000627F34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE035ED92C87951000627F34 /* Assets.xcassets */; };
 		DE035EDD2C87951000627F34 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE035EDC2C87951000627F34 /* Preview Assets.xcassets */; };
@@ -64,9 +70,15 @@
 		9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		9DA4D0132CABA0B600107CD2 /* RestaurantModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantModel.swift; sourceTree = "<group>"; };
 		9DA4D0172CABA5DC00107CD2 /* RestaurantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantViewModel.swift; sourceTree = "<group>"; };
-		9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9DE937102CAE35160061CD33 /* RestaurantCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCardView.swift; sourceTree = "<group>"; };
 		9DE937112CAE35160061CD33 /* RestaurantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsListView.swift; sourceTree = "<group>"; };
+		9DFED6C12CC558A5004348A2 /* ProductModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductModel.swift; sourceTree = "<group>"; };
+		9DFED6C32CC559E5004348A2 /* ProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewModel.swift; sourceTree = "<group>"; };
+		9DFED6C52CC55CA7004348A2 /* ProductDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDAO.swift; sourceTree = "<group>"; };
+		9DFED6C72CC56416004348A2 /* ProductCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCardView.swift; sourceTree = "<group>"; };
+		9DFED6C92CC564EE004348A2 /* ProductListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductListView.swift; sourceTree = "<group>"; };
+		9DFED6CB2CC58017004348A2 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		9DFED6CF2CC5A6DD004348A2 /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		DE035ED22C87950E00627F34 /* 5palas12-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "5palas12-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSApp.swift; sourceTree = "<group>"; };
 		DE035ED92C87951000627F34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,6 +147,7 @@
 				9D4702712CAB0D39003FDB87 /* LogoView.swift */,
 				9D7173DD2CBB654900E4B524 /* TabBarButton.swift */,
 				DE294FF62CACB9370045044A /* TabBarView.swift */,
+				9DFED6CB2CC58017004348A2 /* RatingView.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -157,8 +170,21 @@
 			children = (
 				9DA4D00D2CAB5CAD00107CD2 /* LocationManager.swift */,
 				9DA4D00E2CAB5CAD00107CD2 /* MapView.swift */,
+				9DFED6CF2CC5A6DD004348A2 /* MapAnnotationView.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		9DFED6C02CC55852004348A2 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				9DFED6C52CC55CA7004348A2 /* ProductDAO.swift */,
+				9DFED6C12CC558A5004348A2 /* ProductModel.swift */,
+				9DFED6C32CC559E5004348A2 /* ProductViewModel.swift */,
+				9DFED6C72CC56416004348A2 /* ProductCardView.swift */,
+				9DFED6C92CC564EE004348A2 /* ProductListView.swift */,
+			);
+			path = Product;
 			sourceTree = "<group>";
 		};
 		DE035EC92C87950E00627F34 = {
@@ -188,6 +214,7 @@
 			children = (
 				DE5F98DB2CC5959100862BA2 /* BusinessCenter */,
 				DE3CBBD12CC4A9FD0089E081 /* Profile */,
+				9DFED6C02CC55852004348A2 /* Product */,
 				DE4772D42CBFFDF60078DBB7 /* User */,
 				DE4772D32CBFFD8C0078DBB7 /* Login */,
 				9D7173E02CBB694C00E4B524 /* Layout */,
@@ -196,7 +223,6 @@
 				DE035ED52C87950E00627F34 /* _palas12_iOSApp.swift */,
 				9D51D2F12CBC6750005B7827 /* FirestoreManager.swift */,
 				9D51D2E92CBC64FA005B7827 /* AppDelegate.swift */,
-				9DA4D01D2CABAC1B00107CD2 /* ContentView.swift */,
 				DEE457792CACC0F000F810DD /* HexColorExtension.swift */,
 				DE035ED92C87951000627F34 /* Assets.xcassets */,
 				DE035EDB2C87951000627F34 /* Preview Content */,
@@ -377,15 +403,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DFED6D02CC5A6DD004348A2 /* MapAnnotationView.swift in Sources */,
 				DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */,
 				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
 				DE294FF72CACB9390045044A /* TabBarView.swift in Sources */,
 				9DE937122CAE35160061CD33 /* RestaurantCardView.swift in Sources */,
 				9DE937132CAE35160061CD33 /* RestaurantsListView.swift in Sources */,
+				9DFED6C22CC558A5004348A2 /* ProductModel.swift in Sources */,
 				9DA4D00F2CAB5CAD00107CD2 /* LocationManager.swift in Sources */,
 				9D51D2F42CBC6A38005B7827 /* RestaurantDAO.swift in Sources */,
-				9DA4D01E2CABAC1B00107CD2 /* ContentView.swift in Sources */,
+				9DFED6CC2CC58017004348A2 /* RatingView.swift in Sources */,
+				9DFED6C82CC56416004348A2 /* ProductCardView.swift in Sources */,
+				9DFED6CA2CC564EE004348A2 /* ProductListView.swift in Sources */,
 				9D51D2EA2CBC64FA005B7827 /* AppDelegate.swift in Sources */,
+				9DFED6C62CC55CB4004348A2 /* ProductDAO.swift in Sources */,
 				9DA4D0102CAB5CAD00107CD2 /* MapView.swift in Sources */,
 				9D4702722CAB0D39003FDB87 /* LogoView.swift in Sources */,
 				9DA4D0142CABA0B600107CD2 /* RestaurantModel.swift in Sources */,
@@ -394,6 +425,7 @@
 				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
 				9D51D2F22CBC6750005B7827 /* FirestoreManager.swift in Sources */,
 				9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */,
+				9DFED6C42CC559E5004348A2 /* ProductViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,7 +589,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 6U6UWM69SL;
+				DEVELOPMENT_TEAM = YYACA4789Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -573,7 +605,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "--12.-palas12-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = palas12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -589,7 +621,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 6U6UWM69SL;
+				DEVELOPMENT_TEAM = YYACA4789Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -605,7 +637,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "--12.-palas12-iOS";
+				PRODUCT_BUNDLE_IDENTIFIER = palas12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
