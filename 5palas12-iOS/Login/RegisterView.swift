@@ -18,17 +18,20 @@ struct RegisterView: View {
     @State var password: String = ""
     @State var isBusiness: Bool = false
     @State var showPassword: Bool = false
+    @State var home: Int = 0
     @FocusState private var inFocus: Field?
     @State private var navigateToAdditionalInfo = false
     @State private var registerResponse: String = ""
+    @State private var birthday = Date()
+    private let userDAO = UserDAO()
     
     enum Field {
         case email, plain, secure
     }
     
     var isRegisterDisabled: Bool {
-            [email, password, name].contains(where: \.isEmpty) || (!isBusiness && surname.isEmpty)
-        }
+        [email, password, name].contains(where: \.isEmpty) || (!isBusiness && surname.isEmpty)
+    }
     
     var body : some View {
         NavigationStack{
@@ -83,6 +86,15 @@ struct RegisterView: View {
                     }
                     .padding(.horizontal)
                 
+                DatePicker("Select Birthdate", selection: $birthday, displayedComponents: .date)
+                    .foregroundColor(.gray)
+                    .padding(10)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(.gray, lineWidth: 2)
+                    }
+                    .padding(.horizontal)
+                
                 HStack {
                     if showPassword {
                         TextField("Password", text: $password)
@@ -109,36 +121,20 @@ struct RegisterView: View {
                 }
                 .padding(.horizontal)
                 
-//                Button {
-//                    register() // Call the register function
-//                } label: {
-//                    Text("Register")
-//                        .font(.title2)
-//                        .bold()
-//                        .foregroundColor(.white)
-//                }
-//                .frame(height: 46)
-//                .frame(maxWidth: .infinity)
-//                .background(isRegisterDisabled ? .gray : Color(hex: "#588157"))
-//                .cornerRadius(8)
-//                .disabled(isRegisterDisabled)
-//                .padding()
-                
-                
-                    Button {
-                        register() // Call the register function
-                    } label: {
-                        Text("Register")
-                            .font(.title2)
-                            .bold()
-                            .foregroundColor(.white)
-                    }
-                    .frame(height: 46)
-                    .frame(maxWidth: .infinity)
-                    .background(isRegisterDisabled ? .gray : Color(hex: "#588157"))
-                    .cornerRadius(8)
-                    .disabled(isRegisterDisabled)
-                    .padding()
+                Button {
+                    register()
+                } label: {
+                    Text("Register")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.white)
+                }
+                .frame(height: 46)
+                .frame(maxWidth: .infinity)
+                .background(isRegisterDisabled ? .gray : Color(hex: "#588157"))
+                .cornerRadius(8)
+                .disabled(isRegisterDisabled)
+                .padding()
                 
                 
                 if !registerResponse.isEmpty {
@@ -150,31 +146,46 @@ struct RegisterView: View {
                 
                 Spacer()
             }
-            NavigationLink(destination: AdditionalInfoView(name: name, surname: surname, email: email), isActive: $navigateToAdditionalInfo) {
+            NavigationLink(destination: TabBarView(selectedTab: $home), isActive: $navigateToAdditionalInfo) {
                 Text("")
             }
             .hidden()
+            .navigationBarBackButtonHidden(true)
             
         }
     }
     private func register() {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                registerResponse = "Error during registration: \(error.localizedDescription)"
+                registerResponse = "Error: \(error.localizedDescription)"
                 return
             }
-
-            // Si el registro fue exitoso, redirigimos a la pantalla adicional
-            if let user = authResult?.user {
-                registerResponse = "User \(user.uid) registered successfully!"
-                navigateToAdditionalInfo = true // Activa la navegación
-                print(navigateToAdditionalInfo)
+            
+            let userId = UUID()
+            
+            let user = UserModel(
+                id: userId,
+                name: name,
+                surname: surname,
+                email: email,
+                birthday: birthday,
+                createdAt: Date()
+            )
+            
+            self.userDAO.addUser(user) { result in
+                switch result {
+                case .success():
+                    navigateToAdditionalInfo = true
+                case .failure(let error):
+                    registerResponse = "Firestore Error: \(error.localizedDescription)"
+                }
             }
         }
     }
-
+    
+    
 }
 
-//#Preview {
-//    RegisterView()
-//}
+#Preview {
+    RegisterView()
+}

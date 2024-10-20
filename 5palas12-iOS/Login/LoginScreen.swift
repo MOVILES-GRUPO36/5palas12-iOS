@@ -143,7 +143,6 @@ struct LoginScreen: View {
                 return
             }
             
-            // Successfully logged in
             loginResponse = "Login successful!"
             Analytics.logEvent("login", parameters: [
                 "method": "email"
