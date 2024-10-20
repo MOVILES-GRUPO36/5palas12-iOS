@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RestaurantsListView: View {
-    @StateObject private var locationManager = LocationManager()
+    @StateObject var locationManager = LocationManager()
     @ObservedObject var restaurantsVM: RestaurantViewModel
     @State private var selectedTab = 0
     @State private var enterTime: Date? = nil // Variable to store the time the view appears
@@ -28,7 +28,8 @@ struct RestaurantsListView: View {
                     }.background(Color("Timberwolf"))
             }
         }
-                .onDisappear {
+        .onAppear(perform: locationManager.requestLocation)
+        .onDisappear {
                     // Calculate how long the user stayed on the view
                     if let enterTime = enterTime {
                         let elapsedTime = Date().timeIntervalSince(enterTime)

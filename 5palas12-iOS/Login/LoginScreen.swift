@@ -114,7 +114,7 @@ struct LoginScreen: View {
                 .padding()
                 
                 
-                NavigationLink (destination: RegisterView()) {
+                NavigationLink (destination: RegisterView(isLoggedIn:$isLoggedIn)) {
                     Text("Don't have an account? ") +
                     Text("Register")
                         .fontWeight(.heavy)
@@ -130,6 +130,7 @@ struct LoginScreen: View {
             
             Spacer()
         }
+        .navigationBarBackButtonHidden()
         .background(Color(hex: "#E6E1DB"))
         .edgesIgnoringSafeArea(.all)
     }
