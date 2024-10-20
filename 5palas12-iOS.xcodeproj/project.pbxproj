@@ -93,8 +93,10 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9D4702752CAB1345003FDB87 /* Fonts */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (9D4702782CAB136B003FDB87 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Fonts; sourceTree = "<group>"; };
+		DE3CBBD12CC4A9FD0089E081 /* Profile */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Profile; sourceTree = "<group>"; };
 		DE4772D32CBFFD8C0078DBB7 /* Login */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Login; sourceTree = "<group>"; };
 		DE4772D42CBFFDF60078DBB7 /* User */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = User; sourceTree = "<group>"; };
+		DE5F98DB2CC5959100862BA2 /* BusinessCenter */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BusinessCenter; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,8 @@
 		DE035ED42C87950E00627F34 /* 5palas12-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DE5F98DB2CC5959100862BA2 /* BusinessCenter */,
+				DE3CBBD12CC4A9FD0089E081 /* Profile */,
 				DE4772D42CBFFDF60078DBB7 /* User */,
 				DE4772D32CBFFD8C0078DBB7 /* Login */,
 				9D7173E02CBB694C00E4B524 /* Layout */,
@@ -249,8 +253,10 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				DE3CBBD12CC4A9FD0089E081 /* Profile */,
 				DE4772D32CBFFD8C0078DBB7 /* Login */,
 				DE4772D42CBFFDF60078DBB7 /* User */,
+				DE5F98DB2CC5959100862BA2 /* BusinessCenter */,
 			);
 			name = "5palas12-iOS";
 			productName = "5palas12-iOS";

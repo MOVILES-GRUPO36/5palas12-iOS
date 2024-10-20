@@ -11,6 +11,7 @@ class UserDAO {
     private let db = FirestoreManager.shared.db
     private let collectionName = "users"
     
+    // Add a new user
     func addUser(_ user: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let userData: [String: Any] = [
             "name": user.name,
@@ -29,8 +30,9 @@ class UserDAO {
         }
     }
     
+    // Get all users
     func getAllUsers(completion: @escaping (Result<[UserModel], Error>) -> Void) {
-        db.collection("users").getDocuments { snapshot, error in
+        db.collection(collectionName).getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -48,5 +50,44 @@ class UserDAO {
             }
         }
     }
-}
 
+    // Fetch a user by ID
+    func getUserById(_ userId: String, completion: @escaping (Result<UserModel, Error>) -> Void) {
+        db.collection(collectionName).document(userId).getDocument { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let snapshot = snapshot, snapshot.exists {
+                do {
+                    let user = try snapshot.data(as: UserModel.self)
+                    completion(.success(user))
+                } catch {
+                    completion(.failure(error))
+                }
+            } else {
+                completion(.failure(NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "User not found"])))
+            }
+        }
+    }
+    
+    // Update a user's information
+    func updateUser(userId: String, with updatedData: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
+        db.collection(collectionName).document(userId).updateData(updatedData) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
+    // Delete a user by ID
+    func deleteUser(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        db.collection(collectionName).document(userId).delete { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+}

@@ -114,12 +114,18 @@ struct LoginScreen: View {
                 .padding()
                 
                 
-                NavigationLink (destination: RegisterView(isLoggedIn:$isLoggedIn)) {
-                    Text("Don't have an account? ") +
-                    Text("Register")
-                        .fontWeight(.heavy)
+                HStack {
+                    Spacer() // Add a leading spacer
+                    NavigationLink(destination: RegisterView(isLoggedIn: $isLoggedIn)) {
+                        Text("Don't have an account? ") +
+                        Text("Register")
+                            .fontWeight(.heavy)
+                    }
+                    Spacer() // Add a trailing spacer
                 }
+                .padding()
                 
+                Spacer()
                 
                 
             }
