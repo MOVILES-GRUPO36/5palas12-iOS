@@ -38,7 +38,7 @@ struct TabBarView: View {
                     ProfileView()
                         .padding(.all,0)
                 default:
-                    RestaurantsListView(restaurantsVM: viewModel)
+                    RestaurantsListView()
                         .padding(.all,0)
                 }
                 

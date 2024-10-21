@@ -171,7 +171,7 @@ struct RegisterView: View {
                 return
             }
             
-            let userId = UUID()
+            let userId = UUID().uuidString
             
             let user = UserModel(
                 id: userId,

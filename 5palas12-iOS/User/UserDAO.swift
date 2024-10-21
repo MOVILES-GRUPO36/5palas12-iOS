@@ -69,6 +69,29 @@ class UserDAO {
         }
     }
     
+    func getUserByEmail(email:String, completion: @escaping (Result<UserModel, Error>) -> Void) {
+        db.collection(collectionName)
+            .whereField("email", isEqualTo: email)
+            .getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                for document in snapshot!.documents {
+                    do {
+                        let user = try document.data(as: UserModel.self)
+                        completion(.success(user))
+                    } catch {
+                        completion(.failure(error))
+                        return
+                    }
+                }
+                
+            }
+        }
+    }
+
+
+    
     // Update a user's information
     func updateUser(userId: String, with updatedData: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
         db.collection(collectionName).document(userId).updateData(updatedData) { error in

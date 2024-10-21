@@ -17,6 +17,7 @@ struct LoginScreen: View {
     @FocusState private var inFocus: Field?
     @State private var loginResponse: String = ""
     @Binding var isLoggedIn: Bool
+    var userDAO: UserDAO = UserDAO()
     
     enum Field {
         case email, plain, secure
@@ -154,12 +155,22 @@ struct LoginScreen: View {
             Analytics.logEvent("login", parameters: [
                 "method": "email"
             ])
-            isLoggedIn = true
+            
+            userDAO.getUserByEmail(email: email) { result in
+                switch result {
+                case .success(let userData):
+                    isLoggedIn = true
+                    UserDefaults.standard.set(userData.email, forKey: "currentUserEmail")
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                    
+                case .failure(let error):
+                    loginResponse = "Firestore Error: \(error.localizedDescription)"
+                }
+            }
         }
     }
-    
-}
 
+}
 
 
 

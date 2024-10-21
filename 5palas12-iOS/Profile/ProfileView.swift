@@ -78,6 +78,7 @@ struct ProfileView: View {
                         .bold()
                         .foregroundColor(.white)
                 }
+                .accentColor(.fernGreen)
                 .frame(height: 46)
                 .frame(maxWidth: .infinity)
                 .background(Color(hex: "#588157"))

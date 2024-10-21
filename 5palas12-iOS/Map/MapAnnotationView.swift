@@ -12,7 +12,7 @@ struct MapAnnotationView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Image(systemName: "map.circle.fill")
+            Image(systemName: "fork.knife.circle")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 30, height: 30)
