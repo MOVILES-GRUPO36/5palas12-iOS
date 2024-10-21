@@ -1,10 +1,3 @@
-//
-//  _palas12_iOSApp.swift
-//  5palas12-iOS
-//
-//  Created by santiago on 03/09/2024.
-//
-
 import SwiftUI
 
 @main
@@ -13,18 +6,40 @@ struct _palas12_iOSApp: App {
     @State var selectedTab = 0
     @State var isLoggedIn: Bool = false
     @StateObject var restaurantsVM: RestaurantViewModel = RestaurantViewModel()
+    @StateObject var userVM: UserViewModel = UserViewModel() // ViewModel to handle user data
+
     var body: some Scene {
         WindowGroup {
             if isLoggedIn {
-                TabBarView(selectedTab: $selectedTab)
-                    .environmentObject(restaurantsVM)
+                if let userData = userVM.userData {
+                    // Show the TabBarView when user data is available
+                    TabBarView(selectedTab: $selectedTab)
+                        .environmentObject(restaurantsVM)
+                        .environmentObject(userData)
+                } else {
+                    // Show a loading view or placeholder until `userData` is loaded
+                    ProgressView("Loading user data...")
+                        .onAppear {
+                            userVM.loadUserFromDefaults()
+                        }
+                }
             } else {
-//                LoginScreen(isLoggedIn: $isLoggedIn)
-//                .onAppear(perform: restaurantsVM.locationManager.requestLocation)
-                TabBarView(selectedTab: $selectedTab)
-                    .environmentObject(restaurantsVM)
+                // Show login screen
+                LoginScreen(isLoggedIn: $isLoggedIn)
+                    .onAppear {
+                        restaurantsVM.locationManager.requestLocation()
+                        checkLoginStatus() // Check if a session exists
+                    }
             }
-            
+        }
+    }
+    
+    func checkLoginStatus() {
+        // Retrieve isLoggedIn from UserDefaults
+        if UserDefaults.standard.bool(forKey: "isLoggedIn") {
+            isLoggedIn = true
+            // Optionally, trigger loading the user data
+            userVM.loadUserFromDefaults()
         }
     }
 }
