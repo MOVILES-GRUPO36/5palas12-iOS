@@ -30,7 +30,7 @@ struct TabBarView: View {
                         .padding(.all,0)
                     
                 case 1:
-                    Text("Search")
+                    SearchView()
                 case 2:
                     MapView()
                         .padding(.all,0)
