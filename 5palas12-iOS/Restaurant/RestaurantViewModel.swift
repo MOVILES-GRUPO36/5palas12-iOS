@@ -7,15 +7,17 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class RestaurantViewModel: ObservableObject {
     
     @Published var restaurants: [RestaurantModel] = []
     @Published var errorMessage: String? = nil
     private var cancellables = Set<AnyCancellable>()
-    private let locationManager = LocationManager()
+    let locationManager = LocationManager()
     private let restaurantDAO = RestaurantDAO()
         
+
     func loadRestaurants() {
 
         restaurantDAO.getAllRestaurants { [weak self] result in

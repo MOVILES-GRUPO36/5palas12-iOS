@@ -22,6 +22,8 @@ struct EditUserInfoView: View {
     @State private var isSuccesful: Bool = false
     @State private var isBusinessError : Bool = false
     @State private var saveChangesResponse: String = ""
+    @Environment(\.presentationMode) var presentationMode
+
     private let userDAO = UserDAO()
     
     enum Field {
@@ -155,9 +157,24 @@ struct EditUserInfoView: View {
             }
             .background(Color(hex: "#E6E1DB"))
         }
-        .navigationTitle("Edit user information")
+        .navigationBarBackButtonHidden(true)
+            .overlay(alignment: .topLeading){
+                
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.fernGreen)
+                        Text("Back")
+                            .foregroundColor(.fernGreen)
+                    }
+                }.offset(x: 10,y: 18)
+                
+            }
         .navigationBarTitleDisplayMode(.inline) // Set display mode
         .background(Color(hex: "#588157"))
+        
     }
     
     private func saveChanges() {

@@ -9,7 +9,7 @@ struct RestaurantCardView: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(height: 150)
+                    .frame(height: 100)
                     .clipped()
             } placeholder: {
                 ProgressView()
@@ -21,29 +21,8 @@ struct RestaurantCardView: View {
                     .font(.headline)
                 Text("\(restaurant.categories.joined(separator: " - "))")
                     .opacity(0.5)
-                HStack(spacing: 2) {
-                    ForEach(0..<5) { index in
-                        if index < Int(restaurant.rating) {
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .background(Color("FernGreen"))
-                                .cornerRadius(4)
-                        } else if index < Int(restaurant.rating + 0.5) {
-                            Image(systemName: "star.leadinghalf.filled")
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .background(Color("FernGreen"))
-                                .cornerRadius(4)
-                        } else {
-                            Image(systemName: "star")
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .background(Color("FernGreen"))
-                                .cornerRadius(4)
-                        }
-                    }
-                }
+                
+                RatingView(rating: restaurant.rating)
 
                 
                 if let distance = restaurant.distance {

@@ -10,8 +10,9 @@ import MapKit
 import SwiftUI
 
 struct MapView: View {
-    @ObservedObject var restaurantsVM: RestaurantViewModel
+    @EnvironmentObject var restaurantsVM: RestaurantViewModel
     @State private var hasCenteredOnUser = false
+    @State private var showDetails = false
     @StateObject private var locationManager = LocationManager()
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 4.7110, longitude: -74.0721),
@@ -21,60 +22,63 @@ struct MapView: View {
     @State private var enterTime: Date? = nil // Variable to store the time the view appears
     
     var body: some View {
-        VStack {
-            LogoView()
-                .padding(.all,0)
-            ZStack {
-                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: restaurantsVM.restaurants) { restaurant in
-                    MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
+        NavigationView {
+            
+            VStack (spacing: 0){
+                LogoView()
+                    .padding(.all,0)
+                ZStack {
+                    Map(coordinateRegion: $region,
+                        showsUserLocation: true,
+                        annotationItems: restaurantsVM.restaurants,
+                        annotationContent: { restaurant in
+                        MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: restaurant.latitude, longitude: restaurant.longitude)) {
+                            MapAnnotationView()
+                                .shadow(radius: 10)
+                                .onTapGesture {
+                                    selectedRestaurant = restaurant
+                                }
+                        }
+                    })
+                    .onAppear {
+                        enterTime = Date() // Almacenar el tiempo de entrada
+                        locationManager.requestLocation()
+                    }
+                    .onDisappear {
+                        // Calcular cuánto tiempo ha estado el usuario e–n la vista
+                        if let enterTime = enterTime {
+                            let elapsedTime = Date().timeIntervalSince(enterTime)
+                            print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                        }
+                    }
+                    .onReceive(locationManager.$lastLocation) { newLocation in
+                        if let location = newLocation, !hasCenteredOnUser {
+                            region = MKCoordinateRegion(
+                                center: location.coordinate,
+                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                            )
+                            hasCenteredOnUser = true
+                        }
+                    }
+                    
+                    if let restaurant = selectedRestaurant {
                         VStack {
-                            Image(systemName: "mappin") // Usar un ícono de pin
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.red)
-                            Text(restaurant.name) // Muestra el nombre del restaurante
-                                .font(.caption)
-                                .foregroundColor(Color("FernGreen"))
-                        }
-                        .onTapGesture {
-                            selectedRestaurant = restaurant
+                            Spacer()
+                            withAnimation(.easeInOut) {
+                                RestaurantCardView(restaurant: restaurant)
+                                    .padding(.bottom, 10)
+                                    .onTapGesture {
+                                        showDetails.toggle()
+                                    }
+                            }
+                            
                         }
                     }
                 }
-                .edgesIgnoringSafeArea(.all)
-                .onAppear {
-                    enterTime = Date() // Almacenar el tiempo de entrada
-                    locationManager.requestLocation()
-                }
-                .onDisappear {
-                    // Calcular cuánto tiempo ha estado el usuario e–n la vista
-                    if let enterTime = enterTime {
-                        let elapsedTime = Date().timeIntervalSince(enterTime)
-                        print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
-                    }
-                }
-                .onReceive(locationManager.$lastLocation) { newLocation in
-                    if let location = newLocation, !hasCenteredOnUser {
-                        region = MKCoordinateRegion(
-                            center: location.coordinate,
-                            span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                        )
-                        hasCenteredOnUser = true
-                    }
-                }
-                
-                if let restaurant = selectedRestaurant {
-                    VStack {
-                        Spacer()
-                        RestaurantCardView(restaurant: restaurant)
-                    }
-                }
+                .padding(.all,0)
             }
-            .onTapGesture {
-                selectedRestaurant = nil
-            }
-            .padding(.all,0)
+        }.sheet(isPresented: $showDetails) {
+            RestaurantDetailView(restaurant: selectedRestaurant!)
         }
     }
 }

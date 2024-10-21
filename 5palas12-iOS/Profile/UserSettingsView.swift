@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct UserSettingsView: View {
+    @Environment(\.presentationMode) var presentationMode
     @State private var settings: [SettingItem] = [
         SettingItem(title: "Notifications", icon: "bell", type: .toggle(true)),
         SettingItem(title: "Account", icon: "person.crop.circle", type: .navigation),
@@ -77,6 +78,21 @@ struct UserSettingsView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
+            .overlay(alignment: .topLeading){
+                
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(.timberwolf)
+                        Text("Back")
+                            .foregroundColor(.timberwolf)
+                    }
+                }.offset(x: 10,y: 18)
+                
+            }
     }
 }
 
