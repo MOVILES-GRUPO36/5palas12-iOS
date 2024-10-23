@@ -12,10 +12,11 @@ struct BusinessCenterListView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var settings: [SettingItem] = [
         SettingItem(title: "Create a business", icon: "building", type: .navigation),
-        SettingItem(title: "View and edit my business", icon: "pencil", type: .navigation),
-        SettingItem(title: "My orders", icon: "cart", type: .navigation),
-        SettingItem(title: "Help & Support", icon: "questionmark.circle", type: .navigation),
-        SettingItem(title: "Delete my business", icon: "trash.circle", type: .navigation)
+        SettingItem(title: "View and edit my business", icon: "pencil.circle.fill", type: .navigation),
+        SettingItem(title: "My orders", icon: "cart.fill", type: .navigation),
+        SettingItem(title: "My products", icon: "carrot.fill", type: .navigation),
+        SettingItem(title: "Help & Support", icon: "questionmark", type: .navigation),
+        SettingItem(title: "Delete my business", icon: "trash.fill", type: .navigation)
     ]
     
     var body: some View {
