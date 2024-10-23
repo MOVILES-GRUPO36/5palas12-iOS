@@ -1,23 +1,9 @@
 import SwiftUI
 
 struct SearchView: View {
+    @EnvironmentObject var restaurantsVM: RestaurantViewModel
     @State private var searchText = ""
     @State private var filteredRestaurants: [RestaurantModel] = []
-
-    private let restaurants: [RestaurantModel] = [
-        RestaurantModel(name: "Green Bistro", latitude: 4.7109, longitude: -74.0721,
-                        photo:"https://picsum.photos/200",
-                        categories: ["Vegan", "Organic"], description: "Healthy vegan food",
-                        rating: 4.5, address: "Bogotá", distance: 2.0),
-        RestaurantModel(name: "Sushi Master", latitude: 4.7109, longitude: -74.0721,
-                        photo:"https://picsum.photos/200",
-                        categories: ["Japanese", "Sushi"], description: "Fresh sushi and sashimi",
-                        rating: 4.7, address: "Bogotá", distance: 3.5),
-        RestaurantModel(name: "Pizza Lovers", latitude: 4.7109, longitude: -74.0721,
-                        photo:"https://picsum.photos/200",
-                        categories: ["Italian", "Pizza"], description: "Wood-fired pizza",
-                        rating: 4.2, address: "Bogotá", distance: 4.0)
-    ]
 
     private let categories: [(name: String, imageUrl: String)] = [
         ("Vegan", "https://picsum.photos/id/1011/300/200"),
@@ -35,7 +21,7 @@ struct SearchView: View {
                     .padding()
 
                 if searchText.isEmpty {
-                    CategoryGridView(categories: categories, restaurants: restaurants)
+                    CategoryGridView(categories: categories, restaurants: restaurantsVM.restaurants)
                 } else if filteredRestaurants.isEmpty {
                     Text("No results found")
                         .foregroundColor(.gray)
@@ -55,17 +41,24 @@ struct SearchView: View {
             }
             .navigationTitle("Search Restaurants")
             .onAppear {
-                filteredRestaurants = restaurants
+                restaurantsVM.loadRestaurants() // Load restaurants dynamically
+                filteredRestaurants = restaurantsVM.restaurants
+            }
+            .onChange(of: restaurantsVM.restaurants) { newRestaurants in
+                filterRestaurants()
+            }
+            .onChange(of: searchText) { _ in
+                filterRestaurants()
             }
         }
     }
 
     func filterRestaurants() {
-        if searchText.isEmpty {
-            filteredRestaurants = restaurants
+        let query = searchText.lowercased()
+        if query.isEmpty {
+            filteredRestaurants = restaurantsVM.restaurants
         } else {
-            let query = searchText.lowercased()
-            filteredRestaurants = restaurants.filter { restaurant in
+            filteredRestaurants = restaurantsVM.restaurants.filter { restaurant in
                 restaurant.name.lowercased().contains(query) ||
                 restaurant.categories.contains { $0.lowercased().contains(query) }
             }
@@ -124,3 +117,5 @@ struct CategoryCard: View {
         .shadow(radius: 5)
     }
 }
+
+
