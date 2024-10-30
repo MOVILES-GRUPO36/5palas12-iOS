@@ -3,37 +3,29 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class OrderDAO {
-    
-    private let db = FirestoreManager.shared.db
-    private let collectionName: String = "orders"
+    private let db = Firestore.firestore()
+    private let collectionName = "orders"
 
-    // Obtener órdenes filtradas por usuario (profile_id)
+    // Fetch orders by user profile ID
     func getOrdersByUser(profileId: String, completion: @escaping (Result<[OrderModel], Error>) -> Void) {
         db.collection(collectionName)
-            .whereField("profile_id", isEqualTo: profileId)  // Filtrar por profile_id
+            .whereField("profile_id", isEqualTo: profileId)
             .getDocuments { snapshot, error in
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    var orders: [OrderModel] = []
-                    for document in snapshot!.documents {
-                        do {
-                            let order = try document.data(as: OrderModel.self)
-                            orders.append(order)
-                        } catch {
-                            completion(.failure(error))
-                            return
-                        }
-                    }
+                    let orders = snapshot?.documents.compactMap { document in
+                        try? document.data(as: OrderModel.self)
+                    } ?? []
                     completion(.success(orders))
                 }
             }
     }
 
-    // Crear una nueva orden
+    // Create a new order
     func createOrder(order: OrderModel, completion: @escaping (Result<Void, Error>) -> Void) {
         do {
-            try db.collection(collectionName).document(order.order_id).setData(from: order) { error in
+            _ = try db.collection(collectionName).document(order.id.uuidString).setData(from: order) { error in
                 if let error = error {
                     completion(.failure(error))
                 } else {
