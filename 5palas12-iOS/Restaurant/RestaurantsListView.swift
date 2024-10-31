@@ -1,4 +1,5 @@
 import SwiftUI
+import FirebaseAnalytics
 
 struct RestaurantsListView: View {
     @StateObject var locationManager = LocationManager()
@@ -24,11 +25,15 @@ struct RestaurantsListView: View {
                 }.background(Color("Timberwolf"))
             }
         }
-        .onAppear(perform: locationManager.requestLocation)
+        .onAppear {
+            locationManager.requestLocation()
+            enterTime = Date()
+        }
         .onDisappear {
             if let enterTime = enterTime {
                 let elapsedTime = Date().timeIntervalSince(enterTime)
-                print("User stayed in the view for \(elapsedTime) seconds.")
+                print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                logTimeFirebase(viewName: "RestaurantsListView", timeSpent: elapsedTime)
             }
         }
         
