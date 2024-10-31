@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 
 struct ProfileView: View {
     private var userDAO : UserDAO = UserDAO()
     @State private var name: String = "John Doe" // Replace with your dynamic user data
     @State private var email: String = "john.doe@example.com" // Replace with your dynamic user data
+    @State private var enterTime: Date? = nil
 
     var body: some View {
         NavigationView {
@@ -117,6 +119,16 @@ struct ProfileView: View {
         //.navigationBarBackButtonHidden()
         .background(Color(hex: "#E6E1DB"))
         .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            enterTime = Date()
+        }
+        .onDisappear {
+            if let enterTime = enterTime {
+                let elapsedTime = Date().timeIntervalSince(enterTime)
+                print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                logTimeFirebase(viewName: "ProfileView", timeSpent: elapsedTime)
+            }
+        }
     }
         
 
@@ -126,8 +138,15 @@ struct ProfileView: View {
         print("Edit profile tapped")
         // You could present a modal or navigate to another view here
     }
+    
+    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
+            Analytics.logEvent("view_time_spent", parameters: [
+                "view_name": viewName,
+                "time_spent": timeSpent
+            ])
+        }
 }
 
-#Preview {
-    ProfileView()
-}
+//#Preview {
+//    ProfileView()
+//}

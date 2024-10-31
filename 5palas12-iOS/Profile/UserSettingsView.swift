@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 
 struct UserSettingsView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -16,8 +17,9 @@ struct UserSettingsView: View {
         SettingItem(title: "Help & Support", icon: "questionmark.circle", type: .navigation),
         SettingItem(title: "About", icon: "info.circle", type: .navigation),
         SettingItem(title: "Logout", icon: "arrow.right.circle", type: .navigation),
-        SettingItem(title: "Delete account", icon: "trash.circle", type: .navigation) // Delete account
+        SettingItem(title: "Delete account", icon: "trash.circle", type: .navigation)
     ]
+    @State private var enterTime: Date? = nil
     
     var body: some View {
         NavigationView {
@@ -26,7 +28,6 @@ struct UserSettingsView: View {
                     .padding(.all, 0)
                 
                 ZStack {
-                    // Set the background color for the entire view
                     Color(hex: "#E6E1DB")
                         .ignoresSafeArea()
                         .padding(.top, -10)
@@ -36,66 +37,79 @@ struct UserSettingsView: View {
                             HStack {
                                 if let iconName = item.icon {
                                     Image(systemName: iconName)
-                                        .foregroundColor(item.title == "Delete account" ? .red : .blue) // Red for "Delete account"
+                                        .foregroundColor(item.title == "Delete account" ? .red : .blue)
                                 }
                                 
                                 Text(item.title)
-                                    .foregroundColor(item.title == "Delete account" ? .red : .primary) // Red text for "Delete account"
+                                    .foregroundColor(item.title == "Delete account" ? .red : .primary)
                                 
                                 Spacer()
                                 
                                 switch item.type {
                                 case .toggle(let isOn):
                                     Toggle("", isOn: .constant(isOn))
-                                        .labelsHidden() // Hide the toggle label
+                                        .labelsHidden()
                                 case .navigation:
                                     Image(systemName: "chevron.right")
                                         .foregroundColor(.gray)
                                 case .plain:
-                                    EmptyView() // No action required
+                                    EmptyView()
                                 }
                             }
-                            .padding(12) // Add padding around each item
+                            .padding(12)
                             .background(
-                                RoundedRectangle(cornerRadius: 8) // Add rounded corners
-                                    .fill(Color.white) // Background color for each item
-//                                    .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 2) // Optional: Add shadow
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.white)
                             )
-//                            .padding(.vertical, 5) // Add vertical spacing between items
                             .onTapGesture {
                                 if case .navigation = item.type {
-                                    // Handle navigation to another view
                                     print("Navigate to \(item.title)")
                                 }
                             }
                         }
-                        .listRowBackground(Color.clear) // Make the row background transparent
+                        .listRowBackground(Color.clear)
                     }
-                    .listStyle(PlainListStyle()) // Optional: Change list style if needed
-                    .background(Color.clear) // Set List background to clear
-                    //.navigationBarTitleDisplayMode(.inline) // Uncomment if needed
-//                    .padding(.horizontal)
+                    .listStyle(PlainListStyle())
+                    .background(Color.clear)
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
-            .overlay(alignment: .topLeading){
-                
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(.timberwolf)
-                        Text("Back")
-                            .foregroundColor(.timberwolf)
-                    }
-                }.offset(x: 10,y: 18)
-                
+        .onAppear {
+            enterTime = Date()
+        }
+        .onDisappear {
+            if let enterTime = enterTime {
+                let elapsedTime = Date().timeIntervalSince(enterTime)
+                print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                logTimeFirebase(viewName: "UserSettingsView", timeSpent: elapsedTime)
             }
+        }
+        .navigationBarBackButtonHidden(true)
+        .overlay(alignment: .topLeading){
+            
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(.timberwolf)
+                    Text("Back")
+                        .foregroundColor(.timberwolf)
+                }
+            }.offset(x: 10,y: 18)
+            
+        }
     }
 }
 
-#Preview {
-    UserSettingsView()
-}
+func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
+        Analytics.logEvent("view_time_spent", parameters: [
+            "view_name": viewName,
+            "time_spent": timeSpent
+        ])
+    }
+
+
+//#Preview {
+//    UserSettingsView()
+//}

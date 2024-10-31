@@ -23,6 +23,7 @@ struct EditUserInfoView: View {
     @State private var isBusinessError : Bool = false
     @State private var saveChangesResponse: String = ""
     @Environment(\.presentationMode) var presentationMode
+    @State private var enterTime: Date? = nil
 
     private let userDAO = UserDAO()
     
@@ -157,6 +158,16 @@ struct EditUserInfoView: View {
             }
             .background(Color(hex: "#E6E1DB"))
         }
+        .onAppear {
+            enterTime = Date()
+        }
+        .onDisappear {
+            if let enterTime = enterTime {
+                let elapsedTime = Date().timeIntervalSince(enterTime)
+                print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                logTimeFirebase(viewName: "EditUserInfoView", timeSpent: elapsedTime)
+            }
+        }
         .navigationBarBackButtonHidden(true)
             .overlay(alignment: .topLeading){
                 
@@ -203,8 +214,15 @@ struct EditUserInfoView: View {
                 }
     }
     
+    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
+            Analytics.logEvent("view_time_spent", parameters: [
+                "view_name": viewName,
+                "time_spent": timeSpent
+            ])
+        }
+    
 }
 
-#Preview {
-    EditUserInfoView()
-}
+//#Preview {
+//    EditUserInfoView()
+//}
