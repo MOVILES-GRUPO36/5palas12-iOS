@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 
 struct UserSettingsView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -18,6 +19,7 @@ struct UserSettingsView: View {
         SettingItem(title: "Logout", icon: "arrow.right.circle", type: .navigation),
         SettingItem(title: "Delete account", icon: "trash.circle", type: .navigation)
     ]
+    @State private var enterTime: Date? = nil
     
     var body: some View {
         NavigationView {
@@ -72,6 +74,16 @@ struct UserSettingsView: View {
                 }
             }
         }
+        .onAppear {
+            enterTime = Date()
+        }
+        .onDisappear {
+            if let enterTime = enterTime {
+                let elapsedTime = Date().timeIntervalSince(enterTime)
+                print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                logTimeFirebase(viewName: "UserSettingsView", timeSpent: elapsedTime)
+            }
+        }
         .navigationBarBackButtonHidden(true)
         .overlay(alignment: .topLeading){
             
@@ -90,6 +102,14 @@ struct UserSettingsView: View {
     }
 }
 
-#Preview {
-    UserSettingsView()
-}
+func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
+        Analytics.logEvent("view_time_spent", parameters: [
+            "view_name": viewName,
+            "time_spent": timeSpent
+        ])
+    }
+
+
+//#Preview {
+//    UserSettingsView()
+//}

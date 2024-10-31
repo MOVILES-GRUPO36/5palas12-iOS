@@ -1,8 +1,10 @@
 import SwiftUI
+import FirebaseAnalytics
 
 struct SearchView: View {
     @EnvironmentObject var restaurantsVM: RestaurantViewModel
     @State private var searchText = ""
+    @State private var enterTime: Date? = nil
     @State private var filteredRestaurants: [RestaurantModel] = []
 
     private let categories: [(name: String, imageUrl: String)] = [
@@ -43,12 +45,20 @@ struct SearchView: View {
             .onAppear {
                 restaurantsVM.loadRestaurants() // Load restaurants dynamically
                 filteredRestaurants = restaurantsVM.restaurants
+                enterTime = Date()
             }
             .onChange(of: restaurantsVM.restaurants) { newRestaurants in
                 filterRestaurants()
             }
             .onChange(of: searchText) { _ in
                 filterRestaurants()
+            }
+            .onDisappear {
+                if let enterTime = enterTime {
+                    let elapsedTime = Date().timeIntervalSince(enterTime)
+                    print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                    logTimeFirebase(viewName: "SearchView", timeSpent: elapsedTime)
+                }
             }
         }
     }
@@ -65,6 +75,8 @@ struct SearchView: View {
         }
     }
 }
+
+
 
 struct CategoryGridView: View {
     let categories: [(name: String, imageUrl: String)]

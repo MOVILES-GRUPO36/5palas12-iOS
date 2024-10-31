@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RestaurantModel: Decodable, Identifiable {
+struct RestaurantModel: Decodable, Identifiable, Equatable {
     var id = UUID()
     var name : String
     var latitude : Double

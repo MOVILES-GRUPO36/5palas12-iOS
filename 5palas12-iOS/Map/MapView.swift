@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 import SwiftUI
+import FirebaseAnalytics
 
 struct MapView: View {
     @EnvironmentObject var restaurantsVM: RestaurantViewModel
@@ -41,7 +42,7 @@ struct MapView: View {
                         }
                     })
                     .onAppear {
-                        enterTime = Date() // Almacenar el tiempo de entrada
+                        enterTime = Date()
                         locationManager.requestLocation()
                     }
                     .onDisappear {
@@ -49,6 +50,7 @@ struct MapView: View {
                         if let enterTime = enterTime {
                             let elapsedTime = Date().timeIntervalSince(enterTime)
                             print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
+                            logTimeFirebase(viewName: "MapView", timeSpent: elapsedTime)
                         }
                     }
                     .onReceive(locationManager.$lastLocation) { newLocation in
@@ -81,4 +83,11 @@ struct MapView: View {
             RestaurantDetailView(restaurant: selectedRestaurant!)
         }
     }
+    
+    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
+            Analytics.logEvent("view_time_spent", parameters: [
+                "view_name": viewName,
+                "time_spent": timeSpent
+            ])
+        }
 }
