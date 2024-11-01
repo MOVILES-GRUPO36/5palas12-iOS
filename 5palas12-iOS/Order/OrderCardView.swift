@@ -2,44 +2,53 @@ import SwiftUI
 
 struct OrderCardView: View {
     var order: OrderModel
-
+    
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Orden ID: \(order.order_id)")
-                .font(.headline)
-                .padding(.bottom, 2)
-
-            Text("Restaurant: \(order.restaurant_id)")
-                .font(.subheadline)
-                .opacity(0.7)
-                .padding(.bottom, 2)
-
-            Text("Total: $\(order.total_price, specifier: "%.2f")")
-                .font(.title3)
-                .bold()
-                .padding(.bottom, 2)
-
-            Text("Time Estimated: \(order.estimated_time)")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-                .padding(.bottom, 2)
-
-            NavigationLink(destination: OrderDetailView(order: order)) {
-                Text("Details")
-                    .bold()
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 16)
-                    .foregroundColor(.white)
-                    .background(Color("FernGreen"))
-                    .cornerRadius(8)
+            AsyncImage(url: URL(string: "https://example.com/order-image")) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 100)
+                    .clipped()
+            } placeholder: {
+                ProgressView()
+                    .progressViewStyle(LinearProgressViewStyle())
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Order for \(order.userEmail)")
+                    .font(.headline)
+                
+                Text("Products: \(order.products.joined(separator: ", "))")
+                    .font(.subheadline)
+                    .lineLimit(2)
+                    .truncationMode(.tail)
+                    .opacity(0.7)
+                
+                Text("Total Price: $\(order.price, specifier: "%.2f")")
+                    .font(.subheadline)
+                    .foregroundColor(.green)
+                
+                Text("Pickup Time: \(order.pickUpTime)")
+                    .font(.subheadline)
+                    .opacity(0.6)
+                
+                if order.isActive {
+                    Text("Status: Active")
+                        .font(.caption)
+                        .foregroundColor(.blue)
+                } else {
+                    Text("Status: Inactive")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
+            }
+            .padding([.leading, .bottom, .trailing])
         }
-        .padding()
         .background(Color.white)
         .cornerRadius(10)
         .shadow(radius: 5)
         .padding(.horizontal)
     }
 }
-
