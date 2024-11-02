@@ -4,7 +4,8 @@ import SwiftUI
 struct _palas12_iOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State var selectedTab = 0
-    @State var isLoggedIn: Bool = false
+//    @State var isLoggedIn: Bool = false
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     @StateObject var restaurantsVM: RestaurantViewModel = RestaurantViewModel()
     @StateObject var userVM: UserViewModel = UserViewModel() // ViewModel to handle user data
 
@@ -32,6 +33,7 @@ struct _palas12_iOSApp: App {
                     }
             }
         }
+        .environmentObject(userVM)
     }
     
     func checkLoginStatus() {

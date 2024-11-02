@@ -20,51 +20,5 @@
             landmarkType = "13">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "165B2A87-66EA-4C00-9BCA-0CC11F2DB1FE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "5palas12-iOS/Restaurant/SearchView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4"
-            endingLineNumber = "4"
-            landmarkName = "SearchView"
-            landmarkType = "14">
-            <Locations>
-               <Location
-                  uuid = "165B2A87-66EA-4C00-9BCA-0CC11F2DB1FE - b62df6f87f4435ce"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "_palas12_iOS.SearchView.init() -&gt; _palas12_iOS.SearchView"
-                  moduleName = "5palas12-iOS.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/santiago/Developer/moviles/moviles/5palas12-iOS/5palas12-iOS/Restaurant/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "10"
-                  endingLineNumber = "10">
-               </Location>
-               <Location
-                  uuid = "165B2A87-66EA-4C00-9BCA-0CC11F2DB1FE - aec190570ed8edc9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "_palas12_iOS.SearchView.init(restaurantsVM: SwiftUI.EnvironmentObject&lt;_palas12_iOS.RestaurantViewModel&gt;) -&gt; _palas12_iOS.SearchView"
-                  moduleName = "5palas12-iOS.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/santiago/Developer/moviles/moviles/5palas12-iOS/5palas12-iOS/Restaurant/SearchView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "6"
-                  endingLineNumber = "6">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
