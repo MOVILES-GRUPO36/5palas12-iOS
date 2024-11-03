@@ -10,7 +10,8 @@ import SwiftUI
 struct TabBarView: View {
     @Binding var selectedTab: Int
     @EnvironmentObject var restaurantsVM: RestaurantViewModel
-    
+    @EnvironmentObject var networkMonitor: NetworkMonitor
+    @State private var showAlert = false
 
     
     let tabBarHeight: CGFloat = 100 
@@ -70,7 +71,22 @@ struct TabBarView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Lost Connection"),
+                        message: Text("Some features of this app may not work. Please check your internet connection."),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+                .onChange(of: networkMonitor.isConnected) { isConnected in
+                    if !isConnected {
+                        showAlert = true
+                    } else {
+                        showAlert = false
+                    }
+                }
     }
+    
         
 }
 

@@ -2,7 +2,7 @@ import Foundation
 
 struct OrderModel: Decodable, Identifiable, Equatable {
     var id = UUID()
-    var userEmail= String
+    var userEmail: String
     var products : [String]
     var price: Double
     var isActive : Bool
@@ -17,6 +17,5 @@ struct OrderModel: Decodable, Identifiable, Equatable {
     }
 }
 
-}
 
 
