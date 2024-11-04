@@ -75,14 +75,13 @@ struct ProfileView: View {
                 .cornerRadius(8)
                 .padding()
                 
-                Button {
-                    //Text("huh")
-                } label: {
+                NavigationLink(destination: OrdersListView()) {
                     Text("My orders")
                         .font(.title2)
                         .bold()
                         .foregroundColor(.white)
                 }
+                .accentColor(.fernGreen)
                 .frame(height: 46)
                 .frame(maxWidth: .infinity)
                 .background(Color(hex: "#588157"))

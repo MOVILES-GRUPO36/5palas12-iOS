@@ -8,6 +8,7 @@ struct _palas12_iOSApp: App {
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     @StateObject var restaurantsVM: RestaurantViewModel = RestaurantViewModel()
     @StateObject var userVM: UserViewModel = UserViewModel() // ViewModel to handle user data
+    @StateObject private var networkMonitor = NetworkMonitor.shared
 
     var body: some Scene {
         WindowGroup {
@@ -17,6 +18,7 @@ struct _palas12_iOSApp: App {
                     TabBarView(selectedTab: $selectedTab)
                         .environmentObject(restaurantsVM)
                         .environmentObject(userData)
+                        .environmentObject(networkMonitor)
                 } else {
                     // Show a loading view or placeholder until `userData` is loaded
                     ProgressView("Loading user data...")
