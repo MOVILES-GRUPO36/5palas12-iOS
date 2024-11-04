@@ -17,14 +17,13 @@ struct RestaurantDetailView: View {
                     .padding(.all,0)
                 ScrollView{
                     VStack(spacing: 0){
-                        AsyncImage(url: URL(string: restaurant.photo)){ image in
-                            image
+                        if let cachedImage = restaurant.cachedImage {
+                            Image(uiImage: cachedImage)
                                 .resizable()
-                                .scaledToFill()
-                                .frame( height: (250))
+                                .aspectRatio(contentMode: .fill)
+                                .frame(height: 100)
                                 .clipped()
-                            
-                        } placeholder: {
+                        } else {
                             ProgressView()
                                 .progressViewStyle(LinearProgressViewStyle())
                         }
