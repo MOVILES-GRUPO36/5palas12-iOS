@@ -4,9 +4,11 @@ import SwiftUI
 struct _palas12_iOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State var selectedTab = 0
-    @State var isLoggedIn: Bool = false
+//    @State var isLoggedIn: Bool = false
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     @StateObject var restaurantsVM: RestaurantViewModel = RestaurantViewModel()
     @StateObject var userVM: UserViewModel = UserViewModel() // ViewModel to handle user data
+    @StateObject private var networkMonitor = NetworkMonitor.shared
 
     var body: some Scene {
         WindowGroup {
@@ -16,6 +18,7 @@ struct _palas12_iOSApp: App {
                     TabBarView(selectedTab: $selectedTab)
                         .environmentObject(restaurantsVM)
                         .environmentObject(userData)
+                        .environmentObject(networkMonitor)
                 } else {
                     // Show a loading view or placeholder until `userData` is loaded
                     ProgressView("Loading user data...")
@@ -32,6 +35,7 @@ struct _palas12_iOSApp: App {
                     }
             }
         }
+        .environmentObject(userVM)
     }
     
     func checkLoginStatus() {
