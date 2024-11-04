@@ -16,23 +16,70 @@ class RestaurantViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     let locationManager = LocationManager()
     private let restaurantDAO = RestaurantDAO()
-        
+    
+    private let imageCache = NSCache<NSString, UIImage>() // Cache para imágenes
 
     func loadRestaurants() {
-
         restaurantDAO.getAllRestaurants { [weak self] result in
             switch result {
             case .success(let restaurants):
                 self?.restaurants = restaurants
                 self?.calculateDistances()
-                print("Restaurantes cargados desde Firestore correctamente")
+                self?.cacheRestaurantsData()
+                print("Restaurantes cargados y almacenados en caché")
             case .failure(let error):
-                self?.errorMessage = "Error al cargar restaurantes desde Firestore: \(error.localizedDescription)"
+                self?.errorMessage = "Error al cargar restaurantes: \(error.localizedDescription)"
                 print(self?.errorMessage ?? "Error desconocido")
             }
         }
     }
-    
+
+    private func cacheRestaurantsData() {
+        for i in 0..<restaurants.count {
+            loadRestaurantImage(for: restaurants[i]) { [weak self] image in
+                DispatchQueue.main.async {
+                    self?.restaurants[i].cachedImage = image
+                }
+            }
+        }
+    }
+
+    private func loadRestaurantImage(for restaurant: RestaurantModel, completion: @escaping (UIImage?) -> Void) {
+        let cacheKey = NSString(string: restaurant.photo)
+
+        if let cachedImage = imageCache.object(forKey: cacheKey) {
+            completion(cachedImage)
+            return
+        }
+
+        guard let imageURL = URL(string: restaurant.photo) else {
+            print("URL de la imagen no válida para el restaurante: \(restaurant.name)")
+            completion(nil)
+            return
+        }
+
+        URLSession.shared.dataTask(with: imageURL) { [weak self] data, _, error in
+            guard let data = data, let image = UIImage(data: data), error == nil else {
+                print("Error al descargar imagen: \(error?.localizedDescription ?? "desconocido")")
+                completion(nil)
+                return
+            }
+
+            self?.imageCache.setObject(image, forKey: cacheKey)
+            completion(image)
+        }.resume()
+    }
+
+    func clearCache() {
+        imageCache.removeAllObjects() // Elimina todas las imágenes de la cache
+        print("Cache de imágenes eliminado.")
+    }
+
+    func clearRestaurantsData() {
+        restaurants.removeAll()
+        print("Datos de restaurantes eliminados.")
+    }
+
     private func calculateDistances() {
         guard let userLocation = locationManager.lastLocation else {
             print("No se pudo obtener la ubicación del usuario")
