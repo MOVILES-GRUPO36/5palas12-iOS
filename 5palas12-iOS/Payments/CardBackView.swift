@@ -22,7 +22,7 @@ struct CardBackView: View {
             
             HStack {
                 
-                Text(" \(creditCard.ccv)")
+                Text(" \(creditCard.cvv)")
                     .frame(width: 100, height: 33, alignment: .leading)
                     .background(.white)
                     .foregroundStyle(.black)

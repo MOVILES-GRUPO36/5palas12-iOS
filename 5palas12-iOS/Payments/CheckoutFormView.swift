@@ -37,12 +37,12 @@ struct CheckoutFormView: View {
                     creditCard.expiryDate = formatExpiryDate(newValue)
                 }
             
-            TextField("CCV", text: $creditCard.ccv)
+            TextField("CCV", text: $creditCard.cvv)
                 .keyboardType(.numberPad)
                 .focused($isCCVFocused)
-                .onChange(of: creditCard.ccv) { newValue in
+                .onChange(of: creditCard.cvv) { newValue in
                     // Limitar a solo dígitos y un máximo de 4 caracteres
-                    creditCard.ccv = newValue.filter { $0.isNumber }
+                    creditCard.cvv = newValue.filter { $0.isNumber }
                         .prefix(3).description
                 }
         }

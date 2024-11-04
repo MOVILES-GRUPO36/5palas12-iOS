@@ -45,6 +45,7 @@
 		DE035EF32C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035EF22C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift */; };
 		DE294FF12CAB3BE70045044A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE294FF02CAB3BE70045044A /* FirebaseAuth */; };
 		DE294FF72CACB9390045044A /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE294FF62CACB9370045044A /* TabBarView.swift */; };
+		DE4E695F2CD91CD300211054 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = DE4E695E2CD91CD300211054 /* SQLite */; };
 		DE9131D42CC6BADD0004F455 /* FilteredRestaurantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */; };
 		DE9131D52CC6BADD0004F455 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9131D32CC6BADD0004F455 /* SearchBar.swift */; };
 		DED92B192CAB319F000ED341 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DED92B182CAB319F000ED341 /* GoogleService-Info.plist */; };
@@ -140,6 +141,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE4E695F2CD91CD300211054 /* SQLite in Frameworks */,
 				DED92B1C2CAB329F000ED341 /* FirebaseAnalytics in Frameworks */,
 				DE294FF12CAB3BE70045044A /* FirebaseAuth in Frameworks */,
 				9D51D2EE2CBC6615005B7827 /* FirebaseCore in Frameworks */,
@@ -413,6 +415,7 @@
 			mainGroup = DE035EC92C87950E00627F34;
 			packageReferences = (
 				DED92B1A2CAB329F000ED341 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				DE4E695D2CD91CD300211054 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 			);
 			productRefGroup = DE035ED32C87950E00627F34 /* Products */;
 			projectDirPath = "";
@@ -654,7 +657,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = YYACA4789Q;
+				DEVELOPMENT_TEAM = 6U6UWM69SL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -671,7 +674,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = palas12;
+				PRODUCT_BUNDLE_IDENTIFIER = "-palas12";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -687,7 +690,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = YYACA4789Q;
+				DEVELOPMENT_TEAM = 6U6UWM69SL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -704,7 +707,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = palas12;
+				PRODUCT_BUNDLE_IDENTIFIER = "-palas12";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -830,6 +833,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DE4E695D2CD91CD300211054 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.3;
+			};
+		};
 		DED92B1A2CAB329F000ED341 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -853,6 +864,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DED92B1A2CAB329F000ED341 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		DE4E695E2CD91CD300211054 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE4E695D2CD91CD300211054 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
 		};
 		DED92B1B2CAB329F000ED341 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

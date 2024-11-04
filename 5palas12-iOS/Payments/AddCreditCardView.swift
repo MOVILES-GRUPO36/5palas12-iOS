@@ -2,12 +2,15 @@ import SwiftUI
 
 struct AddCreditCardView: View {
     @Binding var creditCard: CreditCard
+    @EnvironmentObject var creditCardStore: CreditCardStore
     @State private var flip: Bool = false
     @State private var degrees: Double = 0
     @State private var errorMessage: String? // Variable para el mensaje de error
     @State private var showAlert = false // Estado para controlar la presentación del alert
     @Environment(\.presentationMode) var presentationMode
     @FocusState private var isCCVFocused: Bool
+    
+    
 
     var body: some View {
         VStack {
@@ -50,30 +53,37 @@ struct AddCreditCardView: View {
             
             // Botón para agregar tarjeta
             Button(action: addCreditCard) {
-                Text("Add Card")
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.accentColor)
-                    .cornerRadius(10)
-            }
-            .padding(.horizontal)
-            .padding(.top, 20)
-            
-            Spacer()
+                            Text("Add Card")
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.accentColor)
+                                .cornerRadius(10)
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 20)
+                        
+                        Spacer()
         }
         .padding(.top, 15)
         // Presenta el alert cuando showAlert es verdadero
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Error"), message: Text(errorMessage ?? "An error occurred"), dismissButton: .default(Text("OK")))
-        }
+                    Alert(title: Text("Error"), message: Text(errorMessage ?? "An error occurred"), dismissButton: .default(Text("OK")))
+                }
+        
     }
     
     private func addCreditCard() {
         // Validar los datos de la tarjeta
         if isValidCreditCard(creditCard) {
-            // Aquí se podría añadir la tarjeta a un arreglo o base de datos
+            // If the card is valid, append it to the list
+            // and save it to the JSON file
             print("Tarjeta añadida:", creditCard)
+            
+            // Save the new card using JSONFileManager
+            creditCardStore.addCreditCard(creditCard)
+            
+            // Dismiss the view
             presentationMode.wrappedValue.dismiss()
         } else {
             // Activar el alert con el mensaje de error
@@ -86,7 +96,7 @@ struct AddCreditCardView: View {
         guard !card.cardHolder.isEmpty,
               card.number.count == 19, // 16 dígitos + 3 espacios
               card.expiryDate.count == 5, // "MM/YY"
-              (card.ccv.count == 3 || card.ccv.count == 4) else {
+              (card.cvv.count == 3 || card.cvv.count == 4) else {
             errorMessage = "Please fill in all fields."
             return false
         }
