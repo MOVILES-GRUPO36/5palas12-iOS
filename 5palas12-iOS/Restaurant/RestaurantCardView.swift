@@ -5,13 +5,13 @@ struct RestaurantCardView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            AsyncImage(url: URL(string: restaurant.photo)) { image in
-                image
+            if let cachedImage = restaurant.cachedImage {
+                Image(uiImage: cachedImage)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 100)
                     .clipped()
-            } placeholder: {
+            } else {
                 ProgressView()
                     .progressViewStyle(LinearProgressViewStyle())
             }
@@ -23,7 +23,6 @@ struct RestaurantCardView: View {
                     .opacity(0.5)
                 
                 RatingView(rating: restaurant.rating)
-
                 
                 if let distance = restaurant.distance {
                     Text("Distance: \(distance, specifier: "%.2f") km")
@@ -41,4 +40,3 @@ struct RestaurantCardView: View {
         .padding(.horizontal)
     }
 }
-

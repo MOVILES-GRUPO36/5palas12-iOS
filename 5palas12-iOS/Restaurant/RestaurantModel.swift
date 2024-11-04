@@ -6,20 +6,22 @@
 //
 
 import Foundation
+import UIKit
 
 struct RestaurantModel: Decodable, Identifiable, Equatable {
     var id = UUID()
-    var name : String
-    var latitude : Double
-    var longitude : Double
-    var photo : String
-    var categories : [String]
-    var description : String
-    var rating : Double
-    var address : String
-    var distance : Double?
+    var name: String
+    var latitude: Double
+    var longitude: Double
+    var photo: String  
+    var categories: [String]
+    var description: String
+    var rating: Double
+    var address: String
+    var distance: Double?
+    var cachedImage: UIImage?
     
-    enum CodingKeys : String, CodingKey{
+    enum CodingKeys: String, CodingKey {
         case name
         case latitude
         case longitude
