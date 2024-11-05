@@ -9,7 +9,7 @@ import Foundation
 
 struct OrderModel: Codable, Identifiable, Equatable {
     var id = UUID()
-    var orderNumber: Double // New attribute
+    var orderNumber: Double 
     var userEmail: String
     var products: [String]
     var price: Double

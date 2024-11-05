@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUI
 import Combine
 
 class TimeManager: ObservableObject {
@@ -17,15 +16,17 @@ class TimeManager: ObservableObject {
     }
     
     private func startUpdatingTime() {
-        // Using Grand Central Dispatch to update time every second
         DispatchQueue.global(qos: .background).async {
             while true {
-                let now = Date() // Get the current date and time
+                let now = Date()
+                
                 DispatchQueue.main.async {
                     self.currentTime = now
                 }
-                Thread.sleep(forTimeInterval: 1) // Sleep for 1 second
+                
+                Thread.sleep(forTimeInterval: 1) // Every second
             }
         }
     }
 }
+
