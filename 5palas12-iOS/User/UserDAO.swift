@@ -50,7 +50,7 @@ class UserDAO {
             }
         }
     }
-
+    
     // Fetch a user by ID
     func getUserById(_ userId: String, completion: @escaping (Result<UserModel, Error>) -> Void) {
         db.collection(collectionName).document(userId).getDocument { snapshot, error in
@@ -73,24 +73,24 @@ class UserDAO {
         db.collection(collectionName)
             .whereField("email", isEqualTo: email)
             .getDocuments { snapshot, error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                for document in snapshot!.documents {
-                    do {
-                        let user = try document.data(as: UserModel.self)
-                        completion(.success(user))
-                    } catch {
-                        completion(.failure(error))
-                        return
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    for document in snapshot!.documents {
+                        do {
+                            let user = try document.data(as: UserModel.self)
+                            completion(.success(user))
+                        } catch {
+                            completion(.failure(error))
+                            return
+                        }
                     }
+                    
                 }
-                
             }
-        }
     }
-
-
+    
+    
     
     // Update a user's information
     func updateUser(userId: String, with updatedData: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
@@ -113,4 +113,55 @@ class UserDAO {
             }
         }
     }
+    
+    func addRestaurantToUser(email: String, restaurantName: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let usersCollection = db.collection(collectionName)
+        
+        // Query the user's document by email
+        usersCollection.whereField("email", isEqualTo: email).getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let document = snapshot?.documents.first else {
+                // Handle case where no document with the given email is found
+                completion(.failure(NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "User not found"])))
+                return
+            }
+            
+            // Get the document reference of the found user
+            let userRef = document.reference
+            
+            // Set the "restaurant" field to the specified restaurant name (replacing any existing value)
+            userRef.updateData([
+                "restaurant": restaurantName
+            ]) { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
+                }
+            }
+        }
+    }
+    
+    func getUserByEmail(userEmail: String, completion: @escaping (Result<UserModel?, Error>) -> Void) {
+            db.collection(collectionName)
+                .whereField("email", isEqualTo: userEmail)
+                .getDocuments { snapshot, error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else if let document = snapshot?.documents.first {
+                        do {
+                            let user = try document.data(as: UserModel.self)
+                            completion(.success(user))
+                        } catch {
+                            completion(.failure(error))
+                        }
+                    } else {
+                        completion(.success(nil)) // No user found
+                    }
+                }
+        }
 }

@@ -1,7 +1,8 @@
 import SwiftUI
+import FirebaseAuth
 
 struct BusinessCenterListView: View {
-    @State private var businessExists: Bool = false
+    @ObservedObject var viewModel: BusinessCenterViewModel
     @State var restaurant: RestaurantModel?
     @State private var selectedSetting: SettingItem? = nil
     @State private var settings: [SettingItem] = [
@@ -29,7 +30,7 @@ struct BusinessCenterListView: View {
                 Spacer()
                 
                 List {
-                    ForEach(businessExists ? 1..<settings.count : 0..<1, id: \.self) { index in
+                    ForEach(viewModel.businessExists ? 1..<settings.count : 0..<1, id: \.self) { index in
                         let item = settings[index]
                         
                         Button(action: {
@@ -43,8 +44,9 @@ struct BusinessCenterListView: View {
             }
             .background(Color.timberwolf)
             .onAppear {
-                if restaurant != nil {
-                    businessExists.toggle()
+                if let userEmail = Auth.auth().currentUser?.email {
+                    print(userEmail)
+                    viewModel.loadUserBusinessStatus(for: userEmail) // Load business status on appear
                 }
             }
             .sheet(item: $selectedSetting) { item in
@@ -75,7 +77,7 @@ struct BusinessCenterListView: View {
     private func destinationView(for item: SettingItem) -> some View {
         switch item.title {
         case "Create a business":
-            return AnyView(Text("Create a business view"))
+            return AnyView(CreateBusinessView(viewModel: viewModel))
         case "View and edit my business":
             return AnyView(Text("View and edit my business view"))
         case "My orders":
