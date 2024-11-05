@@ -1,10 +1,3 @@
-//
-//  OrderListView.swift
-//  5palas12-iOS
-//
-//  Created by Sebastian Gaona on 4/11/24.
-//
-
 import SwiftUI
 import FirebaseAnalytics
 
@@ -14,6 +7,7 @@ struct OrdersListView: View {
     @State private var enterTime: Date? = nil
     @State private var showAlert = false
     @State private var timeRemaining = ""
+    @State private var timer: Timer? = nil
 
     private var userEmail: String? {
         UserDefaults.standard.string(forKey: "currentUserEmail")
@@ -26,23 +20,27 @@ struct OrdersListView: View {
     }
 
     private func calculateTimeRemaining() -> String? {
+
         let pickupTimes: [String: Int] = ["5PM": 17, "6PM": 18, "7PM": 19]
-        
+
         guard let earliestPickup = activePickupTimes.min(),
               let hour = pickupTimes[earliestPickup] else {
             return nil
         }
-
+        
+        // Create a date for the earliest pickup time today
         var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
         components.hour = hour
         components.minute = 0
-        let earliestPickupDate = Calendar.current.date(from: components)!
+        var earliestPickupDate = Calendar.current.date(from: components)!
 
+        // If the current time is already past the pickup time, move to the next day
         let now = Date()
+        if earliestPickupDate <= now {
+            earliestPickupDate = Calendar.current.date(byAdding: .day, value: 1, to: earliestPickupDate)!
+        }
+
         let timeDifference = earliestPickupDate.timeIntervalSince(now)
-        
-        guard timeDifference > 0 else { return nil }
-        
         let hours = Int(timeDifference) / 3600
         let minutes = (Int(timeDifference) % 3600) / 60
         return "\(hours) hours and \(minutes) minutes"
@@ -86,14 +84,17 @@ struct OrdersListView: View {
                     enterTime = Date()
                 }
                 
-                Timer.scheduledTimer(withTimeInterval: 20, repeats: true) { _ in
+                timer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
                     if let remainingTime = calculateTimeRemaining() {
-                        timeRemaining = remainingTime
-                        showAlert = true
+                        DispatchQueue.main.async {
+                            timeRemaining = remainingTime
+                            showAlert = true
+                        }
                     }
                 }
             }
             .onDisappear {
+                timer?.invalidate()  // Stop the timer when view disappears
                 if let enterTime = enterTime {
                     let elapsedTime = Date().timeIntervalSince(enterTime)
                     print("User was in the OrdersListView for \(elapsedTime) seconds.")
