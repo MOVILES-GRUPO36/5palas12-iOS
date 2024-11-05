@@ -9,6 +9,8 @@ struct _palas12_iOSApp: App {
     @StateObject var restaurantsVM: RestaurantViewModel = RestaurantViewModel()
     @StateObject var userVM: UserViewModel = UserViewModel() // ViewModel to handle user data
     @StateObject private var networkMonitor = NetworkMonitor.shared
+    @StateObject var ordersVM = OrdersViewModel()
+    @StateObject private var timeManager = TimeManager()
 
     var body: some Scene {
         WindowGroup {
@@ -19,6 +21,8 @@ struct _palas12_iOSApp: App {
                         .environmentObject(restaurantsVM)
                         .environmentObject(userData)
                         .environmentObject(networkMonitor)
+                        .environmentObject(ordersVM)
+                        .environmentObject(timeManager)
                 } else {
                     // Show a loading view or placeholder until `userData` is loaded
                     ProgressView("Loading user data...")

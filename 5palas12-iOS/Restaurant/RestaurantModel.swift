@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct RestaurantModel: Decodable, Identifiable, Equatable {
+struct RestaurantModel: Decodable, Identifiable, Equatable, Hashable{
     var id = UUID()
     var name: String
     var latitude: Double
