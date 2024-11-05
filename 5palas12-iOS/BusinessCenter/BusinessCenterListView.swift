@@ -1,15 +1,9 @@
-//
-//  BusinessCenterListView.swift
-//  5palas12-iOS
-//
-//  Created by santiago on 20/10/2024.
-//
-
 import SwiftUI
 
 struct BusinessCenterListView: View {
     @State private var businessExists: Bool = false
-    @Environment(\.presentationMode) var presentationMode
+    @State var restaurant: RestaurantModel?
+    @State private var selectedSetting: SettingItem? = nil
     @State private var settings: [SettingItem] = [
         SettingItem(title: "Create a business", icon: "building", type: .navigation),
         SettingItem(title: "View and edit my business", icon: "pencil.circle.fill", type: .navigation),
@@ -22,9 +16,6 @@ struct BusinessCenterListView: View {
     var body: some View {
         NavigationView {
             VStack {
-                LogoView()
-                    .padding(.all, 0)
-                
                 Spacer()
                 
                 Text("Welcome to Business Center")
@@ -37,73 +28,66 @@ struct BusinessCenterListView: View {
                 
                 Spacer()
                 
-                
-                ZStack {
-                    Color(.timberwolf)
-                        .ignoresSafeArea()
-                        .padding(.top, 0)
-                    
-                    List {
-                        ForEach(businessExists ? 1..<settings.count : 0..<1, id: \.self) { index in let item = settings[index]
-                            HStack {
-                                if let iconName = item.icon {
-                                    Image(systemName: iconName)
-                                        .foregroundColor(item.title == "Delete my business" ? .red : .blue)
-                                }
-                                
-                                Text(item.title)
-                                    .foregroundColor(item.title == "Delete my business" ? .red : .primary)
-                                
-                                Spacer()
-                                
-                                switch item.type {
-                                case .toggle(let isOn):
-                                    Toggle("", isOn: .constant(isOn))
-                                        .labelsHidden()
-                                case .navigation:
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
-                                case .plain:
-                                    EmptyView()
-                                }
-                            }
-                            .padding(12)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.white)
-                            )
-                            .onTapGesture {
-                                if case .navigation = item.type {
-                                    print("Navigate to \(item.title)")
-                                }
-                            }
+                List {
+                    ForEach(businessExists ? 1..<settings.count : 0..<1, id: \.self) { index in
+                        let item = settings[index]
+                        
+                        Button(action: {
+                            selectedSetting = item
+                        }) {
+                            settingRow(item: item)
                         }
-                        .listRowBackground(Color.clear)
                     }
-                    .listStyle(PlainListStyle())
-                    .background(Color.clear)
                 }
+                .listStyle(PlainListStyle())
             }
             .background(Color.timberwolf)
-        }
-        .navigationBarBackButtonHidden(true)
-        .overlay(alignment: .topLeading){
-            
-            Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-            }) {
-                HStack {
-                    Image(systemName: "chevron.left")
-                        .foregroundColor(.timberwolf)
-                    Text("Back")
-                        .foregroundColor(.timberwolf)
+            .onAppear {
+                if restaurant != nil {
+                    businessExists.toggle()
                 }
-            }.offset(x: 10,y: 18)
-            
+            }
+            .sheet(item: $selectedSetting) { item in
+                destinationView(for: item)
+            }
         }
     }
-}
-
-#Preview {
-    BusinessCenterListView()
+    
+    private func settingRow(item: SettingItem) -> some View {
+        HStack {
+            if let iconName = item.icon {
+                Image(systemName: iconName)
+                    .foregroundColor(item.title == "Delete my business" ? .red : .blue)
+            }
+            
+            Text(item.title)
+                .foregroundColor(item.title == "Delete my business" ? .red : .primary)
+            
+            Spacer()
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color.white)
+        )
+    }
+    
+    private func destinationView(for item: SettingItem) -> some View {
+        switch item.title {
+        case "Create a business":
+            return AnyView(Text("Create a business view"))
+        case "View and edit my business":
+            return AnyView(Text("View and edit my business view"))
+        case "My orders":
+            return AnyView(Text("My orders view"))
+        case "My products":
+            return AnyView(BusinessProductListView(productVM: ProductViewModel(restaurant: restaurant!)))
+        case "Help & Support":
+            return AnyView(Text("Help & Support view"))
+        case "Delete my business":
+            return AnyView(Text("Delete my business view"))
+        default:
+            return AnyView(EmptyView())
+        }
+    }
 }

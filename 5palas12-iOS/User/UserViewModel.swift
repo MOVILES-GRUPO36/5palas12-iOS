@@ -2,7 +2,8 @@ import SwiftUI
 import FirebaseFirestore
 
 class UserViewModel: ObservableObject {
-    @Published var userData: UserModel? = nil
+    @Published var userData: UserModel? = nil    
+    
 
     func loadUserFromDefaults() {
         if let email = UserDefaults.standard.string(forKey: "currentUserEmail") {

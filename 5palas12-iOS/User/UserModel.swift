@@ -14,6 +14,7 @@ class UserModel: Decodable, Identifiable, ObservableObject{
     @Published var email : String
     @Published var birthday : Date
     @Published var createdAt : Date
+    @Published var restaurant :String?
     
     init (id: String, name: String, surname: String, email: String, birthday: Date, createdAt: Date){
         self.id = id
@@ -23,6 +24,15 @@ class UserModel: Decodable, Identifiable, ObservableObject{
         self.birthday = birthday
         self.createdAt = createdAt
     }
+    init (name: String, surname: String, email: String, birthday: Date, createdAt: Date, restaurant: String?){
+        self.id = UUID().uuidString
+        self.name = name
+        self.surname = surname
+        self.email = email
+        self.birthday = birthday
+        self.createdAt = createdAt
+        self.restaurant = restaurant
+    }
     
     enum CodingKeys : String, CodingKey{
         case name
@@ -30,6 +40,7 @@ class UserModel: Decodable, Identifiable, ObservableObject{
         case email
         case birthday
         case createdAt
+        case restaurant
     }
     
     required init(from decoder: Decoder) throws {
@@ -40,5 +51,8 @@ class UserModel: Decodable, Identifiable, ObservableObject{
         self.email = try container.decode(String.self, forKey: .email)
         self.birthday = try container.decode(Date.self, forKey: .birthday)
         self.createdAt = try container.decode(Date.self, forKey: .createdAt)
+        if let restaurant = try? container.decode(String.self, forKey: .restaurant){
+            self.restaurant = restaurant
+        }
     }
 }

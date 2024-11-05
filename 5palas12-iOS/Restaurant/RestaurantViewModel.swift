@@ -33,6 +33,10 @@ class RestaurantViewModel: ObservableObject {
             }
         }
     }
+    
+    func getRestaurantByName(name: String) -> RestaurantModel? {
+        return restaurants.first { $0.name.lowercased() == name.lowercased() }
+    }
 
     private func cacheRestaurantsData() {
         for i in 0..<restaurants.count {

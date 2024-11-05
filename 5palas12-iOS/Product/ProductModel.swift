@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductModel : Decodable, Identifiable, Hashable{
+struct ProductModel : Codable, Identifiable, Hashable{
     var id = UUID()
     var name: String
     var price: Double
