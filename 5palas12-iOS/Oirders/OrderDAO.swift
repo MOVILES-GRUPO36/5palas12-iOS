@@ -57,7 +57,7 @@ class OrderDAO {
                     let localOrders = self.loadOrdersLocally()
                     let uniqueOrders = self.mergeUniqueOrders(firestoreOrders: firestoreOrders, localOrders: localOrders)
                     
-                    // Guardar las ordenes unical en el almacenamiento local
+                    // Guardar las ordenes unicas en el almacenamiento local
                     self.saveOrdersToFile(uniqueOrders)
                     completion(.success(uniqueOrders))
                 }
@@ -68,12 +68,12 @@ class OrderDAO {
         }
     }
     
-    // Mezclar Firestore and local orders
+    // Mezclar Firestore por orderNumber
     private func mergeUniqueOrders(firestoreOrders: [OrderModel], localOrders: [OrderModel]) -> [OrderModel] {
         var uniqueOrders = firestoreOrders
 
         for localOrder in localOrders {
-            if !firestoreOrders.contains(where: { $0.restaurantName == localOrder.restaurantName }) {
+            if !firestoreOrders.contains(where: { $0.orderNumber == localOrder.orderNumber }) {
                 uniqueOrders.append(localOrder)
             }
         }
@@ -84,7 +84,7 @@ class OrderDAO {
     func saveOrderLocally(_ order: OrderModel) {
         var savedOrders = loadOrdersLocally()
         
-        if !savedOrders.contains(where: { $0.restaurantName == order.restaurantName }) {
+        if !savedOrders.contains(where: { $0.orderNumber == order.orderNumber }) {
             savedOrders.append(order)
             saveOrdersToFile(savedOrders)
         }
@@ -125,9 +125,9 @@ class OrderDAO {
     func syncLocalOrdersToFirestore() {
         let localOrders = loadOrdersLocally()
         for order in localOrders {
-            // Query Firestore to check if the order already exists
+            // Revisar si en firebase existe el numero de orden
             db.collection(collectionName)
-                .whereField("restaurantName", isEqualTo: order.restaurantName)
+                .whereField("orderNumber", isEqualTo: order.orderNumber)
                 .getDocuments { [weak self] snapshot, error in
                     guard let self = self else { return }
                     
@@ -136,20 +136,17 @@ class OrderDAO {
                         return
                     }
                     
-                    // Check if there are any documents with the same restaurant name
                     if let snapshot = snapshot, snapshot.documents.isEmpty {
-                        // No duplicate found, proceed to add the order
                         self.db.collection(self.collectionName).addDocument(data: order.dictionaryRepresentation) { error in
                             if error == nil {
-                                // If successfully uploaded, remove the local copy
+                                // Successfully uploaded, remove local copy
                                 var remainingOrders = self.loadOrdersLocally()
-                                remainingOrders.removeAll { $0.restaurantName == order.restaurantName }
+                                remainingOrders.removeAll { $0.orderNumber == order.orderNumber }
                                 self.saveOrdersToFile(remainingOrders)
                             }
                         }
                     } else {
-                        // Duplicate found, skip adding this order
-                        print("Duplicate order found for restaurant: \(order.restaurantName), skipping sync.")
+                        print("Duplicate order found for order number: \(order.orderNumber), skipping sync.")
                     }
                 }
         }

@@ -86,7 +86,7 @@ struct OrdersListView: View {
                     enterTime = Date()
                 }
                 
-                Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
+                Timer.scheduledTimer(withTimeInterval: 20, repeats: true) { _ in
                     if let remainingTime = calculateTimeRemaining() {
                         timeRemaining = remainingTime
                         showAlert = true

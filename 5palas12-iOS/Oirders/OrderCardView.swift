@@ -27,7 +27,7 @@ struct OrderCardView: View {
                 Text("Order Code \(order.id)")
                     .font(.headline)
                 
-                Text("Restaurant: \(order.restaurantName)") // Display restaurant name
+                Text("Restaurant: \(order.restaurantName)")
                     .font(.subheadline)
                     .fontWeight(.bold)
                 

@@ -12,7 +12,7 @@ struct CreateOrderView: View {
     @EnvironmentObject var restaurantsVM: RestaurantViewModel
     @StateObject private var productVM = ProductViewModel(restaurant: RestaurantModel(id: UUID(), name: "", latitude: 0.0, longitude: 0.0, photo: "", categories: [], description: "", rating: 0.0, address: ""))
     
-    // Placeholder product for "Anything available"
+    // Dejar un producto Anything Available para manejar la conexion eventual
     private let placeholderProduct = ProductModel(name: "Anything available", price: 0.0, categories: [], photo: "")
     
     @State private var userEmail: String = UserDefaults.standard.string(forKey: "currentUserEmail") ?? ""
@@ -51,7 +51,6 @@ struct CreateOrderView: View {
                         
                         Picker("Select Product", selection: $selectedProduct) {
                             if productVM.products.isEmpty {
-                                // Display the placeholder product when no products are available
                                 Text(placeholderProduct.name).tag(ProductModel?.some(placeholderProduct))
                             } else {
                                 Text("Choose a product").tag(ProductModel?.none)
@@ -123,7 +122,7 @@ struct CreateOrderView: View {
         ordersVM.createOrder(
             userEmail: userEmail,
             products: productNames,
-            price: selectedProduct.price, // Use the price from the selected product, which could be 0.0 for "Anything available"
+            price: selectedProduct.price,
             isActive: isActive,
             pickUpTime: pickUpTime,
             restaurantName: selectedRestaurant.name
