@@ -2,6 +2,7 @@ import SwiftUI
 import FirebaseAnalytics
 
 struct OrdersListView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var ordersVM: OrdersViewModel
     @EnvironmentObject var timeManager: TimeManager
     @State private var enterTime: Date? = nil
@@ -108,6 +109,20 @@ struct OrdersListView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
-        }
+        }.navigationBarBackButtonHidden(true)
+            .overlay(alignment: .topLeading){
+                
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(Color("Timberwolf"))
+                        Text("Back")
+                            .foregroundColor(Color("Timberwolf"))
+                    }
+                }.offset(x: 10,y: 18)
+                
+            }
     }
 }
