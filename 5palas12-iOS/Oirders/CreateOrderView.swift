@@ -102,6 +102,18 @@ struct CreateOrderView: View {
                         .padding(.top)
                 }
                 
+                // boton
+                NavigationLink(destination: OrdersListView()) {
+                    Text("Go to Order List")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color(hex: "#228B22"))
+                        .cornerRadius(8)
+                        .padding(.horizontal)
+                }
+                
                 Spacer()
             }
             .background(Color("Timberwolf"))
