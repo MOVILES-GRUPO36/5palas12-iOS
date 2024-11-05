@@ -61,19 +61,34 @@ struct ProfileView: View {
                 .background(Color(hex: "#588157"))
                 .cornerRadius(8)
                 .padding()
-                
-                NavigationLink(destination: BusinessCenterListView(restaurant: restaurantVM.getRestaurantByName(name: (userVM.userData?.restaurant)!)!)) {
-                    Text("Business Center")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.white)
+                if userVM.userData?.restaurant != nil {
+                    NavigationLink(destination: BusinessCenterListView(restaurant: restaurantVM.getRestaurantByName(name: (userVM.userData?.restaurant)!)!)) {
+                        Text("Business Center")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+                    .accentColor(.fernGreen)
+                    .frame(height: 46)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(hex: "#588157"))
+                    .cornerRadius(8)
+                    .padding()
+                } else {
+                    NavigationLink(destination: BusinessCenterListView()) {
+                        Text("Business Center")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+                    .accentColor(.fernGreen)
+                    .frame(height: 46)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(hex: "#588157"))
+                    .cornerRadius(8)
+                    .padding()
                 }
-                .accentColor(.fernGreen)
-                .frame(height: 46)
-                .frame(maxWidth: .infinity)
-                .background(Color(hex: "#588157"))
-                .cornerRadius(8)
-                .padding()
+                
                 
                 NavigationLink(destination: OrdersListView()) {
                     Text("My orders")
