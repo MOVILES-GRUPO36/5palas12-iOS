@@ -17,7 +17,7 @@ class RestaurantViewModel: ObservableObject {
     let locationManager = LocationManager()
     private let restaurantDAO = RestaurantDAO()
     
-    private let imageCache = NSCache<NSString, UIImage>() 
+    private let imageCache = NSCache<NSString, UIImage>()
 
     func loadRestaurants() {
         restaurantDAO.getAllRestaurants { [weak self] result in
