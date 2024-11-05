@@ -14,6 +14,7 @@ struct ProfileView: View {
     @State private var email: String = "Set email"
     @State private var enterTime: Date? = nil
     @EnvironmentObject var userVM: UserViewModel
+    @EnvironmentObject var restaurantVM: RestaurantViewModel
     @State private var navigateToLogin = false
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     
@@ -60,20 +61,34 @@ struct ProfileView: View {
                 .background(Color(hex: "#588157"))
                 .cornerRadius(8)
                 .padding()
-                
-                Button {
-                    //Text("huh")
-                } label: {
-                    Text("Business center")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.white)
+                if userVM.userData?.restaurant != nil {
+                    NavigationLink(destination: BusinessCenterListView(restaurant: restaurantVM.getRestaurantByName(name: (userVM.userData?.restaurant)!)!)) {
+                        Text("Business Center")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+                    .accentColor(.fernGreen)
+                    .frame(height: 46)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(hex: "#588157"))
+                    .cornerRadius(8)
+                    .padding()
+                } else {
+                    NavigationLink(destination: BusinessCenterListView()) {
+                        Text("Business Center")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.white)
+                    }
+                    .accentColor(.fernGreen)
+                    .frame(height: 46)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(hex: "#588157"))
+                    .cornerRadius(8)
+                    .padding()
                 }
-                .frame(height: 46)
-                .frame(maxWidth: .infinity)
-                .background(Color(hex: "#588157"))
-                .cornerRadius(8)
-                .padding()
+                
                 
                 NavigationLink(destination: OrdersListView()) {
                     Text("My orders")
