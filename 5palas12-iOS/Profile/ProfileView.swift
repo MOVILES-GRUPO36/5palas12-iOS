@@ -10,6 +10,7 @@ import FirebaseAnalytics
 
 struct ProfileView: View {
     private var userDAO : UserDAO = UserDAO()
+    @StateObject private var businessCenterViewModel = BusinessCenterViewModel()
     @State private var name: String = "Set name"
     @State private var email: String = "Set email"
     @State private var enterTime: Date? = nil
@@ -62,7 +63,7 @@ struct ProfileView: View {
                 .cornerRadius(8)
                 .padding()
                 if userVM.userData?.restaurant != nil {
-                    NavigationLink(destination: BusinessCenterListView(restaurant: restaurantVM.getRestaurantByName(name: (userVM.userData?.restaurant)!)!)) {
+                    NavigationLink(destination: BusinessCenterListView(viewModel: businessCenterViewModel, restaurant: restaurantVM.getRestaurantByName(name: (userVM.userData?.restaurant)!)!)) {
                         Text("Business Center")
                             .font(.title2)
                             .bold()
@@ -75,7 +76,7 @@ struct ProfileView: View {
                     .cornerRadius(8)
                     .padding()
                 } else {
-                    NavigationLink(destination: BusinessCenterListView()) {
+                    NavigationLink(destination: BusinessCenterListView(viewModel: businessCenterViewModel)) {
                         Text("Business Center")
                             .font(.title2)
                             .bold()
