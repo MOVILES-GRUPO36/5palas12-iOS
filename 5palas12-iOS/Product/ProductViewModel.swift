@@ -11,23 +11,44 @@ class ProductViewModel: ObservableObject {
     var restaurant: RestaurantModel
     @Published var products: [ProductModel] = []
     @Published var errorMessage: String? = nil
+    
+    private let productDAO = ProductDAO()
+    
     init(restaurant: RestaurantModel) {
         self.restaurant = restaurant
         fetchProductsbyRestaurant(restaurant: restaurant)
     }
-    private let productDAO = ProductDAO()
     
     func fetchProductsbyRestaurant(restaurant: RestaurantModel) {
         productDAO.getProductsbyRestaurant(restaurant: restaurant) { [weak self] result in
             switch result {
-                
             case .success(let products):
-                self?.products = products
-                print("Products fetched")
+                DispatchQueue.main.async {
+                    self?.products = products
+                    print("Products fetched")
+                }
             case .failure(let error):
-                self?.errorMessage = "Error al cargar restaurantes desde Firestore: \(error.localizedDescription)"
-                print(self?.errorMessage ?? "Error desconocido")
+                DispatchQueue.main.async {
+                    self?.errorMessage = "Error al cargar productos desde Firestore: \(error.localizedDescription)"
+                    print(self?.errorMessage ?? "Error desconocido")
+                }
             }
+        }
+    }
+    
+    func addProduct(_ product: ProductModel, completion: @escaping (Bool) -> Void) {
+        productDAO.addProduct(product, for: restaurant) { [weak self] success in
+            if success {
+                DispatchQueue.main.async {
+                    self?.products.append(product)
+                    print("Product added successfully")
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.errorMessage = "Error al agregar producto a Firestore."
+                }
+            }
+            completion(success)
         }
     }
 }
