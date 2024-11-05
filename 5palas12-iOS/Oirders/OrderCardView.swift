@@ -1,3 +1,10 @@
+//
+//  OrderCardView.swift
+//  5palas12-iOS
+//
+//  Created by Sebastian Gaona on 4/11/24.
+//
+
 import SwiftUI
 
 struct OrderCardView: View {
@@ -5,7 +12,7 @@ struct OrderCardView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            AsyncImage(url: URL(string: "https://example.com/order-image")) { image in
+            AsyncImage(url: URL(string: "https://cdn-icons-png.flaticon.com/512/2272/2272267.png")) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -17,8 +24,12 @@ struct OrderCardView: View {
             }
 
             VStack(alignment: .leading, spacing: 6) {
-                Text("Order for \(order.userEmail)")
+                Text("Order Code \(order.id)")
                     .font(.headline)
+                
+                Text("Restaurant: \(order.restaurantName)") // Display restaurant name
+                    .font(.subheadline)
+                    .fontWeight(.bold)
                 
                 Text("Products: \(order.products.joined(separator: ", "))")
                     .font(.subheadline)
