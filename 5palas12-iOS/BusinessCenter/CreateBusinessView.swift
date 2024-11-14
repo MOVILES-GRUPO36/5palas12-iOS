@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import CoreLocation
+import MapKit
 
 struct CreateBusinessView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -30,15 +31,15 @@ struct CreateBusinessView: View {
     
     @ObservedObject private var locationManager = LocationManager()
 
+    // State variables for location
+    @State private var selectedLocation: CLLocationCoordinate2D?
+    @State private var showingLocationPicker = false
+    
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Business Details")) {
                     TextField("Name", text: $name)
-                    TextField("Latitude", text: $latitude)
-                        .keyboardType(.decimalPad)
-                    TextField("Longitude", text: $longitude)
-                        .keyboardType(.decimalPad)
                     TextField("Photo URL", text: $photo)
                     TextField("Categories (comma-separated)", text: $categories)
                     TextField("Description", text: $description)
@@ -47,16 +48,75 @@ struct CreateBusinessView: View {
                     TextField("Address", text: $address)
                 }
                 
+                // Location Picker Section
+                Section(header: Text("Location")) {
+                    if let location = selectedLocation {
+                        Text("Location Selected")
+                            .foregroundColor(.green)
+                        
+                        // In the CreateBusinessView
+                        Map(coordinateRegion: .constant(MKCoordinateRegion(
+                            center: selectedLocation ?? CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), // Default location
+                            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+                        )), annotationItems: [LocationPin(coordinate: selectedLocation ?? CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194))]) { location in
+                            MapPin(coordinate: location.coordinate, tint: .red)
+                        }
+                        .frame(height: 200)
+                        .cornerRadius(10)
+                        .padding(.top, 10)
+                        .disabled(true) // Disable interaction with the map
+                        
+                        // Display Coordinates
+                        Text("Latitude: \(location.latitude), Longitude: \(location.longitude)")
+                            .foregroundColor(.black)
+                            .padding(.top, 5)
+                        
+                        // Button to change the location
+                        Button(action: { showingLocationPicker.toggle() }) {
+                            Text("Change Location")
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                    } else {
+                        Text("Location not chosen")
+                            .foregroundColor(.red)
+                        
+                        HStack {
+                            Button(action: useCurrentLocation) {
+                                Text("Use Current Location")
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.green)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(8)
+                            }
+
+                            Button(action: { showingLocationPicker.toggle() }) {
+                                Text("Choose Location Manually")
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(.fernGreen)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(8)
+                            }
+                        }
+                    }
+                }
+                
                 Button(action: saveBusiness) {
                     Text("Save Business")
                         .fontWeight(.bold)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
+                        .background(.fernGreen)
                         .cornerRadius(8)
                 }
             }
+            
             .navigationBarTitle("Create a Business", displayMode: .inline)
             .onAppear {
                 locationManager.requestLocation()
@@ -65,15 +125,23 @@ struct CreateBusinessView: View {
                     userEmail = currentUser.email ?? ""
                 }
             }
-            .onReceive(locationManager.$lastLocation) { location in
-                if let location = location {
-                    latitude = "\(location.coordinate.latitude)"
-                    longitude = "\(location.coordinate.longitude)"
-                }
+            
+            .sheet(isPresented: $showingLocationPicker) {
+                LocationPickerView(selectedLocation: $selectedLocation)
             }
         }
+        .background(Color.timberwolf)
     }
     
+    private func useCurrentLocation() {
+        // Use the current location from the location manager
+        if let currentLocation = locationManager.lastLocation {
+            selectedLocation = currentLocation.coordinate
+            latitude = "\(currentLocation.coordinate.latitude)"
+            longitude = "\(currentLocation.coordinate.longitude)"
+        }
+    }
+
     private func saveBusiness() {
         guard let latitudeValue = Double(latitude),
               let longitudeValue = Double(longitude),
@@ -83,8 +151,8 @@ struct CreateBusinessView: View {
         
         restaurant = RestaurantModel(
             name: name,
-            latitude: latitudeValue,
-            longitude: longitudeValue,
+            latitude: Double(selectedLocation?.latitude ?? 0),
+            longitude: Double(selectedLocation?.longitude ?? 0),
             photo: photo,
             categories: categories.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) },
             description: description,

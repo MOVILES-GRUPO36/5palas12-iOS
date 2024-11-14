@@ -99,30 +99,31 @@ struct LoginScreen: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                Button {
+                Button(action: {
                     login()
-                } label: {
+                }) {
                     Text("Log in")
                         .font(.title2)
                         .bold()
                         .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .frame(height: 46)
-                .frame(maxWidth: .infinity)
-                .background(isLogInDisabled ? .gray : Color(hex: "#588157"))
-                .cornerRadius(8)
-                .disabled(isLogInDisabled)
-                .padding()
+                .frame(height: 46) // Define button height
+                .frame(maxWidth: .infinity) // Stretch the button width
+                .background(isLogInDisabled ? .gray : Color(hex: "#588157")) // Background color
+                .cornerRadius(8) // Rounded corners
+                .disabled(isLogInDisabled) // Disable conditionally
+                .padding() // Add padding around the button
                 
                 
                 HStack {
-                    Spacer() // Add a leading spacer
+                    Spacer()
                     NavigationLink(destination: RegisterView(isLoggedIn: $isLoggedIn)) {
                         Text("Don't have an account? ") +
                         Text("Register")
                             .fontWeight(.heavy)
                     }
-                    Spacer() // Add a trailing spacer
+                    Spacer()
                 }
                 .padding()
                 

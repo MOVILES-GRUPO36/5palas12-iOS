@@ -59,7 +59,7 @@ struct BusinessCenterListView: View {
         HStack {
             if let iconName = item.icon {
                 Image(systemName: iconName)
-                    .foregroundColor(item.title == "Delete my business" ? .red : .blue)
+                    .foregroundColor(item.title == "Delete my business" ? .red : .fernGreen)
             }
             
             Text(item.title)
@@ -87,7 +87,7 @@ struct BusinessCenterListView: View {
         case "Help & Support":
             return AnyView(Text("Help & Support view"))
         case "Delete my business":
-            return AnyView(Text("Delete my business view"))
+            return AnyView(DeleteBusinessView(viewModel: viewModel))
         default:
             return AnyView(EmptyView())
         }
