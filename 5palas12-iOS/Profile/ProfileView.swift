@@ -25,7 +25,7 @@ struct ProfileView: View {
             VStack {
                 // Profile Info
                 LogoView()
-                    .padding(.all,0)
+                    .padding(.all, 0)
                 
                 HStack {
                     VStack(alignment: .leading) {
@@ -50,95 +50,41 @@ struct ProfileView: View {
                 .padding()
                 
                 Spacer()
-                NavigationLink(destination: AuthenticatedPaymentMethodsView()) {
-                    Text("Payment Methods")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.white)
+                
+                createButton(title: "Payment Methods", color: Color(hex: "#588157")) {
+                    AuthenticatedPaymentMethodsView()
                 }
-                .accentColor(.fernGreen)
-                .frame(height: 46)
-                .frame(maxWidth: .infinity)
-                .background(Color(hex: "#588157"))
-                .cornerRadius(8)
-                .padding()
-                if userVM.userData?.restaurant != nil {
-                    NavigationLink(destination: BusinessCenterListView(viewModel: businessCenterViewModel, restaurant: restaurantVM.getRestaurantByName(name: (userVM.userData?.restaurant)!)!)) {
-                        Text("Business Center")
-                            .font(.title2)
-                            .bold()
-                            .foregroundColor(.white)
+                
+                if let restaurantName = userVM.userData?.restaurant {
+                    createButton(title: "Business Center", color: Color(hex: "#588157")) {
+                        BusinessCenterListView(
+                            viewModel: businessCenterViewModel,
+                            restaurant: restaurantVM.getRestaurantByName(name: restaurantName)!
+                        )
                     }
-                    .accentColor(.fernGreen)
-                    .frame(height: 46)
-                    .frame(maxWidth: .infinity)
-                    .background(Color(hex: "#588157"))
-                    .cornerRadius(8)
-                    .padding()
                 } else {
-                    NavigationLink(destination: BusinessCenterListView(viewModel: businessCenterViewModel)) {
-                        Text("Business Center")
-                            .font(.title2)
-                            .bold()
-                            .foregroundColor(.white)
+                    createButton(title: "Business Center", color: Color(hex: "#588157")) {
+                        BusinessCenterListView(viewModel: businessCenterViewModel)
                     }
-                    .accentColor(.fernGreen)
-                    .frame(height: 46)
-                    .frame(maxWidth: .infinity)
-                    .background(Color(hex: "#588157"))
-                    .cornerRadius(8)
-                    .padding()
                 }
                 
-                
-                NavigationLink(destination: OrdersListView()) {
-                    Text("My orders")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.white)
+                createButton(title: "My Orders", color: Color(hex: "#588157")) {
+                    OrdersListView()
                 }
-                .accentColor(.fernGreen)
-                .frame(height: 46)
-                .frame(maxWidth: .infinity)
-                .background(Color(hex: "#588157"))
-                .cornerRadius(8)
-                .padding()
                 
-                NavigationLink(destination: UserSettingsView()) {
-                    Text("Settings")
-                        .font(.title2)
-                        .bold()
-                        .foregroundColor(.white)
+                createButton(title: "Settings", color: Color(hex: "#588157")) {
+                    UserSettingsView()
                 }
-                .accentColor(.fernGreen)
-                .frame(height: 46)
-                .frame(maxWidth: .infinity)
-                .background(Color(hex: "#588157"))
-                .cornerRadius(8)
-                .padding()
                 
-                NavigationLink(destination: LoginScreen(isLoggedIn: .constant(false))) {
-                                    Text("Logout")
-                                        .font(.title2)
-                                        .bold()
-                                        .foregroundColor(.white)
-                                        .frame(height: 46)
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color.red)
-                                        .cornerRadius(8)
-                                        .padding()
-                                }
-                                .simultaneousGesture(TapGesture().onEnded {
-                                    logout() // Perform the logout action
-                                })
-                
-                
-                
+                createButton(title: "Logout", color: Color.red) {
+                    LoginScreen(isLoggedIn: .constant(false))
+                }
+                .simultaneousGesture(TapGesture().onEnded {
+                    logout()
+                })
                 
             }
-                               
         }
-        //.navigationBarBackButtonHidden()
         .background(Color(hex: "#E6E1DB"))
         .edgesIgnoringSafeArea(.all)
         .onAppear {
@@ -151,29 +97,29 @@ struct ProfileView: View {
         .onDisappear {
             if let enterTime = enterTime {
                 let elapsedTime = Date().timeIntervalSince(enterTime)
-                print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
                 logTimeFirebase(viewName: "ProfileView", timeSpent: elapsedTime)
             }
         }
     }
     
-    
-    
-    private func editProfile() {
-        // Your logic to navigate to the edit profile view or to handle editing
-        print("Edit profile tapped")
-        // You could present a modal or navigate to another view here
+    private func createButton<Destination: View>(title: String, color: Color, @ViewBuilder destination: @escaping () -> Destination) -> some View {
+        NavigationLink(destination: destination()) {
+            Text(title)
+                .font(.title2)
+                .bold()
+                .foregroundColor(.white)
+                .frame(height: 46) // Button height
+                .frame(maxWidth: .infinity) // Button width
+                .background(color) // Background color
+                .cornerRadius(8) // Rounded corners
+                .padding() // Padding around the button
+        }
     }
     
     func logout() {
         UserDefaults.standard.removeObject(forKey: "currentUserEmail")
-        
-//        UserDefaults.standard.set(false, forKey: "isLoggedIn")
         isLoggedIn = false
         userVM.userData = nil
-        print(UserDefaults.standard.bool(forKey: "isLoggedIn"))
-        print(UserDefaults.standard.string(forKey: "currentUserEmail"))
-        
     }
     
     func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
@@ -183,7 +129,3 @@ struct ProfileView: View {
         ])
     }
 }
-
-//#Preview {
-//    ProfileView()
-//}

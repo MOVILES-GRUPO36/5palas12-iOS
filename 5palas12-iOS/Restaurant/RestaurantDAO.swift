@@ -54,7 +54,7 @@ class RestaurantDAO {
     
     func getRestaurantByUserEmail(userEmail: String, completion: @escaping (Result<RestaurantModel?, Error>) -> Void) {
             db.collection(collectionName)
-                .whereField("userEmail", isEqualTo: userEmail) // Ensure this matches your Firestore schema
+                .whereField("email", isEqualTo: userEmail) // Ensure this matches your Firestore schema
                 .getDocuments { snapshot, error in
                     if let error = error {
                         completion(.failure(error))
