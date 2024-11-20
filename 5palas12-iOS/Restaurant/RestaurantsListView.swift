@@ -28,8 +28,10 @@ struct RestaurantsListView: View {
         .onAppear {
             locationManager.requestLocation()
             enterTime = Date()
+            restaurantsVM.startDistanceUpdates()
         }
         .onDisappear {
+            restaurantsVM.stopDistanceUpdates()
             if let enterTime = enterTime {
                 let elapsedTime = Date().timeIntervalSince(enterTime)
                 print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
