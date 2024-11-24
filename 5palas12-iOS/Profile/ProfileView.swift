@@ -120,6 +120,10 @@ struct ProfileView: View {
         UserDefaults.standard.removeObject(forKey: "currentUserEmail")
         isLoggedIn = false
         userVM.userData = nil
+        
+        // Delete local orders file
+        let orderDAO = OrderDAO()
+        orderDAO.deleteLocalOrdersFile()
     }
     
     func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {

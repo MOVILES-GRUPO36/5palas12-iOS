@@ -102,9 +102,17 @@ class OrderDAO {
     private func saveOrdersToFile(_ orders: [OrderModel]) {
         let fileURL = getDocumentsDirectory().appendingPathComponent(localFileName)
         if let data = try? JSONEncoder().encode(orders) {
-            try? data.write(to: fileURL)
+            do {
+                try data.write(to: fileURL)
+                print("Local orders file saved at: \(fileURL.path)")
+            } catch {
+                print("Error saving local orders file: \(error.localizedDescription)")
+            }
+        } else {
+            print("Failed to encode orders for saving.")
         }
     }
+
     
     private func getDocumentsDirectory() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -151,4 +159,19 @@ class OrderDAO {
                 }
         }
     }
+    
+    func deleteLocalOrdersFile() {
+        let fileURL = getDocumentsDirectory().appendingPathComponent(localFileName)
+        do {
+            if FileManager.default.fileExists(atPath: fileURL.path) {
+                try FileManager.default.removeItem(at: fileURL)
+                print("Local orders file deleted successfully.")
+            } else {
+                print("No local orders file found to delete.")
+            }
+        } catch {
+            print("Error deleting local orders file: \(error.localizedDescription)")
+        }
+    }
+
 }
