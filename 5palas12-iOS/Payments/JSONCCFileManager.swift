@@ -55,7 +55,13 @@ class JSONCCFileManager {
         saveCreditCards(cards) 
     }
     
+    func deleteAllCreditCards() {
+            saveCreditCards([])
+        }
+    
     private func getDocumentsDirectory() -> URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
+    
+    
 }
