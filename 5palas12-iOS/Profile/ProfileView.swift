@@ -124,6 +124,9 @@ struct ProfileView: View {
         // Delete local orders file
         let orderDAO = OrderDAO()
         orderDAO.deleteLocalOrdersFile()
+        
+        let jsonCards = JSONCCFileManager()
+        jsonCards.deleteAllCreditCards()
     }
     
     func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
