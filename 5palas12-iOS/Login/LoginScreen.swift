@@ -126,15 +126,15 @@ struct LoginScreen: View {
                     Spacer()
                 }
                 .padding()
+                .font(.caption)
+                .foregroundStyle(.black)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.top,-20)
                 
                 Spacer()
                 
                 
             }
-            .font(.caption)
-            .foregroundStyle(.black)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top,-20)
             
             Spacer()
         }

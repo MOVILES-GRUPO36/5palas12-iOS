@@ -15,8 +15,10 @@ struct RegisterView: View {
     @State private var surname: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var passwordConfirmation: String = ""
     @State private var isBusiness: Bool = false
     @State private var showPassword: Bool = false
+    @State private var showPasswordConfirmation: Bool = false
     @State private var home: Int = 0
     @FocusState private var inFocus: Field?
     @State private var navigateToAdditionalInfo = false
@@ -29,17 +31,18 @@ struct RegisterView: View {
     private let userDAO = UserDAO()
     
     enum Field {
-        case email, plain, secure
+        case email, plain, secure, confirm
     }
     
     var isRegisterDisabled: Bool {
-        [email, password, name].contains(where: \.isEmpty) ||
+        [email, password, name, passwordConfirmation].contains(where: \.isEmpty) ||
         (!isBusiness && surname.isEmpty) ||
         !isOldEnough ||
         email.count > 40 ||
         password.count > 40 ||
         name.count > 40 ||
-        surname.count > 40
+        surname.count > 40 ||
+        password != passwordConfirmation
     }
     
     var isOldEnough: Bool {
@@ -147,6 +150,35 @@ struct RegisterView: View {
                         if newValue.count > 40 { password = String(newValue.prefix(40)) }
                     }
                     
+                    HStack {
+                        if showPasswordConfirmation {
+                            TextField("Confirm Password", text: $passwordConfirmation)
+                                .focused($inFocus, equals: .confirm)
+                                .padding(10)
+                        } else {
+                            SecureField("Confirm Password", text: $passwordConfirmation)
+                                .focused($inFocus, equals: .confirm)
+                                .padding(10)
+                        }
+                        
+                        Button(action: {
+                            showPasswordConfirmation.toggle()
+                            inFocus = showPasswordConfirmation ? .confirm : nil
+                        }) {
+                            Image(systemName: showPasswordConfirmation ? "eye.slash" : "eye")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.trailing, 10)
+                    }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(.gray, lineWidth: 2)
+                    }
+                    .padding(.horizontal)
+                    .onChange(of: passwordConfirmation) { newValue in
+                        if newValue.count > 40 { passwordConfirmation = String(newValue.prefix(40)) }
+                    }
+                    
                     Button {
                         register()
                     } label: {
@@ -172,6 +204,21 @@ struct RegisterView: View {
                     } message: {
                         Text(registerResponse)
                     }
+                    
+                    HStack {
+                        Spacer()
+                        NavigationLink(destination: LoginScreen(email: email, password: password, isLoggedIn: $isLoggedIn)) {
+                            Text("Already have an account? ") +
+                            Text("Log in")
+                                .fontWeight(.heavy)
+                        }
+                        Spacer()
+                    }
+                    .padding()
+                    .font(.caption)
+                    .foregroundStyle(.black)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top,-20)
                     
                     Spacer()
                 }
@@ -203,6 +250,12 @@ struct RegisterView: View {
     }
     
     private func register() {
+        guard password == passwordConfirmation else {
+            isBusinessError = true
+            registerResponse = "Passwords do not match."
+            return
+        }
+        
         isLoading = true
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
