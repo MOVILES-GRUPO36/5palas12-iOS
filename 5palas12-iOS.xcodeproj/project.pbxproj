@@ -14,6 +14,13 @@
 		890CE07D2CD97B3E009FE9B5 /* OrderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CE07C2CD97B38009FE9B5 /* OrderCardView.swift */; };
 		890CE07F2CD97B53009FE9B5 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CE07E2CD97B49009FE9B5 /* CreateOrderView.swift */; };
 		890CE0812CD97B5E009FE9B5 /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CE0802CD97B5A009FE9B5 /* TimeManager.swift */; };
+		896D78E82CF3FA8B0000B8BB /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78E72CF3FA830000B8BB /* ChatMessage.swift */; };
+		896D78EA2CF3FBDC0000B8BB /* UserMessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78E92CF3FBD20000B8BB /* UserMessageBubble.swift */; };
+		896D78EC2CF3FC0A0000B8BB /* GeminiMessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78EB2CF3FC050000B8BB /* GeminiMessageBubble.swift */; };
+		896D78EE2CF3FC2D0000B8BB /* GeminiChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78ED2CF3FC1F0000B8BB /* GeminiChatView.swift */; };
+		896D78F12CF410440000B8BB /* Nutrition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78F02CF4103F0000B8BB /* Nutrition.swift */; };
+		896D78F32CF410CB0000B8BB /* NutritionAPImanager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78F22CF410C00000B8BB /* NutritionAPImanager.swift */; };
+		896D78F62CF411020000B8BB /* NutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78F52CF410FD0000B8BB /* NutritionView.swift */; };
 		9D01778A2CD99DFA0072EB70 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9D0177892CD99DFA0072EB70 /* FirebaseStorage */; };
 		9D0177C22CD9B5210072EB70 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0177C12CD9B5210072EB70 /* SearchBar.swift */; };
 		9D0177C42CD9C3550072EB70 /* OfflineModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0177C32CD9C3500072EB70 /* OfflineModeView.swift */; };
@@ -80,6 +87,13 @@
 		890CE07C2CD97B38009FE9B5 /* OrderCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCardView.swift; sourceTree = "<group>"; };
 		890CE07E2CD97B49009FE9B5 /* CreateOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderView.swift; sourceTree = "<group>"; };
 		890CE0802CD97B5A009FE9B5 /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
+		896D78E72CF3FA830000B8BB /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		896D78E92CF3FBD20000B8BB /* UserMessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessageBubble.swift; sourceTree = "<group>"; };
+		896D78EB2CF3FC050000B8BB /* GeminiMessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiMessageBubble.swift; sourceTree = "<group>"; };
+		896D78ED2CF3FC1F0000B8BB /* GeminiChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiChatView.swift; sourceTree = "<group>"; };
+		896D78F02CF4103F0000B8BB /* Nutrition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nutrition.swift; sourceTree = "<group>"; };
+		896D78F22CF410C00000B8BB /* NutritionAPImanager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionAPImanager.swift; sourceTree = "<group>"; };
+		896D78F52CF410FD0000B8BB /* NutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionView.swift; sourceTree = "<group>"; };
 		9D0177C12CD9B5210072EB70 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		9D0177C32CD9C3500072EB70 /* OfflineModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineModeView.swift; sourceTree = "<group>"; };
 		9D4702712CAB0D39003FDB87 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
@@ -182,6 +196,27 @@
 			path = Oirders;
 			sourceTree = "<group>";
 		};
+		896D78E22CF3FA480000B8BB /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				896D78ED2CF3FC1F0000B8BB /* GeminiChatView.swift */,
+				896D78EB2CF3FC050000B8BB /* GeminiMessageBubble.swift */,
+				896D78E92CF3FBD20000B8BB /* UserMessageBubble.swift */,
+				896D78E72CF3FA830000B8BB /* ChatMessage.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		896D78EF2CF410390000B8BB /* Food */ = {
+			isa = PBXGroup;
+			children = (
+				896D78F52CF410FD0000B8BB /* NutritionView.swift */,
+				896D78F22CF410C00000B8BB /* NutritionAPImanager.swift */,
+				896D78F02CF4103F0000B8BB /* Nutrition.swift */,
+			);
+			path = Food;
+			sourceTree = "<group>";
+		};
 		9D7173E02CBB694C00E4B524 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +293,8 @@
 		DE035ED42C87950E00627F34 /* 5palas12-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				896D78EF2CF410390000B8BB /* Food */,
+				896D78E22CF3FA480000B8BB /* Chat */,
 				890CE0732CD97AC6009FE9B5 /* Oirders */,
 				9D56D4482CD176B800098007 /* Payments */,
 				DE5F98DB2CC5959100862BA2 /* BusinessCenter */,
@@ -463,6 +500,8 @@
 			files = (
 				890CE07F2CD97B53009FE9B5 /* CreateOrderView.swift in Sources */,
 				890CE07B2CD97B2F009FE9B5 /* OrderDAO.swift in Sources */,
+				896D78F12CF410440000B8BB /* Nutrition.swift in Sources */,
+				896D78EA2CF3FBDC0000B8BB /* UserMessageBubble.swift in Sources */,
 				890CE0792CD97B23009FE9B5 /* OrderListView.swift in Sources */,
 				9DFED6D02CC5A6DD004348A2 /* MapAnnotationView.swift in Sources */,
 				DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */,
@@ -470,6 +509,7 @@
 				890CE0752CD97B03009FE9B5 /* OrderViewModel.swift in Sources */,
 				DE294FF72CACB9390045044A /* TabBarView.swift in Sources */,
 				9DE937122CAE35160061CD33 /* RestaurantCardView.swift in Sources */,
+				896D78EE2CF3FC2D0000B8BB /* GeminiChatView.swift in Sources */,
 				9DE937132CAE35160061CD33 /* RestaurantsListView.swift in Sources */,
 				9DB47C382CD72C670036B770 /* NetworkMonitor.swift in Sources */,
 				9DFED6C22CC558A5004348A2 /* ProductModel.swift in Sources */,
@@ -477,10 +517,12 @@
 				9D51D2F42CBC6A38005B7827 /* RestaurantDAO.swift in Sources */,
 				9DFED6CC2CC58017004348A2 /* RatingView.swift in Sources */,
 				9DFED6C82CC56416004348A2 /* ProductCardView.swift in Sources */,
+				896D78F32CF410CB0000B8BB /* NutritionAPImanager.swift in Sources */,
 				9DFED6CA2CC564EE004348A2 /* ProductListView.swift in Sources */,
 				9DE63B902CD95B0400797C82 /* (null) in Sources */,
 				890CE0812CD97B5E009FE9B5 /* TimeManager.swift in Sources */,
 				890CE07D2CD97B3E009FE9B5 /* OrderCardView.swift in Sources */,
+				896D78EC2CF3FC0A0000B8BB /* GeminiMessageBubble.swift in Sources */,
 				890CE0772CD97B0F009FE9B5 /* OrderModel.swift in Sources */,
 				9D51D2EA2CBC64FA005B7827 /* AppDelegate.swift in Sources */,
 				9DFED6C62CC55CB4004348A2 /* ProductDAO.swift in Sources */,
@@ -491,11 +533,13 @@
 				9D0177C22CD9B5210072EB70 /* SearchBar.swift in Sources */,
 				9DA4D0142CABA0B600107CD2 /* RestaurantModel.swift in Sources */,
 				9D673DF62CC95F76007A6E30 /* SearchView.swift in Sources */,
+				896D78E82CF3FA8B0000B8BB /* ChatMessage.swift in Sources */,
 				9D7173E22CBB7E7F00E4B524 /* RestaurantDetailView.swift in Sources */,
 				9D7173DE2CBB654900E4B524 /* TabBarButton.swift in Sources */,
 				9D51D2F22CBC6750005B7827 /* FirestoreManager.swift in Sources */,
 				9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */,
 				9DFED6C42CC559E5004348A2 /* ProductViewModel.swift in Sources */,
+				896D78F62CF411020000B8BB /* NutritionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,7 +720,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = palas12;
+				PRODUCT_BUNDLE_IDENTIFIER = "--palas12";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -709,7 +753,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = palas12;
+				PRODUCT_BUNDLE_IDENTIFIER = "--palas12";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

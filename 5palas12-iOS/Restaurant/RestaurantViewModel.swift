@@ -16,20 +16,46 @@ class RestaurantViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     let locationManager = LocationManager()
     private let restaurantDAO = RestaurantDAO()
+    private var distanceUpdateTimer: Timer?
+
     
     private let imageCache = NSCache<NSString, UIImage>()
 
-    func loadRestaurants() {
-        restaurantDAO.getAllRestaurants { [weak self] result in
-            switch result {
-            case .success(let restaurants):
-                self?.restaurants = restaurants
+    func startDistanceUpdates() {
+            distanceUpdateTimer = Timer.scheduledTimer(withTimeInterval: 150, repeats: true) { [weak self] _ in
+                self?.updateDistances()
+            }
+        }
+
+    func stopDistanceUpdates() {
+            distanceUpdateTimer?.invalidate()
+            distanceUpdateTimer = nil
+        }
+    
+    private func updateDistances() {
+            DispatchQueue.global(qos: .background).async { [weak self] in
                 self?.calculateDistances()
-                self?.cacheRestaurantsData()
-                print("Restaurantes cargados y almacenados en caché")
-            case .failure(let error):
-                self?.errorMessage = "Error al cargar restaurantes: \(error.localizedDescription)"
-                print(self?.errorMessage ?? "Error desconocido")
+                
+                DispatchQueue.main.async {
+                    self?.objectWillChange.send()
+                }
+            }
+        }
+    func loadRestaurants() {
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            self?.restaurantDAO.getAllRestaurants { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let restaurants):
+                        self?.restaurants = restaurants
+                        self?.calculateDistances()
+                        self?.cacheRestaurantsData()
+                        print("Restaurantes cargados y almacenados en caché")
+                    case .failure(let error):
+                        self?.errorMessage = "Error al cargar restaurantes: \(error.localizedDescription)"
+                        print(self?.errorMessage ?? "Error desconocido")
+                    }
+                }
             }
         }
     }
