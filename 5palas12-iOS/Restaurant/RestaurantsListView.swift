@@ -22,9 +22,30 @@ struct RestaurantsListView: View {
                         }
                     }
                     .padding()
+                    
                 }.background(Color("Timberwolf"))
-            }
-        }
+                // Spacer to push the button to the bottom
+                                Spacer()
+                                
+                                // Button to go to Food Info
+                                NavigationLink(destination: NutritionView()) {
+                                    HStack {
+                                        Image(systemName: "message.fill")
+                                            .foregroundColor(.white)
+                                            .padding(.trailing, 5)
+                                        Text("Ask for Food Info")
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                    }
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.fernGreen)
+                                    .cornerRadius(10)
+                                    .padding(.horizontal)
+                                }
+                                .padding(.bottom, 20)
+                            }
+                        }
         .onAppear {
             locationManager.requestLocation()
             enterTime = Date()

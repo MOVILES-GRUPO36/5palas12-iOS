@@ -78,6 +78,26 @@ struct MapView: View {
                     }
                 }
                 .padding(.all,0)
+                Spacer() // Pushes the button to the bottom of the screen
+                               
+                               // Button to go to Gemini Chat View
+                               NavigationLink(destination: GeminiChatView()) {
+                                   HStack {
+                                       Image(systemName: "message.fill")
+                                           .foregroundColor(.white)
+                                           .padding(.trailing, 5)
+                                       Text("Ask for indications")
+                                           .font(.headline)
+                                           .foregroundColor(.white)
+                                   }
+                                   .padding()
+                                   .frame(maxWidth: .infinity)
+                                   .background(Color.fernGreen)
+                                   .cornerRadius(10)
+                                   .padding(.horizontal)
+                               }
+                               .padding(.bottom, 20)
+                
             }
         }.sheet(isPresented: $showDetails) {
             RestaurantDetailView(restaurant: selectedRestaurant!)
