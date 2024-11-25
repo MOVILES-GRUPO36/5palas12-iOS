@@ -60,6 +60,7 @@
 		DED92B192CAB319F000ED341 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DED92B182CAB319F000ED341 /* GoogleService-Info.plist */; };
 		DED92B1C2CAB329F000ED341 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DED92B1B2CAB329F000ED341 /* FirebaseAnalytics */; };
 		DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE457792CACC0F000F810DD /* HexColorExtension.swift */; };
+		DEFC94A22CF4262B009AADE4 /* BasedOnYou.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFC94A12CF4262B009AADE4 /* BasedOnYou.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredRestaurantsView.swift; sourceTree = "<group>"; };
 		DED92B182CAB319F000ED341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DEE457792CACC0F000F810DD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
+		DEFC94A12CF4262B009AADE4 /* BasedOnYou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasedOnYou.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -232,6 +234,7 @@
 		9DA4D0152CABA56300107CD2 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
+				DEFC94A12CF4262B009AADE4 /* BasedOnYou.swift */,
 				9D0177C12CD9B5210072EB70 /* SearchBar.swift */,
 				DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */,
 				9DE937102CAE35160061CD33 /* RestaurantCardView.swift */,
@@ -536,6 +539,7 @@
 				896D78E82CF3FA8B0000B8BB /* ChatMessage.swift in Sources */,
 				9D7173E22CBB7E7F00E4B524 /* RestaurantDetailView.swift in Sources */,
 				9D7173DE2CBB654900E4B524 /* TabBarButton.swift in Sources */,
+				DEFC94A22CF4262B009AADE4 /* BasedOnYou.swift in Sources */,
 				9D51D2F22CBC6750005B7827 /* FirestoreManager.swift in Sources */,
 				9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */,
 				9DFED6C42CC559E5004348A2 /* ProductViewModel.swift in Sources */,
@@ -703,7 +707,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 6U6UWM69SL;
+				DEVELOPMENT_TEAM = ZK4YT63F8M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -720,7 +724,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "--palas12";
+				PRODUCT_BUNDLE_IDENTIFIER = palas12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -736,7 +740,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 6U6UWM69SL;
+				DEVELOPMENT_TEAM = ZK4YT63F8M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -753,7 +757,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "--palas12";
+				PRODUCT_BUNDLE_IDENTIFIER = palas12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
