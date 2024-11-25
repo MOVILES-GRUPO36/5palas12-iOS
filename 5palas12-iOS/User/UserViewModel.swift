@@ -41,14 +41,15 @@ class UserViewModel: ObservableObject {
     }
     
     func updateUser(email: String, with updatedData: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
-            userDAO.updateUserByEmail(email: email, with: updatedData) { result in
-                switch result {
-                case .success:
-                    self.userData?.preferences = updatedData["preferences"] as? [String]
-                    completion(.success(()))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
+        userDAO.updateUserByEmail(email: email, with: updatedData) { result in
+            switch result {
+            case .success:
+                self.userData?.preferences = updatedData["preferences"] as? [String]
+                self.objectWillChange.send()
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
+    }
 }
