@@ -91,8 +91,24 @@ class UserDAO {
     }
     
     
+    func updateUserByEmail(email: String, with updatedData: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
+            db.collection(collectionName).whereField("email", isEqualTo: email).getDocuments { snapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let document = snapshot?.documents.first {
+                    document.reference.updateData(updatedData) { error in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            completion(.success(()))
+                        }
+                    }
+                } else {
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User not found."])))
+                }
+            }
+        }
     
-    // Update a user's information
     func updateUser(userId: String, with updatedData: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
         db.collection(collectionName).document(userId).updateData(updatedData) { error in
             if let error = error {
@@ -103,21 +119,34 @@ class UserDAO {
         }
     }
     
-    // Delete a user by ID
-    func deleteUser(userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        db.collection(collectionName).document(userId).delete { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(()))
-            }
+    func deleteUserByEmail(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            db.collection(collectionName)
+                .whereField("email", isEqualTo: email)
+                .getDocuments { querySnapshot, error in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    
+                    guard let documents = querySnapshot?.documents, !documents.isEmpty else {
+                        completion(.failure(NSError(domain: "UserNotFound", code: 404, userInfo: [NSLocalizedDescriptionKey: "User with email \(email) not found."])))
+                        return
+                    }
+                    
+                    let documentID = documents.first!.documentID
+                    self.db.collection(self.collectionName).document(documentID).delete { error in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            completion(.success(()))
+                        }
+                    }
+                }
         }
-    }
     
     func addRestaurantToUser(email: String, restaurantName: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let usersCollection = db.collection(collectionName)
         
-        // Query the user's document by email
         usersCollection.whereField("email", isEqualTo: email).getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
@@ -125,15 +154,12 @@ class UserDAO {
             }
             
             guard let document = snapshot?.documents.first else {
-                // Handle case where no document with the given email is found
                 completion(.failure(NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "User not found"])))
                 return
             }
             
-            // Get the document reference of the found user
             let userRef = document.reference
             
-            // Set the "restaurant" field to the specified restaurant name (replacing any existing value)
             userRef.updateData([
                 "restaurant": restaurantName
             ]) { error in
@@ -160,8 +186,52 @@ class UserDAO {
                             completion(.failure(error))
                         }
                     } else {
-                        completion(.success(nil)) // No user found
+                        completion(.success(nil))
                     }
                 }
         }
+    
+    func migrateUsersToAddPreferences(completion: @escaping (Result<Void, Error>) -> Void) {
+        let usersCollection = db.collection(collectionName)
+        
+        usersCollection.getDocuments { snapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let documents = snapshot?.documents else {
+                print("No documents found.")
+                completion(.success(()))
+                return
+            }
+            
+            let group = DispatchGroup()
+            
+            for document in documents {
+                group.enter()
+                
+                let userRef = document.reference
+                var userData = document.data()
+                
+                if userData["preferences"] == nil {
+                    userRef.updateData(["preferences": []]) { error in
+                        if let error = error {
+                            print("Error updating user \(document.documentID): \(error)")
+                        } else {
+                            print("User \(document.documentID) updated successfully.")
+                        }
+                        group.leave()
+                    }
+                } else {
+                    group.leave()
+                }
+            }
+            
+            group.notify(queue: .main) {
+                print("Migration completed.")
+                completion(.success(()))
+            }
+        }
+    }
 }

@@ -34,6 +34,14 @@ class RestaurantViewModel: ObservableObject {
         }
     }
     
+    func filterRestaurants(by categories: [String]) -> [RestaurantModel] {
+            return restaurants.filter { restaurant in
+                !categories.isEmpty && restaurant.categories.contains { category in
+                    categories.contains(category)
+                }
+            }
+        }
+    
     func getRestaurantByName(name: String) -> RestaurantModel? {
         return restaurants.first { $0.name.lowercased() == name.lowercased() }
     }
@@ -75,7 +83,7 @@ class RestaurantViewModel: ObservableObject {
     }
 
     func clearCache() {
-        imageCache.removeAllObjects() // Elimina todas las imágenes de la cache
+        imageCache.removeAllObjects()
         print("Cache de imágenes eliminado.")
     }
 
@@ -101,7 +109,7 @@ class RestaurantViewModel: ObservableObject {
     }
     
     private func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
-        let R = 6371.0 // Radio de la Tierra en kilómetros
+        let R = 6371.0 
         let dLat = (lat2 - lat1) * .pi / 180.0
         let dLon = (lon2 - lon1) * .pi / 180.0
         let a = sin(dLat / 2) * sin(dLat / 2) +
