@@ -22,7 +22,7 @@ class RestaurantViewModel: ObservableObject {
     private let imageCache = NSCache<NSString, UIImage>()
 
     func startDistanceUpdates() {
-            distanceUpdateTimer = Timer.scheduledTimer(withTimeInterval: 150, repeats: true) { [weak self] _ in
+            distanceUpdateTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { [weak self] _ in
                 self?.updateDistances()
             }
         }

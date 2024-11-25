@@ -24,6 +24,7 @@
 		9D01778A2CD99DFA0072EB70 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9D0177892CD99DFA0072EB70 /* FirebaseStorage */; };
 		9D0177C22CD9B5210072EB70 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0177C12CD9B5210072EB70 /* SearchBar.swift */; };
 		9D0177C42CD9C3550072EB70 /* OfflineModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0177C32CD9C3500072EB70 /* OfflineModeView.swift */; };
+		9D0E61EB2CF422C30093D1A2 /* BasedOnYou.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0E61EA2CF422C30093D1A2 /* BasedOnYou.swift */; };
 		9D4702722CAB0D39003FDB87 /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D4702712CAB0D39003FDB87 /* LogoView.swift */; };
 		9D51D2EA2CBC64FA005B7827 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D51D2E92CBC64FA005B7827 /* AppDelegate.swift */; };
 		9D51D2EE2CBC6615005B7827 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9D51D2ED2CBC6615005B7827 /* FirebaseCore */; };
@@ -96,6 +97,7 @@
 		896D78F52CF410FD0000B8BB /* NutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionView.swift; sourceTree = "<group>"; };
 		9D0177C12CD9B5210072EB70 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		9D0177C32CD9C3500072EB70 /* OfflineModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineModeView.swift; sourceTree = "<group>"; };
+		9D0E61EA2CF422C30093D1A2 /* BasedOnYou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasedOnYou.swift; sourceTree = "<group>"; };
 		9D4702712CAB0D39003FDB87 /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
 		9D51D2E92CBC64FA005B7827 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9D51D2F12CBC6750005B7827 /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 		9DA4D0152CABA56300107CD2 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
+				9D0E61EA2CF422C30093D1A2 /* BasedOnYou.swift */,
 				9D0177C12CD9B5210072EB70 /* SearchBar.swift */,
 				DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */,
 				9DE937102CAE35160061CD33 /* RestaurantCardView.swift */,
@@ -536,6 +539,7 @@
 				896D78E82CF3FA8B0000B8BB /* ChatMessage.swift in Sources */,
 				9D7173E22CBB7E7F00E4B524 /* RestaurantDetailView.swift in Sources */,
 				9D7173DE2CBB654900E4B524 /* TabBarButton.swift in Sources */,
+				9D0E61EB2CF422C30093D1A2 /* BasedOnYou.swift in Sources */,
 				9D51D2F22CBC6750005B7827 /* FirestoreManager.swift in Sources */,
 				9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */,
 				9DFED6C42CC559E5004348A2 /* ProductViewModel.swift in Sources */,
@@ -703,7 +707,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 6U6UWM69SL;
+				DEVELOPMENT_TEAM = YYACA4789Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -736,7 +740,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = 6U6UWM69SL;
+				DEVELOPMENT_TEAM = YYACA4789Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
