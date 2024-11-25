@@ -6,7 +6,7 @@
 
 ## Type 2: User and Business Behavior
 - [ ] At what time of the day is it most likely to find the most products available?
-- [ ] Are there any deals for the user based on food preference?
+- [ ] Are there any available restaurants tailored to the user’s specific food preferences?
 
 ## Type 3: Feature Usage Analysis
 - [x] Determine the **most used feature by users** to prioritize improvements and further development of high-value aspects.
