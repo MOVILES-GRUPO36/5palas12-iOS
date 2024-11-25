@@ -54,7 +54,6 @@ struct GeminiChatView: View {
         }
     }
     
-    // Enviar mensaje a la API de Gemini
     func sendMessage() {
         let trimmedInput = userInput.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedInput.isEmpty else { return }
@@ -69,9 +68,16 @@ struct GeminiChatView: View {
         // Indicador de carga mientras esperamos la respuesta de la API
         isLoading = true
         
+        // Definir el contexto inicial
+        let initialContext = "You are a helpful assistant of 5 palas 12 app that is an app for ordering and picking food, you are here for answering questions and give the user indications for going to the diferent restaurants in bogota colombia, you should demand an initial location point and then give the user indications for arriving to the desired restaurant"
+        
+        // Concatenar el contexto inicial con la entrada del usuario
+        let fullInput = initialContext + "\n" + trimmedInput
+        
         // Realizar la solicitud a la API de Gemini
-        fetchGeminiResponse(input: trimmedInput)
+        fetchGeminiResponse(input: fullInput)
     }
+
     
     func fetchGeminiResponse(input: String) {
         guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDxISDIIdOkIUT0TNRFY1Occ3rbCANZQzw") else {
