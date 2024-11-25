@@ -272,7 +272,8 @@ struct RegisterView: View {
                 surname: surname,
                 email: email,
                 birthday: birthday,
-                createdAt: Date()
+                createdAt: Date(),
+                preferences: []
             )
             
             self.userDAO.addUser(user) { result in

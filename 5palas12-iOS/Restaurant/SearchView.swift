@@ -6,6 +6,7 @@ struct SearchView: View {
     @State private var searchText = ""
     @State private var enterTime: Date? = nil
     @State private var filteredRestaurants: [RestaurantModel] = []
+    @EnvironmentObject var userVM: UserViewModel
 
     private let categories: [(name: String, imageUrl: String)] = [
         ("Vegan", "https://picsum.photos/id/1011/300/200"),
@@ -21,8 +22,14 @@ struct SearchView: View {
             VStack {
                 SearchBar(text: $searchText, onSearch: filterRestaurants)
                     .padding()
+                    .padding(.top, -15)
+                    .padding(.bottom, -15)
 
                 if searchText.isEmpty {
+                    createButton(title: "Based on you", color: Color(hex: "#588157")) {
+                        BasedOnYouView().environmentObject(userVM)
+                    }
+                    
                     CategoryGridView(categories: categories, restaurants: restaurantsVM.restaurants)
                 } else if filteredRestaurants.isEmpty {
                     Text("No results found")
@@ -43,7 +50,7 @@ struct SearchView: View {
             }
             .navigationTitle("Search Restaurants")
             .onAppear {
-                restaurantsVM.loadRestaurants() // Load restaurants dynamically
+                restaurantsVM.loadRestaurants()
                 filteredRestaurants = restaurantsVM.restaurants
                 enterTime = Date()
             }
@@ -61,6 +68,7 @@ struct SearchView: View {
                 }
             }
         }
+        .background(Color(hex: "#E6E1DB"))
     }
 
     func filterRestaurants() {
@@ -72,6 +80,20 @@ struct SearchView: View {
                 restaurant.name.lowercased().contains(query) ||
                 restaurant.categories.contains { $0.lowercased().contains(query) }
             }
+        }
+    }
+    
+    private func createButton<Destination: View>(title: String, color: Color, @ViewBuilder destination: @escaping () -> Destination) -> some View {
+        NavigationLink(destination: destination()) {
+            Text(title)
+                .font(.title2)
+                .bold()
+                .foregroundColor(.white)
+                .frame(height: 46)
+                .frame(maxWidth: .infinity)
+                .background(color)
+                .cornerRadius(8)
+                .padding()
         }
     }
 }

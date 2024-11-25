@@ -2,7 +2,8 @@ import SwiftUI
 import FirebaseFirestore
 
 class UserViewModel: ObservableObject {
-    @Published var userData: UserModel? = nil    
+    @Published var userData: UserModel? = nil
+    private let userDAO = UserDAO()
     
 
     func loadUserFromDefaults() {
@@ -21,4 +22,33 @@ class UserViewModel: ObservableObject {
             print("No email found in UserDefaults")
         }
     }
+    
+    func addPreferences(_ preferences: [String], completion: @escaping (Bool) -> Void) {
+        guard let userId = userData?.id else {
+            completion(false)
+            return
+        }
+        
+        UserDAO().updateUser(userId: userId, with: ["preferences": FieldValue.arrayUnion(preferences)]) { result in
+            switch result {
+            case .success():
+                self.userData?.preferences?.append(contentsOf: preferences)
+                completion(true)
+            case .failure:
+                completion(false)
+            }
+        }
+    }
+    
+    func updateUser(email: String, with updatedData: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
+            userDAO.updateUserByEmail(email: email, with: updatedData) { result in
+                switch result {
+                case .success:
+                    self.userData?.preferences = updatedData["preferences"] as? [String]
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
 }
