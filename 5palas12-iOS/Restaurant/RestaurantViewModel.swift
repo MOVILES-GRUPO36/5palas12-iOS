@@ -33,14 +33,14 @@ class RestaurantViewModel: ObservableObject {
         }
     
     private func updateDistances() {
-            DispatchQueue.global(qos: .background).async { [weak self] in
-                self?.calculateDistances()
-                
-                DispatchQueue.main.async {
-                    self?.objectWillChange.send()
-                }
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            self?.calculateDistances()
+            
+            DispatchQueue.main.async {
+                self?.objectWillChange.send()
             }
         }
+    }
     func loadRestaurants() {
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             self?.restaurantDAO.getAllRestaurants { result in
