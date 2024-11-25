@@ -11,11 +11,10 @@ struct BasedOnYouView: View {
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var restaurantsVM: RestaurantViewModel
     @State private var availableCategories = ["Vegetariano", "Vegano", "Mediterránea", "Organica", "Postres", "Mariscos", "Colombiana", "A la carte", "gluten-free", "Buffet", "Típica", "China", "Parrilla"]
+    @State private var selectedCategories: [String] = []
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var isEditingPreferences = false
-    
-    @State private var selectedCategories: [String] = []
 
     let columns = [GridItem(.adaptive(minimum: 100), spacing: 10)]
 
@@ -82,6 +81,7 @@ struct BasedOnYouView: View {
                 }
                 .padding()
 
+                // Show the filtered restaurants based on the user's selected preferences
                 let filteredRestaurants = restaurantsVM.filterRestaurants(by: userVM.userData?.preferences ?? [])
                 let sortedFilteredRestaurants = sortRestaurants(filteredRestaurants)
 
@@ -99,12 +99,6 @@ struct BasedOnYouView: View {
                 }
             }
         }
-        .onAppear {
-            preloadUserPreferences()
-        }
-        .onChange(of: userVM.userData?.preferences) { newPreferences in
-            selectedCategories = newPreferences ?? []
-        }
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Preferences Error"),
@@ -112,12 +106,11 @@ struct BasedOnYouView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
+        .onAppear {
+            preloadUserPreferences()
+        }
     }
-
-    private func preloadUserPreferences() {
-        // Initialize selectedCategories with current user preferences when the view appears
-        selectedCategories = userVM.userData?.preferences ?? []
-    }
+    
 
     private func toggleCategorySelection(_ category: String) {
         if let index = selectedCategories.firstIndex(of: category) {
@@ -147,14 +140,9 @@ struct BasedOnYouView: View {
                 switch result {
                 case .success:
                     print("Preferences saved successfully!")
-                    // Update preferences in user data model
-                    userVM.userData?.preferences = preferences
-                    selectedCategories = preferences // Update the UI
                     isEditingPreferences = false
                 case .failure(let error):
                     print("Failed to save preferences: \(error.localizedDescription)")
-                    showAlert = true
-                    alertMessage = "Failed to save preferences."
                 }
             }
         } else {
@@ -166,6 +154,10 @@ struct BasedOnYouView: View {
     private func enterEditMode() {
         selectedCategories = userVM.userData?.preferences ?? []
         isEditingPreferences = true
+    }
+
+    private func preloadUserPreferences() {
+        selectedCategories = userVM.userData?.preferences ?? []
     }
 
     private func sortRestaurants(_ restaurants: [RestaurantModel]) -> [RestaurantModel] {
