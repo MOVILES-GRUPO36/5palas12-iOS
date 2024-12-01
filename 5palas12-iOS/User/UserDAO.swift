@@ -234,4 +234,24 @@ class UserDAO {
             }
         }
     }
+    
+    func removeRestaurantFromUser(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        db.collection(collectionName)
+            .whereField("email", isEqualTo: email)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let document = snapshot?.documents.first {
+                    document.reference.updateData(["restaurant": FieldValue.delete()]) { error in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            completion(.success(()))
+                        }
+                    }
+                } else {
+                    completion(.failure(NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "User not found."])))
+                }
+            }
+    }
 }

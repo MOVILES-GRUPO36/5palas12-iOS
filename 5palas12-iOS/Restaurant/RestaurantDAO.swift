@@ -70,5 +70,44 @@ class RestaurantDAO {
                     }
                 }
         }
+    func deleteRestaurantByName(_ name: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        db.collection(collectionName)
+            .whereField("name", isEqualTo: name)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let document = snapshot?.documents.first {
+                    document.reference.delete { deleteError in
+                        if let deleteError = deleteError {
+                            completion(.failure(deleteError))
+                        } else {
+                            completion(.success(()))
+                        }
+                    }
+                } else {
+                    // No matching restaurant found
+                    completion(.failure(NSError(domain: "RestaurantDAO", code: 404, userInfo: [NSLocalizedDescriptionKey: "Restaurant not found"])))
+                }
+            }
+    }
+    
+    func getRestaurantByName(_ name: String, completion: @escaping (Result<RestaurantModel, Error>) -> Void) {
+        db.collection(collectionName)
+            .whereField("name", isEqualTo: name)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let document = snapshot?.documents.first {
+                    do {
+                        let restaurant = try document.data(as: RestaurantModel.self)
+                        completion(.success(restaurant))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                } else {
+                    completion(.failure(NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "Restaurant not found"])))
+                }
+            }
+    }
 }
 

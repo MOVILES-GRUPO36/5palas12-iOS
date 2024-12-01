@@ -58,6 +58,7 @@
 		DE294FF12CAB3BE70045044A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE294FF02CAB3BE70045044A /* FirebaseAuth */; };
 		DE294FF72CACB9390045044A /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE294FF62CACB9370045044A /* TabBarView.swift */; };
 		DE9131D42CC6BADD0004F455 /* FilteredRestaurantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */; };
+		DEA868DA2CF4E8A700FEE2B5 /* BasedOnYou.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA868D92CF4E8A700FEE2B5 /* BasedOnYou.swift */; };
 		DED92B192CAB319F000ED341 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DED92B182CAB319F000ED341 /* GoogleService-Info.plist */; };
 		DED92B1C2CAB329F000ED341 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DED92B1B2CAB329F000ED341 /* FirebaseAnalytics */; };
 		DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE457792CACC0F000F810DD /* HexColorExtension.swift */; };
@@ -132,6 +133,7 @@
 		DE035EF22C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DE294FF62CACB9370045044A /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredRestaurantsView.swift; sourceTree = "<group>"; };
+		DEA868D92CF4E8A700FEE2B5 /* BasedOnYou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasedOnYou.swift; sourceTree = "<group>"; };
 		DED92B182CAB319F000ED341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DEE457792CACC0F000F810DD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
 		DEFC94A12CF4262B009AADE4 /* BasedOnYou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasedOnYou.swift; sourceTree = "<group>"; };
@@ -236,7 +238,11 @@
 		9DA4D0152CABA56300107CD2 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< Updated upstream
 				9D0E61EA2CF422C30093D1A2 /* BasedOnYou.swift */,
+=======
+				DEA868D92CF4E8A700FEE2B5 /* BasedOnYou.swift */,
+>>>>>>> Stashed changes
 				9D0177C12CD9B5210072EB70 /* SearchBar.swift */,
 				DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */,
 				9DE937102CAE35160061CD33 /* RestaurantCardView.swift */,
@@ -541,7 +547,11 @@
 				896D78E82CF3FA8B0000B8BB /* ChatMessage.swift in Sources */,
 				9D7173E22CBB7E7F00E4B524 /* RestaurantDetailView.swift in Sources */,
 				9D7173DE2CBB654900E4B524 /* TabBarButton.swift in Sources */,
+<<<<<<< Updated upstream
 				9D0E61EB2CF422C30093D1A2 /* BasedOnYou.swift in Sources */,
+=======
+				DEA868DA2CF4E8A700FEE2B5 /* BasedOnYou.swift in Sources */,
+>>>>>>> Stashed changes
 				9D51D2F22CBC6750005B7827 /* FirestoreManager.swift in Sources */,
 				9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */,
 				9DFED6C42CC559E5004348A2 /* ProductViewModel.swift in Sources */,
@@ -709,7 +719,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
+<<<<<<< Updated upstream
 				DEVELOPMENT_TEAM = YYACA4789Q;
+=======
+				DEVELOPMENT_TEAM = ZK4YT63F8M;
+>>>>>>> Stashed changes
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -742,7 +756,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
+<<<<<<< Updated upstream
 				DEVELOPMENT_TEAM = YYACA4789Q;
+=======
+				DEVELOPMENT_TEAM = ZK4YT63F8M;
+>>>>>>> Stashed changes
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
