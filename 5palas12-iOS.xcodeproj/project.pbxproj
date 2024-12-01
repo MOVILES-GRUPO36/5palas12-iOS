@@ -61,7 +61,6 @@
 		DED92B192CAB319F000ED341 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DED92B182CAB319F000ED341 /* GoogleService-Info.plist */; };
 		DED92B1C2CAB329F000ED341 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DED92B1B2CAB329F000ED341 /* FirebaseAnalytics */; };
 		DEE4577A2CACC0F000F810DD /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE457792CACC0F000F810DD /* HexColorExtension.swift */; };
-		DEFC94A22CF4262B009AADE4 /* BasedOnYou.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFC94A12CF4262B009AADE4 /* BasedOnYou.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,7 +133,6 @@
 		DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredRestaurantsView.swift; sourceTree = "<group>"; };
 		DED92B182CAB319F000ED341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DEE457792CACC0F000F810DD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
-		DEFC94A12CF4262B009AADE4 /* BasedOnYou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasedOnYou.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -709,7 +707,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = YYACA4789Q;
+				DEVELOPMENT_TEAM = ZK4YT63F8M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
@@ -742,7 +740,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"5palas12-iOS/Preview Content\"";
-				DEVELOPMENT_TEAM = YYACA4789Q;
+				DEVELOPMENT_TEAM = ZK4YT63F8M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "-palas12-iOS-Info.plist";
