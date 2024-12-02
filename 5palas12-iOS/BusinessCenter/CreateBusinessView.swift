@@ -25,7 +25,7 @@ struct CreateBusinessView: View {
     @State private var address: String = ""
     @State private var restaurant: RestaurantModel?
     
-    private let restaurantDAO = RestaurantDAO()
+    private let restaurantDAO = RestaurantSA()
     private let userDAO = UserDAO()
     @State private var userEmail: String = ""
     

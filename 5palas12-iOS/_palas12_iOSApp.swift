@@ -17,7 +17,7 @@ struct _palas12_iOSApp: App {
             VStack(spacing: 0) {
                 if isLoggedIn {
                     if networkMonitor.isConnected {
-                        if let userData = userVM.userData {
+                        if userVM.userData != nil {
                             TabBarView(selectedTab: $selectedTab)
                                 .environmentObject(restaurantsVM)
                                 .environmentObject(userVM)

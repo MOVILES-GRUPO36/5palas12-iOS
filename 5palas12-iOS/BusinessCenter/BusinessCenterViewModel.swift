@@ -7,10 +7,12 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 class BusinessCenterViewModel: ObservableObject {
     @Published var businessExists: Bool = false
     private var userDAO = UserDAO()
+    @Published var restaurant: RestaurantModel?
     
     func loadUserBusinessStatus(for userEmail: String) {
         userDAO.getUserByEmail(userEmail: userEmail) { [weak self] result in
