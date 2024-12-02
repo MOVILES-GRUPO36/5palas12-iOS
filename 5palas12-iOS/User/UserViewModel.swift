@@ -4,8 +4,9 @@ import FirebaseFirestore
 class UserViewModel: ObservableObject {
     @Published var userData: UserModel? = nil
     private let userDAO = UserDAO()
+    private let restaurantDAO = RestaurantSA()
     
-
+    
     func loadUserFromDefaults() {
         if let email = UserDefaults.standard.string(forKey: "currentUserEmail") {
             UserDAO().getUserByEmail(email: email) { [weak self] result in
@@ -52,4 +53,6 @@ class UserViewModel: ObservableObject {
             }
         }
     }
+
 }
+

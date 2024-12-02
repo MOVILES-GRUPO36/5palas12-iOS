@@ -6,8 +6,9 @@
 //
 
 import FirebaseFirestore
+import Foundation
 
-class RestaurantDAO {
+class RestaurantSA {
     private let db = FirestoreManager.shared.db
     private let collectionName = "restaurants"
     
@@ -36,18 +37,40 @@ class RestaurantDAO {
         db.collection("restaurants").getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
+            } else if let documents = snapshot?.documents {
                 var restaurants: [RestaurantModel] = []
-                for document in snapshot!.documents {
-                    do {
-                        let restaurant = try document.data(as: RestaurantModel.self)
+                for document in documents {
+                    var restaurant = try? document.data(as: RestaurantModel.self)
+                    restaurant?.restaurantID = document.documentID // Asignar documentID como restaurantID
+                    if let restaurant = restaurant {
                         restaurants.append(restaurant)
-                    } catch {
-                        completion(.failure(error))
-                        return
                     }
                 }
                 completion(.success(restaurants))
+            } else {
+                completion(.success([]))
+            }
+        }
+    }
+    
+    func updateRestaurant(_ restaurant: RestaurantModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let restaurantData: [String: Any] = [
+            "name": restaurant.name,
+            "latitude": restaurant.latitude,
+            "longitude": restaurant.longitude,
+            "photo": restaurant.photo,
+            "categories": restaurant.categories,
+            "description": restaurant.description,
+            "rating": restaurant.rating,
+            "address": restaurant.address,
+            "distance": restaurant.distance ?? 0
+        ]
+
+        db.collection("restaurants").document(restaurant.restaurantID!).updateData(restaurantData) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
             }
         }
     }

@@ -18,7 +18,7 @@ struct DeleteBusinessView: View {
     @State private var userRestaurant: String = ""
     @State private var showAlert = false
 
-    private let restaurantDAO = RestaurantDAO()
+    private let restaurantDAO = RestaurantSA()
     private let userDAO = UserDAO()
     @EnvironmentObject var userVM: UserViewModel
     @EnvironmentObject var restaurantVM: RestaurantViewModel
