@@ -1,5 +1,6 @@
 import SwiftUI
 import FirebaseAnalytics
+import Charts
 
 struct OrdersListView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -9,7 +10,7 @@ struct OrdersListView: View {
     @State private var showAlert = false
     @State private var timeRemaining = ""
     @State private var timer: Timer? = nil
-
+    
     private var userEmail: String? {
         UserDefaults.standard.string(forKey: "currentUserEmail")
     }
@@ -19,11 +20,29 @@ struct OrdersListView: View {
             .filter { $0.isActive }
             .map { $0.pickUpTime }
     }
-
+    private func categoryDistribution() -> [String: Int] {
+        var categoryCount: [String: Int] = [:]
+        
+        for order in ordersVM.orders {
+            for product in order.products {
+                // Supongamos que `product` contiene la categoría en su nombre o tiene un campo específico.
+                // Esto depende de cómo esté definido el modelo de datos.
+                let category = product // Cambia según cómo se obtienen las categorías.
+                categoryCount[category, default: 0] += 1
+            }
+        }
+        
+        return categoryCount
+    }
+    struct CategoryData: Identifiable {
+        let id = UUID()
+        let category: String
+        let count: Int
+    }
     private func calculateTimeRemaining() -> String? {
-
+        
         let pickupTimes: [String: Int] = ["5PM": 17, "6PM": 18, "7PM": 19]
-
+        
         guard let earliestPickup = activePickupTimes.min(),
               let hour = pickupTimes[earliestPickup] else {
             return nil
@@ -34,13 +53,13 @@ struct OrdersListView: View {
         components.hour = hour
         components.minute = 0
         var earliestPickupDate = Calendar.current.date(from: components)!
-
+        
         // If the current time is already past the pickup time, move to the next day
         let now = Date()
         if earliestPickupDate <= now {
             earliestPickupDate = Calendar.current.date(byAdding: .day, value: 1, to: earliestPickupDate)!
         }
-
+        
         let timeDifference = earliestPickupDate.timeIntervalSince(now)
         let hours = Int(timeDifference) / 3600
         let minutes = (Int(timeDifference) % 3600) / 60
@@ -54,6 +73,27 @@ struct OrdersListView: View {
                     .padding(.all, 0)
                 
                 ScrollView {
+                    let chartData = categoryDistribution().map { CategoryData(category: $0.key, count: $0.value) }
+                    
+                    if !chartData.isEmpty {
+                        VStack {
+                            Text("Your favourite food ❤️")
+                                .font(.headline)
+                                .padding(.top)
+                            
+                            Chart(chartData) { data in
+                                SectorMark(
+                                    angle: .value("Count", data.count),
+                                    innerRadius: .ratio(0.6),
+                                    outerRadius: .ratio(1.0)
+                                )
+                                .foregroundStyle(by: .value("Category", data.category))
+                            }
+                            .chartLegend(.visible)
+                            .frame(height: 250)
+                            .padding()
+                        }
+                    }
                     VStack(spacing: 16) {
                         if let email = userEmail {
                             ForEach(ordersVM.orders) { order in
