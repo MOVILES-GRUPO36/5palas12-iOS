@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 struct RestaurantModel: Decodable, Identifiable, Equatable, Hashable{
-    var id = UUID()
+    var restaurantID : String?
+    var id: String { restaurantID ?? UUID().uuidString }
     var name: String
     var latitude: Double
     var longitude: Double
@@ -32,3 +33,4 @@ struct RestaurantModel: Decodable, Identifiable, Equatable, Hashable{
         case address
     }
 }
+

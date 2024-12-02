@@ -3,6 +3,7 @@ import FirebaseAuth
 
 struct BusinessCenterListView: View {
     @ObservedObject var viewModel: BusinessCenterViewModel
+    @EnvironmentObject var userVM: UserViewModel
     @State var restaurant: RestaurantModel?
     @State private var selectedSetting: SettingItem? = nil
     @State private var settings: [SettingItem] = [
@@ -79,7 +80,7 @@ struct BusinessCenterListView: View {
         case "Create a business":
             return AnyView(CreateBusinessView(viewModel: viewModel))
         case "View and edit my business":
-            return AnyView(Text("View and edit my business view"))
+            return AnyView(BusinessEditView(restaurant:restaurant!))
         case "My orders":
             return AnyView(Text("My orders view"))
         case "My products":

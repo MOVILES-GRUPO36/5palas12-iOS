@@ -9,13 +9,14 @@ import Foundation
 import Combine
 import SwiftUI
 
+
 class RestaurantViewModel: ObservableObject {
     
     @Published var restaurants: [RestaurantModel] = []
     @Published var errorMessage: String? = nil
     private var cancellables = Set<AnyCancellable>()
     let locationManager = LocationManager()
-    private let restaurantDAO = RestaurantDAO()
+    private let restaurantSA = RestaurantSA()
     private var distanceUpdateTimer: Timer?
 
     
@@ -31,19 +32,67 @@ class RestaurantViewModel: ObservableObject {
             distanceUpdateTimer?.invalidate()
             distanceUpdateTimer = nil
         }
+    private let distancesQueue = DispatchQueue(label: "5palas12.distancesQueue", qos: .utility)
     
     private func updateDistances() {
-        DispatchQueue.global(qos: .utility).async { [weak self] in
-            self?.calculateDistances()
+        distancesQueue.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.calculateDistances()
             
             DispatchQueue.main.async {
-                self?.objectWillChange.send()
+                self.objectWillChange.send() // Indicar que hubo cambios
+                print("Restaurantes actualizados")
+            }
+        }
+    }
+    private let UIQueue = DispatchQueue(label: "5palas12.restaurantsQueue", qos: .userInteractive)
+    func editRestaurant(_ updatedRestaurant: RestaurantModel) {
+        distancesQueue.async { [weak self] in
+            guard let self = self else { return }
+
+            if let index = self.restaurants.firstIndex(where: { $0.restaurantID == updatedRestaurant.restaurantID }) {
+                DispatchQueue.main.async {
+                    self.restaurants[index] = updatedRestaurant
+                }
+                self.calculateDistance(for: updatedRestaurant)
+                self.loadRestaurantImage(for: updatedRestaurant) { [weak self] image in
+                    DispatchQueue.main.async {
+                        self?.restaurants[index].cachedImage = image
+                    }
+                }
+            } else {
+                print("No se encontró el restaurante con el ID: \(String(describing: updatedRestaurant.restaurantID))")
+            }
+        }
+    }
+
+    private func calculateDistance(for restaurant: RestaurantModel) {
+        guard let userLocation = locationManager.lastLocation else {
+            print("No se pudo obtener la ubicación del usuario")
+            return
+        }
+
+        let userLatitude = userLocation.coordinate.latitude
+        let userLongitude = userLocation.coordinate.longitude
+
+        let distance = haversineDistance(
+            lat1: userLatitude,
+            lon1: userLongitude,
+            lat2: restaurant.latitude,
+            lon2: restaurant.longitude
+        )
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if let index = self.restaurants.firstIndex(where: { $0.restaurantID == restaurant.restaurantID }) {
+                self.restaurants[index].distance = distance
             }
         }
     }
     func loadRestaurants() {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            self?.restaurantDAO.getAllRestaurants { result in
+        UIQueue.async { [weak self] in
+            self?.restaurantSA.getAllRestaurants { result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let restaurants):
@@ -83,9 +132,9 @@ class RestaurantViewModel: ObservableObject {
     }
 
     private func loadRestaurantImage(for restaurant: RestaurantModel, completion: @escaping (UIImage?) -> Void) {
-        let cacheKey = NSString(string: restaurant.photo)
+        let cacheKey = restaurant.photo 
 
-        if let cachedImage = imageCache.object(forKey: cacheKey) {
+        if let cachedImage = imageCache.object(forKey: cacheKey as NSString) {
             completion(cachedImage)
             return
         }
@@ -97,13 +146,14 @@ class RestaurantViewModel: ObservableObject {
         }
 
         URLSession.shared.dataTask(with: imageURL) { [weak self] data, _, error in
+            guard let self = self else { return }
             guard let data = data, let image = UIImage(data: data), error == nil else {
                 print("Error al descargar imagen: \(error?.localizedDescription ?? "desconocido")")
                 completion(nil)
                 return
             }
 
-            self?.imageCache.setObject(image, forKey: cacheKey)
+            self.imageCache.setObject(image, forKey: cacheKey as NSString)
             completion(image)
         }.resume()
     }
@@ -123,14 +173,22 @@ class RestaurantViewModel: ObservableObject {
             print("No se pudo obtener la ubicación del usuario")
             return
         }
-        
+
         let userLatitude = userLocation.coordinate.latitude
         let userLongitude = userLocation.coordinate.longitude
-        
-        for i in 0..<restaurants.count {
-            let restaurant = restaurants[i]
-            let distance = haversineDistance(lat1: userLatitude, lon1: userLongitude, lat2: restaurant.latitude, lon2: restaurant.longitude)
-            restaurants[i].distance = distance
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            for i in 0..<self.restaurants.count {
+                let restaurant = self.restaurants[i]
+                let distance = self.haversineDistance(
+                    lat1: userLatitude,
+                    lon1: userLongitude,
+                    lat2: restaurant.latitude,
+                    lon2: restaurant.longitude
+                )
+                self.restaurants[i].distance = distance
+            }
         }
     }
     

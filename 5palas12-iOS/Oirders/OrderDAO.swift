@@ -5,173 +5,140 @@
 //  Created by Sebastian Gaona on 4/11/24.
 //
 
-import FirebaseFirestore
 import Foundation
+import FirebaseFirestore
 import Network
 
 class OrderDAO {
-    private let db = FirestoreManager.shared.db
-    private let collectionName = "orders"
-    private let localFileName = "orders.json"
-    
-    private var monitor: NWPathMonitor!
-    private var isConnected: Bool = true
+    private let db = FirestoreManager.shared.db // Instancia de Firestore
+    private let collectionName = "orders" // Nombre de la colección en Firestore
+    private let localFileName = "orders.json" // Archivo local para almacenamiento de órdenes
+    private var monitor: NWPathMonitor! // Monitor de red
+    private var isConnected: Bool = true // Estado de la conexión de red
     
     init() {
-        setupNetworkMonitor()
-    }
-    
-    func createOrder(_ order: OrderModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        if isConnected {
-            db.collection(collectionName).addDocument(data: order.dictionaryRepresentation) { error in
-                if let error = error {
-                    // Guardar la orden en local si firebase falla
-                    self.saveOrderLocally(order)
-                    completion(.failure(error))
-                } else {
-                    completion(.success(()))
-                }
-            }
-        } else {
-            saveOrderLocally(order)
-            completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Offline mode, order saved locally."])))
-        }
-    }
-    
-    func getAllOrders(byUserEmail email: String, completion: @escaping (Result<[OrderModel], Error>) -> Void) {
-        if isConnected {
-            db.collection(collectionName).whereField("userEmail", isEqualTo: email).getDocuments { snapshot, error in
-                if let error = error {
-                    // Devolver ordenes locales
-                    completion(.success(self.loadOrdersLocally()))
-                } else {
-                    var firestoreOrders: [OrderModel] = []
-                    
-                    for document in snapshot!.documents {
-                        if let order = try? document.data(as: OrderModel.self) {
-                            firestoreOrders.append(order)
-                        }
-                    }
-                    
-                    // Cargar locales y verificar duplicados
-                    let localOrders = self.loadOrdersLocally()
-                    let uniqueOrders = self.mergeUniqueOrders(firestoreOrders: firestoreOrders, localOrders: localOrders)
-                    
-                    // Guardar las ordenes unicas en el almacenamiento local
-                    self.saveOrdersToFile(uniqueOrders)
-                    completion(.success(uniqueOrders))
-                }
-            }
-        } else {
-            // Offline: Cargar las ordenes locales
-            completion(.success(loadOrdersLocally()))
-        }
-    }
-    
-    // Mezclar Firestore por orderNumber
-    private func mergeUniqueOrders(firestoreOrders: [OrderModel], localOrders: [OrderModel]) -> [OrderModel] {
-        var uniqueOrders = firestoreOrders
-
-        for localOrder in localOrders {
-            if !firestoreOrders.contains(where: { $0.orderNumber == localOrder.orderNumber }) {
-                uniqueOrders.append(localOrder)
-            }
-        }
-        
-        return uniqueOrders
-    }
-    
-    func saveOrderLocally(_ order: OrderModel) {
-        var savedOrders = loadOrdersLocally()
-        
-        if !savedOrders.contains(where: { $0.orderNumber == order.orderNumber }) {
-            savedOrders.append(order)
-            saveOrdersToFile(savedOrders)
-        }
-    }
-    
-    func loadOrdersLocally() -> [OrderModel] {
-        let fileURL = getDocumentsDirectory().appendingPathComponent(localFileName)
-        guard let data = try? Data(contentsOf: fileURL),
-              let orders = try? JSONDecoder().decode([OrderModel].self, from: data) else {
-            return []
-        }
-        return orders
-    }
-    
-    private func saveOrdersToFile(_ orders: [OrderModel]) {
-        let fileURL = getDocumentsDirectory().appendingPathComponent(localFileName)
-        if let data = try? JSONEncoder().encode(orders) {
-            do {
-                try data.write(to: fileURL)
-                print("Local orders file saved at: \(fileURL.path)")
-            } catch {
-                print("Error saving local orders file: \(error.localizedDescription)")
-            }
-        } else {
-            print("Failed to encode orders for saving.")
-        }
+        setupNetworkMonitor() // Inicializa el monitoreo de red
     }
 
-    
-    private func getDocumentsDirectory() -> URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }
-    
+    // MARK: - Configuración del monitor de red
     private func setupNetworkMonitor() {
         monitor = NWPathMonitor()
-        monitor.pathUpdateHandler = { [weak self] path in
-            self?.isConnected = path.status == .satisfied
-            if self?.isConnected == true {
-                self?.syncLocalOrdersToFirestore()
-            }
+        monitor.pathUpdateHandler = { path in
+            self.isConnected = path.status == .satisfied // Actualiza el estado de la conexión
         }
         let queue = DispatchQueue(label: "NetworkMonitor")
         monitor.start(queue: queue)
     }
-    
-    func syncLocalOrdersToFirestore() {
-        let localOrders = loadOrdersLocally()
-        for order in localOrders {
-            // Revisar si en firebase existe el numero de orden
+
+    // MARK: - Obtener órdenes por email desde Firestore
+    func getAllOrders(byUserEmail email: String, completion: @escaping (Result<[OrderModel], Error>) -> Void) {
+        if isConnected {
+            // Si hay conexión, consulta Firestore
             db.collection(collectionName)
-                .whereField("orderNumber", isEqualTo: order.orderNumber)
-                .getDocuments { [weak self] snapshot, error in
-                    guard let self = self else { return }
-                    
+                .whereField("userEmail", isEqualTo: email) // Filtro por correo del usuario
+                .getDocuments { snapshot, error in
                     if let error = error {
-                        print("Error checking for duplicate order: \(error.localizedDescription)")
+                        completion(.failure(error)) // Retorna error si ocurre
                         return
                     }
-                    
-                    if let snapshot = snapshot, snapshot.documents.isEmpty {
-                        self.db.collection(self.collectionName).addDocument(data: order.dictionaryRepresentation) { error in
-                            if error == nil {
-                                // Successfully uploaded, remove local copy
-                                var remainingOrders = self.loadOrdersLocally()
-                                remainingOrders.removeAll { $0.orderNumber == order.orderNumber }
-                                self.saveOrdersToFile(remainingOrders)
-                            }
+
+                    guard let snapshot = snapshot else {
+                        completion(.failure(NSError(domain: "FirestoreError", code: -1, userInfo: [NSLocalizedDescriptionKey: "No data found."])))
+                        return
+                    }
+
+                    do {
+                        // Mapear documentos de Firestore a OrderModel
+                        let orders = try snapshot.documents.map { document -> OrderModel in
+                            var data = document.data()
+                            data["id"] = document.documentID // Agregar el ID del documento como propiedad
+                            let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+                            let order = try JSONDecoder().decode(OrderModel.self, from: jsonData)
+                            return order
                         }
-                    } else {
-                        print("Duplicate order found for order number: \(order.orderNumber), skipping sync.")
+                        completion(.success(orders)) // Devuelve las órdenes al completar
+                    } catch {
+                        completion(.failure(error)) // Error al deserializar
                     }
                 }
+        } else {
+            // Si no hay conexión, carga las órdenes locales
+            loadLocalOrders(completion: completion)
+        }
+    }
+
+    // MARK: - Cargar órdenes locales desde archivo
+    func loadLocalOrders(completion: @escaping (Result<[OrderModel], Error>) -> Void) {
+        let fileURL = getLocalFileURL()
+        do {
+            let data = try Data(contentsOf: fileURL) // Cargar datos del archivo local
+            let orders = try JSONDecoder().decode([OrderModel].self, from: data) // Decodificar las órdenes
+            completion(.success(orders)) // Devuelve las órdenes locales
+        } catch {
+            completion(.failure(error)) // Retorna error si no puede cargar los datos
+        }
+    }
+
+    // MARK: - Guardar órdenes en Firestore
+    func createOrder(_ order: OrderModel, completion: @escaping (Result<Void, Error>) -> Void) {
+            if isConnected {
+                db.collection(collectionName).addDocument(data: order.dictionaryRepresentation) { error in
+                }
+            }
+        }
+
+    // MARK: - Guardar órdenes localmente en archivo JSON
+    func saveOrdersLocally(_ orders: [OrderModel]) {
+        let activeOrders = orders.filter { $0.isActive } // Filtrar solo las órdenes activas
+        let fileURL = getLocalFileURL()
+        do {
+            let data = try JSONEncoder().encode(activeOrders) // Codificar solo las órdenes activas
+            try data.write(to: fileURL) // Guardar el archivo localmente
+        } catch {
+            print("Error al guardar órdenes localmente: \(error)") // Imprimir error si ocurre
+        }
+    }
+
+    // MARK: - Guardar una orden localmente
+    private func saveOrderLocally(_ order: OrderModel) {
+        var currentOrders = loadLocalOrdersSync() // Cargar las órdenes locales
+        currentOrders.append(order) // Añadir la nueva orden
+        saveOrdersLocally(currentOrders) // Guardar las órdenes actualizadas
+    }
+
+    // MARK: - Obtener URL del archivo local
+    private func getLocalFileURL() -> URL {
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return documentsDirectory.appendingPathComponent(localFileName)
+    }
+
+    // MARK: - Cargar órdenes locales de manera síncrona (para uso interno)
+    private func loadLocalOrdersSync() -> [OrderModel] {
+        let fileURL = getLocalFileURL()
+        do {
+            let data = try Data(contentsOf: fileURL) // Cargar datos del archivo
+            let orders = try JSONDecoder().decode([OrderModel].self, from: data) // Decodificar las órdenes
+            return orders
+        } catch {
+            return [] // Si no hay datos, retornar lista vacía
         }
     }
     
     func deleteLocalOrdersFile() {
-        let fileURL = getDocumentsDirectory().appendingPathComponent(localFileName)
+        let fileURL = getLocalFileURL() // Obtener la URL del archivo local
+        let fileManager = FileManager.default // Instancia del FileManager
         do {
-            if FileManager.default.fileExists(atPath: fileURL.path) {
-                try FileManager.default.removeItem(at: fileURL)
-                print("Local orders file deleted successfully.")
+            // Verificar si el archivo existe
+            if fileManager.fileExists(atPath: fileURL.path) {
+                try fileManager.removeItem(at: fileURL) // Eliminar el archivo
+                print("Archivo de órdenes local eliminado exitosamente.")
             } else {
-                print("No local orders file found to delete.")
+                print("El archivo local no existe.")
             }
         } catch {
-            print("Error deleting local orders file: \(error.localizedDescription)")
+            print("Error al eliminar el archivo local: \(error)")
         }
     }
-
 }
+

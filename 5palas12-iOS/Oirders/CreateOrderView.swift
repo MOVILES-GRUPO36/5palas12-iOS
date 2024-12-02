@@ -3,7 +3,7 @@ import SwiftUI
 struct CreateOrderView: View {
     @EnvironmentObject var ordersVM: OrdersViewModel
     @EnvironmentObject var restaurantsVM: RestaurantViewModel
-    @StateObject private var productVM = ProductViewModel(restaurant: RestaurantModel(id: UUID(), name: "", latitude: 0.0, longitude: 0.0, photo: "", categories: [], description: "", rating: 0.0, address: ""))
+    @StateObject private var productVM = ProductViewModel(restaurant: RestaurantModel(name: "", latitude: 0.0, longitude: 0.0, photo: "", categories: [], description: "", rating: 0.0, address: ""))
     
     @State private var userEmail: String = UserDefaults.standard.string(forKey: "currentUserEmail") ?? ""
     @State private var selectedRestaurantName: String?  // Store restaurant name, not object
