@@ -1,10 +1,3 @@
-//
-//  CreateOrderView.swift
-//  5palas12-iOS
-//
-//  Created by Sebastian Gaona on 4/11/24.
-//
-
 import SwiftUI
 
 struct CreateOrderView: View {
@@ -12,11 +5,8 @@ struct CreateOrderView: View {
     @EnvironmentObject var restaurantsVM: RestaurantViewModel
     @StateObject private var productVM = ProductViewModel(restaurant: RestaurantModel(id: UUID(), name: "", latitude: 0.0, longitude: 0.0, photo: "", categories: [], description: "", rating: 0.0, address: ""))
     
-    // Dejar un producto Anything Available para manejar la conexion eventual
-    private let placeholderProduct = ProductModel(name: "Anything available", price: 0.0, categories: [], photo: "")
-    
     @State private var userEmail: String = UserDefaults.standard.string(forKey: "currentUserEmail") ?? ""
-    @State private var selectedRestaurant: RestaurantModel?
+    @State private var selectedRestaurantName: String?  // Store restaurant name, not object
     @State private var selectedProduct: ProductModel?
     @State private var price: Double = 0.0
     @State private var isActive: Bool = true
@@ -37,31 +27,40 @@ struct CreateOrderView: View {
                 Form {
                     Section(header: Text("Order Details")) {
                         
-                        Picker("Select Restaurant", selection: $selectedRestaurant) {
-                            Text("Choose a restaurant").tag(RestaurantModel?.none)
-                            ForEach(restaurantsVM.restaurants) { restaurant in
-                                Text(restaurant.name).tag(RestaurantModel?.some(restaurant))
+                        // Picker to select restaurant
+                        Picker("Select Restaurant", selection: $selectedRestaurantName) {
+                            Text("Choose a restaurant").tag(String?.none)
+                            ForEach(restaurantsVM.restaurants, id: \.id) { restaurant in
+                                Text(restaurant.name).tag(String?.some(restaurant.name))
                             }
                         }
-                        .onChange(of: selectedRestaurant) { newRestaurant in
-                            if let newRestaurant = newRestaurant {
-                                productVM.fetchProductsbyRestaurant(restaurant: newRestaurant)
-                            }
-                        }
-                        
-                        Picker("Select Product", selection: $selectedProduct) {
-                            if productVM.products.isEmpty {
-                                Text(placeholderProduct.name).tag(ProductModel?.some(placeholderProduct))
-                            } else {
-                                Text("Choose a product").tag(ProductModel?.none)
-                                ForEach(productVM.products) { product in
-                                    Text(product.name).tag(ProductModel?.some(product))
+                        .onChange(of: selectedRestaurantName) { newRestaurantName in
+                            if let newRestaurantName = newRestaurantName {
+                                // Fetch products for the selected restaurant
+                                if let selectedRestaurant = restaurantsVM.restaurants.first(where: { $0.name == newRestaurantName }) {
+                                    productVM.fetchProductsbyRestaurant(restaurant: selectedRestaurant)
                                 }
                             }
                         }
-                        .onChange(of: selectedProduct) { newProduct in
-                            if let newProduct = newProduct {
-                                price = newProduct.price
+                        
+                        // Check if the selected restaurant has products
+                        if let selectedRestaurantName = selectedRestaurantName {
+                            if productVM.products.isEmpty {
+                                Text("No products available for selected restaurant")
+                                    .foregroundColor(.gray)
+                            } else {
+                                // Picker to select product from the selected restaurant
+                                Picker("Select Product", selection: $selectedProduct) {
+                                    Text("Choose a product").tag(ProductModel?.none)
+                                    ForEach(productVM.products) { product in
+                                        Text(product.name).tag(ProductModel?.some(product))
+                                    }
+                                }
+                                .onChange(of: selectedProduct) { newProduct in
+                                    if let newProduct = newProduct {
+                                        price = newProduct.price
+                                    }
+                                }
                             }
                         }
                         
@@ -106,13 +105,14 @@ struct CreateOrderView: View {
             }
             .background(Color("Timberwolf"))
             .onAppear {
+                // Ensure the restaurants are loaded when the view appears
                 restaurantsVM.loadRestaurants()
             }
         }
     }
     
     private func createOrder() {
-        guard let selectedProduct = selectedProduct, let selectedRestaurant = selectedRestaurant else {
+        guard let selectedProduct = selectedProduct, let selectedRestaurantName = selectedRestaurantName else {
             showErrorMessage = true
             return
         }
@@ -125,7 +125,7 @@ struct CreateOrderView: View {
             price: selectedProduct.price,
             isActive: isActive,
             pickUpTime: pickUpTime,
-            restaurantName: selectedRestaurant.name
+            restaurantName: selectedRestaurantName
         )
         
         showSuccessMessage = true

@@ -12,6 +12,7 @@ struct ProductCardView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            // Image at the top
             AsyncImage(url: URL(string: product.photo)) { image in
                 image
                     .resizable()
@@ -22,28 +23,38 @@ struct ProductCardView: View {
                 ProgressView()
                     .progressViewStyle(LinearProgressViewStyle())
             }
-            HStack {
+            
+            // Product details
+            VStack(alignment: .leading, spacing: 6) {
+                Text(product.name)
+                    .font(.headline)
                 
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(product.name)
-                        .font(.headline)
-                    Text("\(product.categories.joined(separator: " - "))")
-                        .opacity(0.5)
-                    
-                }
-                .padding([.leading, .bottom, .trailing])
-                .frame(maxWidth: .infinity, alignment: .leading)
+                Text(product.category)
+                    .opacity(0.5)
+                
+                Text("Weight: \(product.weight, specifier: "%.2f") kg")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                Text("CO2 Emissions: \(product.co2Emissions, specifier: "%.2f") kg")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            .padding([.leading, .bottom, .trailing])
+            
+            // Price button
+            HStack {
+                Spacer()
                 Button {
-                    print("pago")
+                    print("Purchase tapped")
                 } label: {
-                    Text("$"+product.price.formatted())
+                    Text("$" + product.price.formatted())
                         .bold()
-                        .padding(.all,8)
-                        .foregroundStyle(Color(.white))
+                        .padding(.all, 8)
+                        .foregroundColor(.white)
                         .background(Color("FernGreen"))
                         .cornerRadius(8)
                 }
-                .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.trailing)
             }
         }

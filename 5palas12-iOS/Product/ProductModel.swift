@@ -11,12 +11,18 @@ struct ProductModel : Codable, Identifiable, Hashable{
     var id = UUID()
     var name: String
     var price: Double
-    var categories : [String]
+    var category : String
     var photo : String
+    var co2Emissions: Double
+    var weight: Double
+    var restaurant: String
     enum CodingKeys: String, CodingKey {
         case name
         case price
-        case categories
+        case category
         case photo
+        case co2Emissions
+        case weight
+        case restaurant
     }
 }
