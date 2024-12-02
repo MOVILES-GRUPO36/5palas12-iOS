@@ -72,6 +72,33 @@ struct CreateOrderView: View {
                             }
                         }
                         .pickerStyle(SegmentedPickerStyle())
+                        
+                        if selectedProduct != nil {
+                            Text("Product Details")
+                                .font(.headline)
+                                
+                            HStack{
+                                Text("Name: ")
+                                Text(selectedProduct?.name ?? "")
+                            }
+                            
+                            HStack{
+                                Text("Price: ")
+                                Text("$\(selectedProduct?.price ?? 0.0, specifier: "%.2f")")
+                            }
+                            
+                            HStack{
+                                Text("Quantity: ")
+                                Text("\(selectedProduct?.weight ?? 0.0, specifier: "%.2f") kg")
+                            }
+                            
+                            HStack{
+                                Text("CO2 emissions saved: ")
+                                Text("\(selectedProduct?.co2Emissions ?? 0.0, specifier: "%.2f") kg")
+                            }
+                            
+                        }
+                        
                     }
                 }
                 .padding(.horizontal)

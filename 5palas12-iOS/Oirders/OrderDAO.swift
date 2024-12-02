@@ -47,6 +47,8 @@ class OrderDAO {
                         return
                     }
 
+                    print("Snapshot size: \(snapshot.documents.count)") // Print the number of documents found
+                    
                     do {
                         // Mapear documentos de Firestore a OrderModel
                         let orders = try snapshot.documents.map { document -> OrderModel in
@@ -56,6 +58,7 @@ class OrderDAO {
                             let order = try JSONDecoder().decode(OrderModel.self, from: jsonData)
                             return order
                         }
+                        print("Fetched orders: \(orders)") // Print the fetched orders
                         completion(.success(orders)) // Devuelve las órdenes al completar
                     } catch {
                         completion(.failure(error)) // Error al deserializar
