@@ -55,6 +55,7 @@
 		DE035EE72C87951000627F34 /* _palas12_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035EE62C87951000627F34 /* _palas12_iOSTests.swift */; };
 		DE035EF12C87951000627F34 /* _palas12_iOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035EF02C87951000627F34 /* _palas12_iOSUITests.swift */; };
 		DE035EF32C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE035EF22C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift */; };
+		DE0960DA2CFD4F7B0066068A /* CategoriesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0960D92CFD4F690066068A /* CategoriesList.swift */; };
 		DE294FF12CAB3BE70045044A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE294FF02CAB3BE70045044A /* FirebaseAuth */; };
 		DE294FF72CACB9390045044A /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE294FF62CACB9370045044A /* TabBarView.swift */; };
 		DE9131D42CC6BADD0004F455 /* FilteredRestaurantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */; };
@@ -129,6 +130,7 @@
 		DE035EEC2C87951000627F34 /* 5palas12-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "5palas12-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE035EF02C87951000627F34 /* _palas12_iOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSUITests.swift; sourceTree = "<group>"; };
 		DE035EF22C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DE0960D92CFD4F690066068A /* CategoriesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesList.swift; sourceTree = "<group>"; };
 		DE294FF62CACB9370045044A /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredRestaurantsView.swift; sourceTree = "<group>"; };
 		DED92B182CAB319F000ED341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 		9DFED6C02CC55852004348A2 /* Product */ = {
 			isa = PBXGroup;
 			children = (
+				DE0960D92CFD4F690066068A /* CategoriesList.swift */,
 				9DFED6C52CC55CA7004348A2 /* ProductDAO.swift */,
 				9DFED6C12CC558A5004348A2 /* ProductModel.swift */,
 				9DFED6C32CC559E5004348A2 /* ProductViewModel.swift */,
@@ -530,6 +533,7 @@
 				9D51D2EA2CBC64FA005B7827 /* AppDelegate.swift in Sources */,
 				9DFED6C62CC55CB4004348A2 /* ProductDAO.swift in Sources */,
 				9DA4D0102CAB5CAD00107CD2 /* MapView.swift in Sources */,
+				DE0960DA2CFD4F7B0066068A /* CategoriesList.swift in Sources */,
 				DE9131D42CC6BADD0004F455 /* FilteredRestaurantsView.swift in Sources */,
 				9D0177C42CD9C3550072EB70 /* OfflineModeView.swift in Sources */,
 				9D4702722CAB0D39003FDB87 /* LogoView.swift in Sources */,
@@ -724,7 +728,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "palas12--";
+				PRODUCT_BUNDLE_IDENTIFIER = palas12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -757,7 +761,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "palas12--";
+				PRODUCT_BUNDLE_IDENTIFIER = palas12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

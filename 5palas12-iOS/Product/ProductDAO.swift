@@ -46,4 +46,27 @@ class ProductDAO {
             }
         }
     }
+    
+    func getProductByName(_ name: String, completion: @escaping (Result<ProductModel, Error>) -> Void) {
+            db.collection("products")
+                .whereField("name", isEqualTo: name)
+                .getDocuments { snapshot, error in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    
+                    guard let document = snapshot?.documents.first else {
+                        completion(.failure(NSError(domain: "FirestoreError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Product not found"])))
+                        return
+                    }
+                    
+                    do {
+                        let product = try document.data(as: ProductModel.self)
+                        completion(.success(product))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+        }
 }

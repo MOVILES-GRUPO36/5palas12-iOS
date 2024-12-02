@@ -51,6 +51,10 @@ struct ProfileView: View {
                 
                 Spacer()
                 
+                createButton(title: "My stats", color: Color(hex: "#588157")) {
+                    ProfileStatsView(userEmail: email)
+                }
+                
                 createButton(title: "Payment Methods", color: Color(hex: "#588157")) {
                     AuthenticatedPaymentMethodsView()
                 }
