@@ -80,9 +80,8 @@ struct OrdersListView: View {
                 .background(Color("Timberwolf"))
             }
             .onAppear {
-                if let email = userEmail, ordersVM.orders.isEmpty {
-                    ordersVM.fetchOrders(byUserEmail: email)
-                    enterTime = Date()
+                if let userEmail = UserDefaults.standard.string(forKey: "currentUserEmail") {
+                    ordersVM.fetchOrders(byUserEmail: userEmail)
                 }
                 
                 timer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
