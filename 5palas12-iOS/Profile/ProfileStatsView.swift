@@ -7,103 +7,39 @@
 import SwiftUI
 
 struct ProfileStatsView: View {
-    @State private var moneySaved: Double = 0.0
-    @State private var co2Saved: Double = 0.0
-    @State private var weightSaved: Double = 0.0
-    private let orderDAO = OrderDAO()
+    @State private var stats: (moneySaved: Double, co2Saved: Double, weightSaved: Double) = (0.0, 0.0, 0.0)
+    @State private var treesPlanted: String?
+    private var orderDAO = OrderDAO()
+    private var productDAO = ProductDAO()
     @State var userEmail: String
-
+    
+    init(userEmail: String) {
+            self._userEmail = State(initialValue: userEmail)
+        }
+    
     var body: some View {
-            VStack {
-                VStack {
-                    HStack {
-                        Image(systemName: "banknote")
-                            .resizable()
-                            .frame(width: 30, height: 20)
-                            .foregroundColor(Color.fernGreen)
-                        
-                        Text("Money invested this month saving the planet!")
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .padding(.leading, 10)
-                    }
-                    .padding()
-                    
-                    Text("$\(moneySaved, specifier: "%.2f")")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.fernGreen)
-                        .padding(.top, 5)
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.white)
-                .cornerRadius(15)
-                .shadow(radius: 5)
-                .padding(.horizontal)
+        VStack {
+            LazyVStack {
+                StatCardView(
+                    iconName: "banknote",
+                    title: "Money invested this month saving the planet!",
+                    value: String(format: "$%.2f", stats.moneySaved),
+                    footer: nil
+                )
 
-                VStack {
-                    HStack {
-                        Image(systemName: "leaf.fill")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(Color.fernGreen)
-                        
-                        Text("CO₂ saved this month!")
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .padding(.leading, 10)
-                    }
-                    .padding()
-                    
-                    Text("\(co2Saved, specifier: "%.2f") kg")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.fernGreen)
-                        .padding(.top, 5)
-                    
-                    if co2Saved > 0 {
-                        let treesEquivalent = co2Saved / 21
-                        Text("This is equivalent to **\(Int(treesEquivalent)) trees planted**!")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .padding(.top, 2)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.white)
-                .cornerRadius(15)
-                .shadow(radius: 5)
-                .padding(.horizontal)
-                
-                VStack {
-                    HStack {
-                        Image(systemName: "fork.knife")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(Color.fernGreen)
-                        
-                        Text("Amount of food saved from waste this month!")
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .padding(.leading, 10)
-                    }
-                    .padding()
-                    
-                    // Display the amount of weight saved
-                    Text("\(weightSaved, specifier: "%.2f") kg")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.fernGreen)
-                        .padding(.top, 5)
-                }
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(Color.white)
-                .cornerRadius(15)
-                .shadow(radius: 5)
-                .padding(.horizontal)
+                StatCardView(
+                    iconName: "leaf.fill",
+                    title: "CO₂ saved this month!",
+                    value: String(format: "%.2f kg", stats.co2Saved),
+                    footer: treesPlanted
+                )
+
+                StatCardView(
+                    iconName: "fork.knife",
+                    title: "Amount of food saved from waste this month!",
+                    value: String(format: "%.2f kg", stats.weightSaved),
+                    footer: nil
+                )
             }
             .padding(.top, 20)
             .onAppear {
@@ -120,7 +56,8 @@ struct ProfileStatsView: View {
                 }
             }
         }
-    
+    }
+
     private func calculateStats(from orders: [OrderModel]) {
         var totalMoneySaved: Double = 0.0
         var totalCo2Saved: Double = 0.0
@@ -128,35 +65,26 @@ struct ProfileStatsView: View {
         let dispatchGroup = DispatchGroup()
         
         for order in orders {
-            print("Order ID: \(order.id)")
             for productName in order.products {
-                print("Product Name: \(productName)")
-                
                 dispatchGroup.enter()
-                
                 fetchProductByName(productName) { product in
                     if let product = product {
                         totalMoneySaved += product.price
                         totalCo2Saved += product.co2Emissions
                         totalWeightSaved += product.weight
                     }
-                    
                     dispatchGroup.leave()
                 }
             }
         }
         
         dispatchGroup.notify(queue: .main) {
-            DispatchQueue.main.async {
-                self.moneySaved = totalMoneySaved
-                self.co2Saved = totalCo2Saved
-                self.weightSaved = totalWeightSaved
-            }
+            self.stats = (totalMoneySaved, totalCo2Saved, totalWeightSaved)
+            self.treesPlanted = totalCo2Saved > 0 ? "This is equivalent to \(Int(totalCo2Saved / 21)) trees planted!" : nil
         }
     }
 
     private func fetchProductByName(_ name: String, completion: @escaping (ProductModel?) -> Void) {
-        let productDAO = ProductDAO()
         productDAO.getProductByName(name) { result in
             switch result {
             case .success(let product):
@@ -178,3 +106,44 @@ struct ProfileStatsView: View {
         }
     }
 }
+
+struct StatCardView: View {
+    var iconName: String
+    var title: String
+    var value: String
+    var footer: String?
+
+    var body: some View {
+        VStack {
+            HStack {
+                Image(systemName: iconName)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(Color.fernGreen)
+                Text(title)
+                    .font(.headline)
+                    .fontWeight(.semibold)
+                    .padding(.leading, 10)
+            }
+            .padding()
+            Text(value)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(Color.fernGreen)
+                .padding(.top, 5)
+            if let footerText = footer {
+                Text(footerText)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .padding(.top, 2)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(Color.white)
+        .cornerRadius(15)
+        .shadow(radius: 5)
+        .padding(.horizontal)
+    }
+}
+
