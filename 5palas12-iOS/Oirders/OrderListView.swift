@@ -81,8 +81,10 @@ struct OrdersListView: View {
             }
             .onAppear {
                 if let userEmail = UserDefaults.standard.string(forKey: "currentUserEmail") {
-                    ordersVM.fetchOrders(byUserEmail: userEmail)
-                }
+        
+                        ordersVM.fetchOrders(byUserEmail: userEmail)
+                                        }
+
                 
                 timer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
                     if let remainingTime = calculateTimeRemaining() {
