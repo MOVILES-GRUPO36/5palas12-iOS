@@ -6,7 +6,7 @@ struct CreateOrderView: View {
     @StateObject private var productVM = ProductViewModel(restaurant: RestaurantModel(name: "", latitude: 0.0, longitude: 0.0, photo: "", categories: [], description: "", rating: 0.0, address: ""))
     
     @State private var userEmail: String = UserDefaults.standard.string(forKey: "currentUserEmail") ?? ""
-    @State private var selectedRestaurantName: String?  // Store restaurant name, not object
+    @State private var selectedRestaurantName: String?
     @State private var selectedProduct: ProductModel?
     @State private var price: Double = 0.0
     @State private var isActive: Bool = true
@@ -27,7 +27,6 @@ struct CreateOrderView: View {
                 Form {
                     Section(header: Text("Order Details")) {
                         
-                        // Picker to select restaurant
                         Picker("Select Restaurant", selection: $selectedRestaurantName) {
                             Text("Choose a restaurant").tag(String?.none)
                             ForEach(restaurantsVM.restaurants, id: \.id) { restaurant in
@@ -49,7 +48,6 @@ struct CreateOrderView: View {
                                 Text("No products available for selected restaurant")
                                     .foregroundColor(.gray)
                             } else {
-                                // Picker to select product from the selected restaurant
                                 Picker("Select Product", selection: $selectedProduct) {
                                     Text("Choose a product").tag(ProductModel?.none)
                                     ForEach(productVM.products) { product in
@@ -132,7 +130,6 @@ struct CreateOrderView: View {
             }
             .background(Color("Timberwolf"))
             .onAppear {
-                // Ensure the restaurants are loaded when the view appears
                 restaurantsVM.loadRestaurants()
             }
         }

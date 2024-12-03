@@ -9,19 +9,18 @@ import SwiftUI
 struct ProfileStatsView: View {
     @State private var moneySaved: Double = 0.0
     @State private var co2Saved: Double = 0.0
-    @State private var weightSaved: Double = 0.0 // New variable for weight saved
+    @State private var weightSaved: Double = 0.0
     private let orderDAO = OrderDAO()
     @State var userEmail: String
 
     var body: some View {
             VStack {
-                // Money Invested Card
                 VStack {
                     HStack {
-                        Image(systemName: "banknote") // Bill icon
+                        Image(systemName: "banknote")
                             .resizable()
                             .frame(width: 30, height: 20)
-                            .foregroundColor(Color.fernGreen) // Green color for eco-friendliness
+                            .foregroundColor(Color.fernGreen)
                         
                         Text("Money invested this month saving the planet!")
                             .font(.headline)
@@ -30,7 +29,6 @@ struct ProfileStatsView: View {
                     }
                     .padding()
                     
-                    // Display the amount of money saved
                     Text("$\(moneySaved, specifier: "%.2f")")
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -43,28 +41,34 @@ struct ProfileStatsView: View {
                 .cornerRadius(15)
                 .shadow(radius: 5)
                 .padding(.horizontal)
-                
-                // CO2 Saved Card
+
                 VStack {
                     HStack {
-                        Image(systemName: "leaf.fill") // Leaf icon
+                        Image(systemName: "leaf.fill")
                             .resizable()
                             .frame(width: 30, height: 30)
-                            .foregroundColor(Color.fernGreen) // Green color for eco-friendliness
+                            .foregroundColor(Color.fernGreen)
                         
-                        Text("CO2 saved this month!")
+                        Text("CO₂ saved this month!")
                             .font(.headline)
                             .fontWeight(.semibold)
                             .padding(.leading, 10)
                     }
                     .padding()
                     
-                    // Display the amount of CO2 saved
                     Text("\(co2Saved, specifier: "%.2f") kg")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(Color.fernGreen)
                         .padding(.top, 5)
+                    
+                    if co2Saved > 0 {
+                        let treesEquivalent = co2Saved / 21
+                        Text("This is equivalent to **\(Int(treesEquivalent)) trees planted**!")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .padding(.top, 2)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -73,13 +77,12 @@ struct ProfileStatsView: View {
                 .shadow(radius: 5)
                 .padding(.horizontal)
                 
-                // Weight Saved Card
                 VStack {
                     HStack {
-                        Image(systemName: "fork.knife") // Drop icon to symbolize weight or size
+                        Image(systemName: "fork.knife")
                             .resizable()
                             .frame(width: 30, height: 30)
-                            .foregroundColor(Color.fernGreen) // Blue color for weight
+                            .foregroundColor(Color.fernGreen)
                         
                         Text("Amount of food saved from waste this month!")
                             .font(.headline)
@@ -118,45 +121,40 @@ struct ProfileStatsView: View {
             }
         }
     
-    // Function to process the orders and calculate the statistics
     private func calculateStats(from orders: [OrderModel]) {
         var totalMoneySaved: Double = 0.0
         var totalCo2Saved: Double = 0.0
-        var totalWeightSaved: Double = 0.0 // New variable for total weight
-        let dispatchGroup = DispatchGroup() // Create DispatchGroup to wait for all async tasks
+        var totalWeightSaved: Double = 0.0
+        let dispatchGroup = DispatchGroup()
         
-        // Iterate through the orders and calculate the total money, CO2, and weight saved
         for order in orders {
             print("Order ID: \(order.id)")
             for productName in order.products {
-                print("Product Name: \(productName)") // Print product name
+                print("Product Name: \(productName)")
                 
-                dispatchGroup.enter() // Enter the dispatch group before starting the async task
+                dispatchGroup.enter()
                 
-                // Fetch the product details using the product name from Firestore
                 fetchProductByName(productName) { product in
                     if let product = product {
                         totalMoneySaved += product.price
                         totalCo2Saved += product.co2Emissions
-                        totalWeightSaved += product.weight // Add the weight of the product
+                        totalWeightSaved += product.weight
                     }
                     
-                    dispatchGroup.leave() // Leave the dispatch group when the async task is complete
+                    dispatchGroup.leave()
                 }
             }
         }
         
-        // Notify when all async tasks are completed
         dispatchGroup.notify(queue: .main) {
             DispatchQueue.main.async {
                 self.moneySaved = totalMoneySaved
                 self.co2Saved = totalCo2Saved
-                self.weightSaved = totalWeightSaved // Update the weight value
+                self.weightSaved = totalWeightSaved
             }
         }
     }
 
-    // Fetch product information from Firestore by product name
     private func fetchProductByName(_ name: String, completion: @escaping (ProductModel?) -> Void) {
         let productDAO = ProductDAO()
         productDAO.getProductByName(name) { result in
@@ -170,13 +168,12 @@ struct ProfileStatsView: View {
         }
     }
 
-    // Print orders and their associated products
     private func printOrdersAndProducts(_ orders: [OrderModel]) {
         for order in orders {
-            print("Order ID: \(order.id)") // Print each order ID
+            print("Order ID: \(order.id)")
             print("Products in this order:")
             for productName in order.products {
-                print("  - Product Name: \(productName)") // Print product name
+                print("  - Product Name: \(productName)")
             }
         }
     }
