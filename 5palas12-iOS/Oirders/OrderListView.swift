@@ -25,9 +25,7 @@ struct OrdersListView: View {
         
         for order in ordersVM.orders {
             for product in order.products {
-                // Supongamos que `product` contiene la categoría en su nombre o tiene un campo específico.
-                // Esto depende de cómo esté definido el modelo de datos.
-                let category = product // Cambia según cómo se obtienen las categorías.
+                let category = product
                 categoryCount[category, default: 0] += 1
             }
         }

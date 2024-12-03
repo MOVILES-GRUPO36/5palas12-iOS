@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RestaurantDetailView: View {
     @State var restaurant: RestaurantModel
+    @EnvironmentObject var cartVM: CartViewModel
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         NavigationView{
