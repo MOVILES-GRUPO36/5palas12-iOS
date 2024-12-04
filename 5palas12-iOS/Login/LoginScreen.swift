@@ -15,6 +15,7 @@ struct LoginScreen: View {
     @State var showPassword: Bool = false
     @FocusState private var inFocus: Field?
     @State private var loginResponse: String = ""
+    @State private var isShowingAlert = false // State for showing alert
     @State private var isLoggingIn: Bool = false // Loading state
     @Binding var isLoggedIn: Bool
     @State private var navigateToMainScreen = false // Control navigation after login
@@ -32,7 +33,6 @@ struct LoginScreen: View {
         NavigationStack {
             ZStack {
                 VStack(alignment: .leading, spacing: 12) {
-                    
                     Spacer()
                     Text("Hi! Welcome")
                         .padding()
@@ -88,13 +88,6 @@ struct LoginScreen: View {
                     }
                     .padding(.horizontal)
                     
-//                    if !loginResponse.isEmpty {
-//                        Text(loginResponse)
-//                            .foregroundColor(.red)
-//                            .padding()
-//                            .frame(maxWidth: .infinity, alignment: .center)
-//                    }
-                    
                     Button(action: {
                         login()
                     }) {
@@ -129,7 +122,6 @@ struct LoginScreen: View {
                     Spacer()
                 }
                 
-                // Show the loading progress view when logging in
                 if isLoggingIn {
                     ZStack {
                         Color.black.opacity(0.4) // Semi-transparent background
@@ -147,7 +139,13 @@ struct LoginScreen: View {
                     .ignoresSafeArea()
                 }
             }
-            // Navigate to the next screen when login is successful
+            .alert(isPresented: $isShowingAlert) {
+                Alert(
+                    title: Text("Login Response"),
+                    message: Text(loginResponse),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
             NavigationLink("", destination: RestaurantsListView(), isActive: $navigateToMainScreen)
                 .hidden()
         }
@@ -162,10 +160,13 @@ struct LoginScreen: View {
             
             if let error = error {
                 loginResponse = "Error: \(error.localizedDescription)"
+                isShowingAlert = true // Trigger alert
                 return
             }
             
             loginResponse = "Login successful!"
+            isShowingAlert = true // Trigger alert
+            
             Analytics.logEvent("login", parameters: [
                 "method": "email"
             ])
@@ -181,6 +182,7 @@ struct LoginScreen: View {
                     
                 case .failure(let error):
                     loginResponse = "Firestore Error: \(error.localizedDescription)"
+                    isShowingAlert = true // Trigger alert
                 }
             }
         }

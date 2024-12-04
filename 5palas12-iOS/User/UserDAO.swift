@@ -120,29 +120,81 @@ class UserDAO {
     }
     
     func deleteUserByEmail(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
-            db.collection(collectionName)
-                .whereField("email", isEqualTo: email)
-                .getDocuments { querySnapshot, error in
+        // Query Firestore for the user with the provided email
+        db.collection(collectionName)
+            .whereField("email", isEqualTo: email)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                // Check if the user exists
+                guard let documents = querySnapshot?.documents, !documents.isEmpty else {
+                    completion(.failure(NSError(domain: "UserNotFound", code: 404, userInfo: [
+                        NSLocalizedDescriptionKey: "User with email \(email) not found."
+                    ])))
+                    return
+                }
+                
+                let documentID = documents.first!.documentID
+                
+                // Begin deletion process
+                self.db.collection(self.collectionName).document(documentID).delete { error in
                     if let error = error {
-                        completion(.failure(error))
+                        completion(.failure(NSError(domain: "FirestoreError", code: 500, userInfo: [
+                            NSLocalizedDescriptionKey: "Failed to delete user document: \(error.localizedDescription)"
+                        ])))
                         return
                     }
                     
-                    guard let documents = querySnapshot?.documents, !documents.isEmpty else {
-                        completion(.failure(NSError(domain: "UserNotFound", code: 404, userInfo: [NSLocalizedDescriptionKey: "User with email \(email) not found."])))
-                        return
-                    }
-                    
-                    let documentID = documents.first!.documentID
-                    self.db.collection(self.collectionName).document(documentID).delete { error in
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-                            completion(.success(()))
+                    // Additional cleanup: For example, delete related collections or data
+                    self.deleteRelatedData(forUserID: documentID) { result in
+                        switch result {
+                        case .success:
+                            completion(.success(())) // Successfully deleted user and related data
+                        case .failure(let error):
+                            completion(.failure(NSError(domain: "CleanupError", code: 500, userInfo: [
+                                NSLocalizedDescriptionKey: "User deleted but cleanup failed: \(error.localizedDescription)"
+                            ])))
                         }
                     }
                 }
-        }
+            }
+    }
+
+    // Helper function to delete related data
+    private func deleteRelatedData(forUserID userID: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        // Example of deleting a subcollection (e.g., orders associated with the user)
+        let relatedCollection = "orders" // Adjust based on your Firestore structure
+        db.collection(relatedCollection)
+            .whereField("userID", isEqualTo: userID)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else {
+                    completion(.success(())) // No related documents, cleanup done
+                    return
+                }
+                
+                // Delete each related document
+                let batch = self.db.batch()
+                documents.forEach { document in
+                    batch.deleteDocument(document.reference)
+                }
+                
+                batch.commit { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(()))
+                    }
+                }
+            }
+    }
     
     func addRestaurantToUser(email: String, restaurantName: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let usersCollection = db.collection(collectionName)

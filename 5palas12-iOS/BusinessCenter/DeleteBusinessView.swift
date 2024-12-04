@@ -121,6 +121,7 @@ struct DeleteBusinessView: View {
                                 alertMessage = "Restaurant deleted successfully!"
                                 viewModel.businessExists = false
                                 restaurant = nil
+                                userVM.userData?.restaurant = nil
                             case .failure(let error):
                                 alertMessage = "Failed to update user: \(error.localizedDescription)"
                             }

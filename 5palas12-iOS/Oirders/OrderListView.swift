@@ -126,4 +126,10 @@ struct OrdersListView: View {
                 
             }
     }
+    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
+        Analytics.logEvent("view_time_spent", parameters: [
+            "view_name": viewName,
+            "time_spent": timeSpent
+        ])
+    }
 }

@@ -88,7 +88,7 @@ struct BusinessCenterListView: View {
         case "Help & Support":
             return AnyView(Text("Help & Support view"))
         case "Delete my business":
-            return AnyView(DeleteBusinessView(viewModel: viewModel))
+            return AnyView(DeleteBusinessView(viewModel: viewModel,userVM: _userVM))
         default:
             return AnyView(EmptyView())
         }
