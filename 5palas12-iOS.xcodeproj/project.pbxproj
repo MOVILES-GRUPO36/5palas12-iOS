@@ -58,6 +58,7 @@
 		DE0960DA2CFD4F7B0066068A /* CategoriesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0960D92CFD4F690066068A /* CategoriesList.swift */; };
 		DE294FF12CAB3BE70045044A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DE294FF02CAB3BE70045044A /* FirebaseAuth */; };
 		DE294FF72CACB9390045044A /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE294FF62CACB9370045044A /* TabBarView.swift */; };
+		DE5DE3412CFFA90D008A1448 /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5DE3402CFFA902008A1448 /* NotificationExtensions.swift */; };
 		DE9131D42CC6BADD0004F455 /* FilteredRestaurantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */; };
 		DED92B192CAB319F000ED341 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DED92B182CAB319F000ED341 /* GoogleService-Info.plist */; };
 		DED92B1C2CAB329F000ED341 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DED92B1B2CAB329F000ED341 /* FirebaseAnalytics */; };
@@ -132,6 +133,7 @@
 		DE035EF22C87951000627F34 /* _palas12_iOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _palas12_iOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DE0960D92CFD4F690066068A /* CategoriesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesList.swift; sourceTree = "<group>"; };
 		DE294FF62CACB9370045044A /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		DE5DE3402CFFA902008A1448 /* NotificationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
 		DE9131D22CC6BADD0004F455 /* FilteredRestaurantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredRestaurantsView.swift; sourceTree = "<group>"; };
 		DED92B182CAB319F000ED341 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DEE457792CACC0F000F810DD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 		DE035ED42C87950E00627F34 /* 5palas12-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				DE5DE3402CFFA902008A1448 /* NotificationExtensions.swift */,
 				896D78EF2CF410390000B8BB /* Food */,
 				896D78E22CF3FA480000B8BB /* Chat */,
 				890CE0732CD97AC6009FE9B5 /* Oirders */,
@@ -518,6 +521,7 @@
 				896D78EE2CF3FC2D0000B8BB /* GeminiChatView.swift in Sources */,
 				9DE937132CAE35160061CD33 /* RestaurantsListView.swift in Sources */,
 				9DB47C382CD72C670036B770 /* NetworkMonitor.swift in Sources */,
+				DE5DE3412CFFA90D008A1448 /* NotificationExtensions.swift in Sources */,
 				9DFED6C22CC558A5004348A2 /* ProductModel.swift in Sources */,
 				9DA4D00F2CAB5CAD00107CD2 /* LocationManager.swift in Sources */,
 				9D51D2F42CBC6A38005B7827 /* RestaurantSA.swift in Sources */,

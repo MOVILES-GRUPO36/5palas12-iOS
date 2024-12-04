@@ -155,11 +155,9 @@ struct LoginScreen: View {
     }
     
     private func login() {
-        // Start the loading indicator
         isLoggingIn = true
         
         Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
-            // Stop the loading indicator once the login is done
             isLoggingIn = false
             
             if let error = error {
@@ -179,7 +177,6 @@ struct LoginScreen: View {
                     UserDefaults.standard.set(userData.email, forKey: "currentUserEmail")
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     
-                    // Trigger the navigation to the main screen
                     navigateToMainScreen = true
                     
                 case .failure(let error):

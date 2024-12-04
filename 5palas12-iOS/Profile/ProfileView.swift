@@ -23,7 +23,6 @@ struct ProfileView: View {
         NavigationView {
             
             VStack {
-                // Profile Info
                 LogoView()
                     .padding(.all, 0)
                 
@@ -39,11 +38,10 @@ struct ProfileView: View {
                     
                     Spacer()
                     
-                    // Edit icon
                     NavigationLink(destination: EditUserInfoView()) {
                         Image(systemName: "pencil")
-                            .font(.title) // Adjust the font size as needed
-                            .foregroundColor(.black) // Change color as needed
+                            .font(.title)
+                            .foregroundColor(.black)
                     }
                     .padding(.trailing)
                 }
@@ -52,7 +50,7 @@ struct ProfileView: View {
                 Spacer()
                 
                 createButton(title: "My stats", color: Color(hex: "#588157")) {
-                    ProfileStatsView(userEmail: email)
+                    ProfileStatsView(viewModel: ProfileStatsViewModel(userEmail: email), userEmail: email)
                 }
                 
                 createButton(title: "Payment Methods", color: Color(hex: "#588157")) {
@@ -112,11 +110,11 @@ struct ProfileView: View {
                 .font(.title2)
                 .bold()
                 .foregroundColor(.white)
-                .frame(height: 46) // Button height
-                .frame(maxWidth: .infinity) // Button width
-                .background(color) // Background color
-                .cornerRadius(8) // Rounded corners
-                .padding() // Padding around the button
+                .frame(height: 46)
+                .frame(maxWidth: .infinity)
+                .background(color)
+                .cornerRadius(8)
+                .padding()
         }
     }
     
@@ -125,7 +123,6 @@ struct ProfileView: View {
         isLoggedIn = false
         userVM.userData = nil
         
-        // Delete local orders file
         let orderDAO = OrderDAO()
         orderDAO.deleteLocalOrdersFile()
         
