@@ -19,14 +19,28 @@ class OrdersViewModel: ObservableObject {
 
     // MARK: - Obtener órdenes por email
     func fetchOrders(byUserEmail email: String) {
-        isLoading = true
-        orderDAO.getAllOrders(byUserEmail: email) { [weak self] result in
-            self?.isLoading = false
-            switch result {
-            case .success(let orders):
-                self?.orders = orders
-            case .failure(let error):
-                self?.errorMessage = error.localizedDescription
+        print("Starting fetchOrders on thread: \(Thread.current)") // Log thread at the start
+        
+        // Dispatch fetching logic to a background thread
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            print("Fetching data on thread: \(Thread.current)") // Log thread where data is fetched
+            
+            self?.orderDAO.getAllOrders(byUserEmail: email) { result in
+                
+                // Switch back to the main thread for UI updates
+                DispatchQueue.main.async { [weak self] in
+                    print("Updating UI on thread: \(Thread.current)") // Log thread for UI update
+                    
+                    switch result {
+                    case .success(let orders):
+                        self?.orders = orders
+                        self?.errorMessage = nil
+                    case .failure(let error):
+                        self?.errorMessage = error.localizedDescription
+                    }
+                    
+                    self?.isLoading = false // Update the loading state
+                }
             }
         }
     }

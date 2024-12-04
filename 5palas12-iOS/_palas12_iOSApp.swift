@@ -6,7 +6,7 @@ struct _palas12_iOSApp: App {
     @State var selectedTab = 0
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     @StateObject var restaurantsVM: RestaurantViewModel = RestaurantViewModel()
-    @StateObject var userVM: UserViewModel = UserViewModel() 
+    @StateObject var userVM: UserViewModel = UserViewModel()
     @StateObject private var networkMonitor = NetworkMonitor.shared
     @StateObject var ordersVM = OrdersViewModel()
     @StateObject private var timeManager = TimeManager()
@@ -41,6 +41,7 @@ struct _palas12_iOSApp: App {
                             .onAppear {
                                 restaurantsVM.locationManager.requestLocation()
                                 checkLoginStatus()
+                                ordersVM.loadInitialOrders() // Ensure orders are loaded
                             }
                     } else {
                         Text("You don't seem to be connected to the internet. Check your connection and try again.")
@@ -63,8 +64,23 @@ struct _palas12_iOSApp: App {
                     showAlert = false
                 }
             }
+            .onAppear {
+                setupInitialDataFetch()
+            }
         }
         .environmentObject(userVM)
+    }
+
+    /// Triggers login check and initial data fetches.
+    func setupInitialDataFetch() {
+        checkLoginStatus()
+        
+        if isLoggedIn, let email = UserDefaults.standard.string(forKey: "currentUserEmail") {
+            // Background fetch orders at startup
+            DispatchQueue.global(qos: .background).async {
+                ordersVM.fetchOrders(byUserEmail: email)
+            }
+        }
     }
 
     func checkLoginStatus() {
