@@ -61,7 +61,7 @@ struct ProfileView: View {
                     createButton(title: "Business Center", color: Color(hex: "#588157")) {
                         BusinessCenterListView(
                             viewModel: businessCenterViewModel,
-                            restaurant: restaurantVM.getRestaurantByName(name: restaurantName)!
+                            restaurant: restaurantVM.getRestaurantByName(name: restaurantName)
                         )
                     }
                 } else {
@@ -75,7 +75,7 @@ struct ProfileView: View {
                 }
                 
                 createButton(title: "Settings", color: Color(hex: "#588157")) {
-                    UserSettingsView()
+                    UserSettingsView(isLoggedIn: $isLoggedIn, userVM: _userVM)
                 }
                 
                 createButton(title: "Logout", color: Color.red) {

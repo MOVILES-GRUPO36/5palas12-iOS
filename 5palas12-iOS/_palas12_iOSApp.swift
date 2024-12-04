@@ -18,6 +18,7 @@ struct _palas12_iOSApp: App {
                 if isLoggedIn {
                     if networkMonitor.isConnected {
                         if userVM.userData != nil {
+                            // Ensure that the restaurantsVM is passed down to environment objects
                             TabBarView(selectedTab: $selectedTab)
                                 .environmentObject(restaurantsVM)
                                 .environmentObject(userVM)
@@ -37,12 +38,14 @@ struct _palas12_iOSApp: App {
                     }
                 } else {
                     if networkMonitor.isConnected {
+                        // Inject restaurantsVM to the LoginScreen as well
                         LoginScreen(isLoggedIn: $isLoggedIn)
                             .onAppear {
                                 restaurantsVM.locationManager.requestLocation()
                                 checkLoginStatus()
-                                ordersVM.loadInitialOrders() // Ensure orders are loaded
+                                ordersVM.loadInitialOrders()
                             }
+                            .environmentObject(restaurantsVM) // Pass restaurantsVM to LoginScreen here
                     } else {
                         Text("You don't seem to be connected to the internet. Check your connection and try again.")
                             .font(.headline)
@@ -69,6 +72,22 @@ struct _palas12_iOSApp: App {
             }
         }
         .environmentObject(userVM)
+        .onChange(of: isLoggedIn) { _ in
+            // Reinitialize environment objects after successful login
+            if isLoggedIn {
+                reinitializeEnvironmentObjects()
+            }
+        }
+    }
+
+    /// Reinitialize environment objects after successful login or re-login.
+    func reinitializeEnvironmentObjects() {
+        // Ensure that any necessary data is reloaded or reinitialized here
+        restaurantsVM.loadRestaurants() // Example: reload restaurants
+        userVM.loadUserFromDefaults()  // Load the user data again
+        ordersVM.loadInitialOrders()   // Example: load orders again
+        
+        // You could call any other necessary re-initialization functions here
     }
 
     /// Triggers login check and initial data fetches.
@@ -76,7 +95,6 @@ struct _palas12_iOSApp: App {
         checkLoginStatus()
         
         if isLoggedIn, let email = UserDefaults.standard.string(forKey: "currentUserEmail") {
-            // Background fetch orders at startup
             DispatchQueue.global(qos: .background).async {
                 ordersVM.fetchOrders(byUserEmail: email)
             }

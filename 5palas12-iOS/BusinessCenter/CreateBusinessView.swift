@@ -28,6 +28,7 @@ struct CreateBusinessView: View {
     private let restaurantDAO = RestaurantSA()
     private let userDAO = UserDAO()
     @State private var userEmail: String = ""
+    @EnvironmentObject var userVM: UserViewModel
     
     @ObservedObject private var locationManager = LocationManager()
 
@@ -167,6 +168,7 @@ struct CreateBusinessView: View {
                     switch userResult {
                     case .success():
                         viewModel.businessExists = true  // Update the view model
+                        userVM.userData?.restaurant = restaurant!.name
                     case .failure(let error):
                         print("Failed to add restaurant to user: \(error.localizedDescription)")
                     }

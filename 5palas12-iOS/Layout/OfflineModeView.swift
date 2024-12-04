@@ -55,7 +55,7 @@ struct OfflineModeView: View {
                 .cornerRadius(8)
                 .padding()
                 
-                NavigationLink(destination: UserSettingsView()) {
+                NavigationLink(destination: UserSettingsView(isLoggedIn: $isLoggedIn)) {
                     Text("Settings")
                         .font(.title2)
                         .bold()
