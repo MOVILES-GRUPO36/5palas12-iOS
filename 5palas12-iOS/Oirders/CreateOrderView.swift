@@ -153,6 +153,14 @@ struct CreateOrderView: View {
         )
         
         showSuccessMessage = true
+        print("Posting notification: .ordersDidChange")
+        
+        NotificationCenter.default.post(
+            name: .ordersDidChange,
+            object: nil,
+            userInfo: ["userEmail": userEmail]
+        )
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             showSuccessMessage = false
         }

@@ -109,8 +109,9 @@ struct DeleteBusinessView: View {
             return
         }
 
-        restaurantDAO.deleteRestaurantByName(restaurantName) { result in
-            DispatchQueue.main.async {
+        // Offload the task to a worker thread
+        DispatchQueue.global(qos: .userInitiated).async {
+            restaurantDAO.deleteRestaurantByName(restaurantName) { result in
                 switch result {
                 case .success:
                     userDAO.removeRestaurantFromUser(email: userEmail) { updateResult in
@@ -127,8 +128,10 @@ struct DeleteBusinessView: View {
                         }
                     }
                 case .failure(let error):
-                    alertMessage = "Failed to delete restaurant: \(error.localizedDescription)"
-                    showAlert = true
+                    DispatchQueue.main.async {
+                        alertMessage = "Failed to delete restaurant: \(error.localizedDescription)"
+                        showAlert = true
+                    }
                 }
             }
         }
