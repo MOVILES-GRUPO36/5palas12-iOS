@@ -13,26 +13,13 @@ class OrderDAO {
     private let db = FirestoreManager.shared.db // Instancia de Firestore
     private let collectionName = "orders" // Nombre de la colección en Firestore
     private let localFileName = "orders.json" // Archivo local para almacenamiento de órdenes
-    private var monitor: NWPathMonitor! // Monitor de red
-    private var isConnected: Bool = true // Estado de la conexión de red
-    
-    init() {
-        setupNetworkMonitor() // Inicializa el monitoreo de red
-    }
 
-    // MARK: - Configuración del monitor de red
-    private func setupNetworkMonitor() {
-        monitor = NWPathMonitor()
-        monitor.pathUpdateHandler = { path in
-            self.isConnected = path.status == .satisfied // Actualiza el estado de la conexión
-        }
-        let queue = DispatchQueue(label: "NetworkMonitor")
-        monitor.start(queue: queue)
-    }
+    
+
 
     // MARK: - Obtener órdenes por email desde Firestore
     func getAllOrders(byUserEmail email: String, completion: @escaping (Result<[OrderModel], Error>) -> Void) {
-        if isConnected {
+        if NetworkMonitor.shared.isConnected {
             // Si hay conexión, consulta Firestore
             db.collection(collectionName)
                 .whereField("userEmail", isEqualTo: email) // Filtro por correo del usuario
@@ -58,7 +45,6 @@ class OrderDAO {
                             let order = try JSONDecoder().decode(OrderModel.self, from: jsonData)
                             return order
                         }
-                        print("Fetched orders: \(orders)") // Print the fetched orders
                         completion(.success(orders)) // Devuelve las órdenes al completar
                     } catch {
                         completion(.failure(error)) // Error al deserializar
@@ -84,7 +70,7 @@ class OrderDAO {
 
     // MARK: - Guardar órdenes en Firestore
     func createOrder(_ order: OrderModel, completion: @escaping (Result<Void, Error>) -> Void) {
-            if isConnected {
+            if NetworkMonitor.shared.isConnected{
                 db.collection(collectionName).addDocument(data: order.dictionaryRepresentation) { error in
                 }
             }

@@ -14,32 +14,8 @@ class OrdersViewModel: ObservableObject {
     @Published var orders: [OrderModel] = [] // Almacena las órdenes obtenidas
     @Published var errorMessage: String? // Para mostrar errores en la vista
     @Published var isLoading: Bool = false // Indica si estamos cargando datos
-    @Published var isConnected: Bool = true // Estado de la conexión a la red
     private var cancellables = Set<AnyCancellable>() // Para gestionar las suscripciones de Combine
-    private var monitor: NWPathMonitor! // Monitorea el estado de la red
-    
-    init() {
-        setupNetworkMonitor() // Configura el monitoreo de la red
-    }
-    
-    // MARK: - Configuración del monitor de red
-    private func setupNetworkMonitor() {
-        monitor = NWPathMonitor()
-        monitor.pathUpdateHandler = { [weak self] path in
-            self?.isConnected = path.status == .satisfied
-            if self?.isConnected == true {
-                // Si hay conexión, intentamos cargar las órdenes desde Firestore
-                if let email = UserDefaults.standard.string(forKey: "currentUserEmail") {
-                    self?.fetchOrders(byUserEmail: email)
-                }
-            } else {
-                // Si no hay conexión, cargamos las órdenes locales
-                self?.loadLocalOrders()
-            }
-        }
-        let queue = DispatchQueue(label: "NetworkMonitor")
-        monitor.start(queue: queue)
-    }
+  
 
     // MARK: - Obtener órdenes por email
     func fetchOrders(byUserEmail email: String) {
