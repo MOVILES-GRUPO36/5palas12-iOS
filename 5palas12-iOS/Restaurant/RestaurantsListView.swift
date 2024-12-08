@@ -52,14 +52,13 @@ struct RestaurantsListView: View {
             restaurantsVM.startDistanceUpdates()
         }
         .onDisappear {
-            restaurantsVM.stopDistanceUpdates()
             if let enterTime = enterTime {
                 let elapsedTime = Date().timeIntervalSince(enterTime)
-                print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
-                logTimeFirebase(viewName: "RestaurantsListView", timeSpent: elapsedTime)
+                print("User was in the view for \(elapsedTime) seconds.")
+                
+                FirebaseLogger.shared.logTimeFirebase(viewName: "RestaurantListView", timeSpent: elapsedTime)
             }
         }
-        
     }
     
     private var sortedRestaurants: [RestaurantModel] {
@@ -69,12 +68,5 @@ struct RestaurantsListView: View {
             }
             return distance1 < distance2
         }
-    }
-    
-    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
-        Analytics.logEvent("view_time_spent", parameters: [
-            "view_name": viewName,
-            "time_spent": timeSpent
-        ])
     }
 }

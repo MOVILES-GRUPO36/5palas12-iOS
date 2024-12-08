@@ -207,7 +207,9 @@ struct UserSettingsView: View {
     private func handleOnDisappear() {
         if let enterTime = enterTime {
             let elapsedTime = Date().timeIntervalSince(enterTime)
-            logTimeFirebase(viewName: "UserSettingsView", timeSpent: elapsedTime)
+            print("User was in the view for \(elapsedTime) seconds.")
+            
+            FirebaseLogger.shared.logTimeFirebase(viewName: "UserSettingsView", timeSpent: elapsedTime)
         }
     }
 
@@ -216,13 +218,6 @@ struct UserSettingsView: View {
         isLoggedIn = false
         OrderDAO().deleteLocalOrdersFile()
         JSONCCFileManager().deleteAllCreditCards()
-    }
-
-    private func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
-        Analytics.logEvent("view_time_spent", parameters: [
-            "view_name": viewName,
-            "time_spent": timeSpent
-        ])
     }
 }
 

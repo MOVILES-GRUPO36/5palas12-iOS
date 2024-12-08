@@ -101,25 +101,18 @@ struct OrdersListView: View {
                 .background(Color("Timberwolf"))
             }
             .onAppear {
-                ordersVM.fetchOrders(byUserEmail: userVM.userData!.email)
-                // Carga estática de los datos del gráfico
-                chartData = categoryDistribution()
-                    .map { CategoryData(category: $0.key, count: $0.value) }
-                
-                timer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
-                    if let remainingTime = calculateTimeRemaining() {
-                        DispatchQueue.main.async {
-                            timeRemaining = remainingTime
-                            showAlert = true
-                        }
-                    }
+                if let userEmail = UserDefaults.standard.string(forKey: "currentUserEmail") {
+                    ordersVM.fetchOrders(byUserEmail: userEmail)
                 }
+                
+                enterTime = Date()
             }
             .onDisappear {
-                timer?.invalidate()
                 if let enterTime = enterTime {
                     let elapsedTime = Date().timeIntervalSince(enterTime)
-                    logTimeFirebase(viewName: "OrdersListView", timeSpent: elapsedTime)
+                    print("User was in the view for \(elapsedTime) seconds.")
+                    
+                    FirebaseLogger.shared.logTimeFirebase(viewName: "OrderListView", timeSpent: elapsedTime)
                 }
             }
             .alert(isPresented: $showAlert) {
@@ -142,8 +135,6 @@ struct OrdersListView: View {
                         .foregroundColor(Color("Timberwolf"))
                 }
             }
-            .offset(x: 10, y: 18)
-        }
     }
     
     func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {

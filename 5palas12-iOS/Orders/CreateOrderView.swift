@@ -13,6 +13,7 @@ struct CreateOrderView: View {
     @State private var pickUpTime: String = "5PM"
     @State private var showSuccessMessage: Bool = false
     @State private var showErrorMessage: Bool = false
+    @State private var enterTime:Date? = nil
     
     let pickUpTimeOptions = ["5PM", "6PM", "7PM"]
     
@@ -129,7 +130,18 @@ struct CreateOrderView: View {
                 Spacer()
             }
             .background(Color("Timberwolf"))
-
+            .onAppear {
+                restaurantsVM.loadRestaurants()
+                enterTime = Date()
+            }
+            .onDisappear {
+                if let enterTime = enterTime {
+                    let elapsedTime = Date().timeIntervalSince(enterTime)
+                    print("User was in the view for \(elapsedTime) seconds.")
+                    
+                    FirebaseLogger.shared.logTimeFirebase(viewName: "CreateOrderView", timeSpent: elapsedTime)
+                }
+            }
         }
     }
     
