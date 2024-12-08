@@ -35,9 +35,7 @@ struct CartView: View {
             }
             ZStack {
                 Spacer()
-                Button {
-                    print("Make orders")
-                } label: {
+                NavigationLink(destination: CheckoutView(), label: {
                     HStack {
                         Image(systemName: "text.page.fill")
                             .foregroundColor(.white)
@@ -51,7 +49,7 @@ struct CartView: View {
                     .background(Color.fernGreen)
                     .cornerRadius(10)
                     .padding(.horizontal)
-                }
+                })
 
             }
         }.background(Color.timberwolf)

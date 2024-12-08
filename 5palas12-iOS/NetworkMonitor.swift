@@ -12,12 +12,13 @@ import SwiftUI
 class NetworkMonitor: ObservableObject {
     static let shared = NetworkMonitor()
     
-    private let monitor = NWPathMonitor()
+    let monitor : NWPathMonitor
     private let queue = DispatchQueue.global(qos: .background)
     
     @Published var isConnected: Bool = true
 
     private init() {
+        monitor = NWPathMonitor()
         startMonitoring()
     }
 

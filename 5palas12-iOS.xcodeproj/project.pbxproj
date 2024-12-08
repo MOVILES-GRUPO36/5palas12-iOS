@@ -191,7 +191,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		890CE0732CD97AC6009FE9B5 /* Oirders */ = {
+		890CE0732CD97AC6009FE9B5 /* Orders */ = {
 			isa = PBXGroup;
 			children = (
 				890CE0802CD97B5A009FE9B5 /* TimeManager.swift */,
@@ -202,7 +202,7 @@
 				890CE0762CD97B08009FE9B5 /* OrderModel.swift */,
 				890CE0742CD97AFB009FE9B5 /* OrderViewModel.swift */,
 			);
-			path = Oirders;
+			path = Orders;
 			sourceTree = "<group>";
 		};
 		896D78E22CF3FA480000B8BB /* Chat */ = {
@@ -309,7 +309,7 @@
 				9DCE681B2CFE7D0E009FED67 /* Cart */,
 				896D78EF2CF410390000B8BB /* Food */,
 				896D78E22CF3FA480000B8BB /* Chat */,
-				890CE0732CD97AC6009FE9B5 /* Oirders */,
+				890CE0732CD97AC6009FE9B5 /* Orders */,
 				9D56D4482CD176B800098007 /* Payments */,
 				DE5F98DB2CC5959100862BA2 /* BusinessCenter */,
 				DE3CBBD12CC4A9FD0089E081 /* Profile */,

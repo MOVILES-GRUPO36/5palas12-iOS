@@ -129,9 +129,7 @@ struct CreateOrderView: View {
                 Spacer()
             }
             .background(Color("Timberwolf"))
-            .onAppear {
-                restaurantsVM.loadRestaurants()
-            }
+
         }
     }
     
