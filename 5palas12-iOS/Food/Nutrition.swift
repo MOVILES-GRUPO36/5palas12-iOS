@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Nutrition: Codable, Identifiable {
+struct NutritionData: Codable, Identifiable {
     let id = UUID()
     let name: String
     let fatTotal: Double?

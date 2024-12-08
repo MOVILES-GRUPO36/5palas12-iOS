@@ -14,6 +14,8 @@
 		890CE07D2CD97B3E009FE9B5 /* OrderCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CE07C2CD97B38009FE9B5 /* OrderCardView.swift */; };
 		890CE07F2CD97B53009FE9B5 /* CreateOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CE07E2CD97B49009FE9B5 /* CreateOrderView.swift */; };
 		890CE0812CD97B5E009FE9B5 /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890CE0802CD97B5A009FE9B5 /* TimeManager.swift */; };
+		89231AEE2D05E06200AD85A9 /* CreateMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89231AED2D05E05900AD85A9 /* CreateMenuView.swift */; };
+		89231AF02D05E09A00AD85A9 /* MenuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89231AEF2D05E09200AD85A9 /* MenuDetailView.swift */; };
 		896D78E82CF3FA8B0000B8BB /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78E72CF3FA830000B8BB /* ChatMessage.swift */; };
 		896D78EA2CF3FBDC0000B8BB /* UserMessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78E92CF3FBD20000B8BB /* UserMessageBubble.swift */; };
 		896D78EC2CF3FC0A0000B8BB /* GeminiMessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78EB2CF3FC050000B8BB /* GeminiMessageBubble.swift */; };
@@ -21,6 +23,8 @@
 		896D78F12CF410440000B8BB /* Nutrition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78F02CF4103F0000B8BB /* Nutrition.swift */; };
 		896D78F32CF410CB0000B8BB /* NutritionAPImanager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78F22CF410C00000B8BB /* NutritionAPImanager.swift */; };
 		896D78F62CF411020000B8BB /* NutritionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896D78F52CF410FD0000B8BB /* NutritionView.swift */; };
+		89B7BB712D056C5900A09EAD /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B7BB702D056C5600A09EAD /* Menu.swift */; };
+		89B7BB742D056CC600A09EAD /* MenuStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B7BB732D056CC200A09EAD /* MenuStorage.swift */; };
 		9D01778A2CD99DFA0072EB70 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9D0177892CD99DFA0072EB70 /* FirebaseStorage */; };
 		9D0177C22CD9B5210072EB70 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0177C12CD9B5210072EB70 /* SearchBar.swift */; };
 		9D0177C42CD9C3550072EB70 /* OfflineModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0177C32CD9C3500072EB70 /* OfflineModeView.swift */; };
@@ -92,6 +96,8 @@
 		890CE07C2CD97B38009FE9B5 /* OrderCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCardView.swift; sourceTree = "<group>"; };
 		890CE07E2CD97B49009FE9B5 /* CreateOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrderView.swift; sourceTree = "<group>"; };
 		890CE0802CD97B5A009FE9B5 /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
+		89231AED2D05E05900AD85A9 /* CreateMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMenuView.swift; sourceTree = "<group>"; };
+		89231AEF2D05E09200AD85A9 /* MenuDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetailView.swift; sourceTree = "<group>"; };
 		896D78E72CF3FA830000B8BB /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		896D78E92CF3FBD20000B8BB /* UserMessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessageBubble.swift; sourceTree = "<group>"; };
 		896D78EB2CF3FC050000B8BB /* GeminiMessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiMessageBubble.swift; sourceTree = "<group>"; };
@@ -99,6 +105,8 @@
 		896D78F02CF4103F0000B8BB /* Nutrition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nutrition.swift; sourceTree = "<group>"; };
 		896D78F22CF410C00000B8BB /* NutritionAPImanager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionAPImanager.swift; sourceTree = "<group>"; };
 		896D78F52CF410FD0000B8BB /* NutritionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionView.swift; sourceTree = "<group>"; };
+		89B7BB702D056C5600A09EAD /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		89B7BB732D056CC200A09EAD /* MenuStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuStorage.swift; sourceTree = "<group>"; };
 		9D0177C12CD9B5210072EB70 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		9D0177C32CD9C3500072EB70 /* OfflineModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineModeView.swift; sourceTree = "<group>"; };
 		9D0E61EA2CF422C30093D1A2 /* BasedOnYou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasedOnYou.swift; sourceTree = "<group>"; };
@@ -221,6 +229,10 @@
 		896D78EF2CF410390000B8BB /* Food */ = {
 			isa = PBXGroup;
 			children = (
+				89231AEF2D05E09200AD85A9 /* MenuDetailView.swift */,
+				89231AED2D05E05900AD85A9 /* CreateMenuView.swift */,
+				89B7BB732D056CC200A09EAD /* MenuStorage.swift */,
+				89B7BB702D056C5600A09EAD /* Menu.swift */,
 				896D78F52CF410FD0000B8BB /* NutritionView.swift */,
 				896D78F22CF410C00000B8BB /* NutritionAPImanager.swift */,
 				896D78F02CF4103F0000B8BB /* Nutrition.swift */,
@@ -527,6 +539,7 @@
 				DE035ED62C87950E00627F34 /* _palas12_iOSApp.swift in Sources */,
 				890CE0752CD97B03009FE9B5 /* OrderViewModel.swift in Sources */,
 				DE294FF72CACB9390045044A /* TabBarView.swift in Sources */,
+				89231AF02D05E09A00AD85A9 /* MenuDetailView.swift in Sources */,
 				9DE937122CAE35160061CD33 /* RestaurantCardView.swift in Sources */,
 				9DCE686F2CFF4CDC009FED67 /* ImageManager.swift in Sources */,
 				896D78EE2CF3FC2D0000B8BB /* GeminiChatView.swift in Sources */,
@@ -535,6 +548,7 @@
 				DE5DE3412CFFA90D008A1448 /* NotificationExtensions.swift in Sources */,
 				9DFED6C22CC558A5004348A2 /* ProductModel.swift in Sources */,
 				9DA4D00F2CAB5CAD00107CD2 /* LocationManager.swift in Sources */,
+				89231AEE2D05E06200AD85A9 /* CreateMenuView.swift in Sources */,
 				9D51D2F42CBC6A38005B7827 /* RestaurantSA.swift in Sources */,
 				9DFED6CC2CC58017004348A2 /* RatingView.swift in Sources */,
 				9DFED6C82CC56416004348A2 /* ProductCardView.swift in Sources */,
@@ -548,6 +562,7 @@
 				9D51D2EA2CBC64FA005B7827 /* AppDelegate.swift in Sources */,
 				9DFED6C62CC55CB4004348A2 /* ProductDAO.swift in Sources */,
 				9DA4D0102CAB5CAD00107CD2 /* MapView.swift in Sources */,
+				89B7BB742D056CC600A09EAD /* MenuStorage.swift in Sources */,
 				DE0960DA2CFD4F7B0066068A /* CategoriesList.swift in Sources */,
 				DE9131D42CC6BADD0004F455 /* FilteredRestaurantsView.swift in Sources */,
 				9D0177C42CD9C3550072EB70 /* OfflineModeView.swift in Sources */,
@@ -561,6 +576,7 @@
 				9D0E61EB2CF422C30093D1A2 /* BasedOnYou.swift in Sources */,
 				9D51D2F22CBC6750005B7827 /* FirestoreManager.swift in Sources */,
 				9DA4D0182CABA5DC00107CD2 /* RestaurantViewModel.swift in Sources */,
+				89B7BB712D056C5900A09EAD /* Menu.swift in Sources */,
 				9DFED6C42CC559E5004348A2 /* ProductViewModel.swift in Sources */,
 				896D78F62CF411020000B8BB /* NutritionView.swift in Sources */,
 			);

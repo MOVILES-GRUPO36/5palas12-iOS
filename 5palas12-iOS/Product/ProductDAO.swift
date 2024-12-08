@@ -11,6 +11,23 @@ class ProductDAO {
     private let db = FirestoreManager.shared.db
     private let collectionName: String = "products"
     
+    func getAllProductsName(completion: @escaping (Result<[String], Error>) -> Void) {
+        db.collection(collectionName)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    var productNames: [String] = []
+                    for document in snapshot!.documents {
+                        if let name = document.data()["name"] as? String {
+                            productNames.append(name)
+                        }
+                    }
+                    completion(.success(productNames))
+                }
+            }
+    }
+    
     func getProductsbyRestaurant(restaurant: RestaurantModel, completion: @escaping (Result<[ProductModel], Error>) -> Void) {
         db.collection(collectionName)
             .whereField("restaurant", isEqualTo: restaurant.name)
