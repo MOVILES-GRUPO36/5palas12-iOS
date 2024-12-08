@@ -84,10 +84,10 @@ struct OfflineModeView: View {
                                 })
                 
                 
-                
+                Spacer()
                 
             }
-                               
+            
         }
         .background(Color(hex: "#E6E1DB"))
         .edgesIgnoringSafeArea(.all)

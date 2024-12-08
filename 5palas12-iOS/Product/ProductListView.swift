@@ -3,6 +3,7 @@ import SwiftUI
 struct ProductListView: View {
     @State var restaurant: RestaurantModel
     @StateObject var productVM: ProductViewModel
+    @EnvironmentObject var cartVm: CartViewModel
     
     init(restaurant: RestaurantModel) {
         _restaurant = State(initialValue: restaurant)

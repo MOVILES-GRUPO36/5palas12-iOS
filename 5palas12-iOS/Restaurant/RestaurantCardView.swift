@@ -12,8 +12,12 @@ struct RestaurantCardView: View {
                     .frame(height: 100)
                     .clipped()
             } else {
-                ProgressView()
-                    .progressViewStyle(LinearProgressViewStyle())
+                Image(systemName: "fork.knife")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 100)
+                    .foregroundColor(.fernGreen)
+                    .clipped()
             }
 
             VStack(alignment: .leading, spacing: 6) {

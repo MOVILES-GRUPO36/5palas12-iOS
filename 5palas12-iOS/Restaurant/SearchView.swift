@@ -14,7 +14,7 @@ struct SearchView: View {
         ("Pizza", "https://picsum.photos/id/1060/300/200"),
         ("Fast Food", "https://picsum.photos/id/1070/300/200"),
         ("Desserts", "https://picsum.photos/id/1080/300/200"),
-        ("Drinks", "https://picsum.photos/id/1090/300/200")
+        ("Drinks", "https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1714158008542-ace991ea197b")
     ]
 
     var body: some View {
@@ -125,19 +125,29 @@ struct CategoryGridView: View {
 struct CategoryCard: View {
     let name: String
     let imageUrl: String
+    @State private var image: UIImage? = nil
 
     var body: some View {
         ZStack {
-            AsyncImage(url: URL(string: imageUrl)) { image in
-                image.resizable()
+            if let image = image {
+                Image(uiImage: image)
+                    .resizable()
                     .scaledToFill()
                     .frame(width: 150, height: 150)
                     .clipped()
                     .overlay(
                         Color.black.opacity(0.3)
                     )
-            } placeholder: {
-                ProgressView().progressViewStyle(LinearProgressViewStyle())
+            } else {
+                ProgressView()
+                    .frame(width: 150, height: 150)
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    .onAppear {
+                        ImageManager.shared.getImage(for: imageUrl) { downloadedImage in
+                            self.image = downloadedImage
+                        }
+                    }
             }
 
             Color(hex: "#228B22").opacity(0.5)

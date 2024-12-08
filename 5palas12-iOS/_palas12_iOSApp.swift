@@ -11,6 +11,7 @@ struct _palas12_iOSApp: App {
     @StateObject var ordersVM = OrdersViewModel()
     @StateObject private var timeManager = TimeManager()
     @State private var showAlert = false
+    @StateObject private var cartVM : CartViewModel = CartViewModel()
 
     var body: some Scene {
         WindowGroup {
@@ -25,6 +26,7 @@ struct _palas12_iOSApp: App {
                                 .environmentObject(networkMonitor)
                                 .environmentObject(ordersVM)
                                 .environmentObject(timeManager)
+                                .environmentObject(cartVM)
                         } else {
                             ProgressView("Loading user data...")
                                 .onAppear {
