@@ -9,10 +9,11 @@ struct DeleteBusinessView: View {
     @State private var showAlert = false
     @State private var alertMessage: String = ""
     @State private var userRestaurant = ""
+    @State private var enterTime:Date? = nil
     
     private let restaurantDAO = RestaurantSA()
     private let userDAO = UserDAO()
-    @EnvironmentObject var userVM: UserViewModel // Ensure UserViewModel is passed as an environment object
+    @EnvironmentObject var userVM: UserViewModel 
     
     var body: some View {
         NavigationView {
@@ -55,6 +56,7 @@ struct DeleteBusinessView: View {
             }
             .navigationBarTitle("Delete Business", displayMode: .inline)
             .onAppear {
+                enterTime = Date()
                 if let email = userVM.userData?.email {
                     print("User email: \(email)")
                 } else {
@@ -65,6 +67,14 @@ struct DeleteBusinessView: View {
                     fetchRestaurantDetails()
                 } else {
                     print("User email not found or empty")
+                }
+            }
+            .onDisappear {
+                if let enterTime = enterTime {
+                    let elapsedTime = Date().timeIntervalSince(enterTime)
+                    print("User was in the view for \(elapsedTime) seconds.")
+                    
+                    FirebaseLogger.shared.logTimeFirebase(viewName: "DeleteBusinessView", timeSpent: elapsedTime)
                 }
             }
             .alert(isPresented: $showAlert) {
@@ -109,7 +119,6 @@ struct DeleteBusinessView: View {
             return
         }
 
-        // Offload the task to a worker thread
         DispatchQueue.global(qos: .userInitiated).async {
             restaurantDAO.deleteRestaurantByName(restaurantName) { result in
                 switch result {

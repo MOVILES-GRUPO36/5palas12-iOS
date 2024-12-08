@@ -99,7 +99,9 @@ struct ProfileView: View {
         .onDisappear {
             if let enterTime = enterTime {
                 let elapsedTime = Date().timeIntervalSince(enterTime)
-                logTimeFirebase(viewName: "ProfileView", timeSpent: elapsedTime)
+                print("User was in the view for \(elapsedTime) seconds.")
+                
+                FirebaseLogger.shared.logTimeFirebase(viewName: "ProfileView", timeSpent: elapsedTime)
             }
         }
     }
@@ -128,12 +130,5 @@ struct ProfileView: View {
         
         let jsonCards = JSONCCFileManager()
         jsonCards.deleteAllCreditCards()
-    }
-    
-    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
-        Analytics.logEvent("view_time_spent", parameters: [
-            "view_name": viewName,
-            "time_spent": timeSpent
-        ])
     }
 }

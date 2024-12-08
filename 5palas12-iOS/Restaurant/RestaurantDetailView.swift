@@ -10,6 +10,7 @@ import SwiftUI
 struct RestaurantDetailView: View {
     @State var restaurant: RestaurantModel
     @Environment(\.presentationMode) var presentationMode
+    @State private var enterTime:Date? = nil
     var body: some View {
         NavigationView{
             VStack(spacing: 0){
@@ -52,21 +53,32 @@ struct RestaurantDetailView: View {
                     .background(Color("Timberwolf"))
                 }.background(Color("Timberwolf"))
             }
-        }.navigationBarBackButtonHidden(true)
-            .overlay(alignment: .topLeading){
+        }
+        .navigationBarBackButtonHidden(true)
+        .onAppear(){
+            enterTime = Date()
+        }
+        .onDisappear {
+            if let enterTime = enterTime {
+                let elapsedTime = Date().timeIntervalSince(enterTime)
+                print("User was in the view for \(elapsedTime) seconds.")
                 
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                            .foregroundColor(Color("Timberwolf"))
-                        Text("Back")
-                            .foregroundColor(Color("Timberwolf"))
-                    }
-                }.offset(x: 10,y: 18)
-                
+                FirebaseLogger.shared.logTimeFirebase(viewName: "RestaurantDetailView", timeSpent: elapsedTime)
             }
-    }}
+        }
+        .overlay(alignment: .topLeading){
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "chevron.left")
+                        .foregroundColor(Color("Timberwolf"))
+                    Text("Back")
+                        .foregroundColor(Color("Timberwolf"))
+                }
+            }.offset(x: 10,y: 18)
+        }
+    }
+}
 
 

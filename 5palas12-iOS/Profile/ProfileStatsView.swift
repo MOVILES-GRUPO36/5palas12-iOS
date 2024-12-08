@@ -9,6 +9,7 @@ import SwiftUI
 struct ProfileStatsView: View {
     @ObservedObject var viewModel: ProfileStatsViewModel
     @State var userEmail: String
+    @State private var enterTime:Date? = nil
 
     var body: some View {
         VStack {
@@ -38,6 +39,15 @@ struct ProfileStatsView: View {
             .onAppear {
                 print("Fetching stats for user: \(userEmail)")
                 viewModel.fetchStats(for: userEmail)
+                enterTime = Date()
+            }
+            .onDisappear {
+                if let enterTime = enterTime {
+                    let elapsedTime = Date().timeIntervalSince(enterTime)
+                    print("User was in the view for \(elapsedTime) seconds.")
+                    
+                    FirebaseLogger.shared.logTimeFirebase(viewName: "ProfileStatsView", timeSpent: elapsedTime)
+                }
             }
         }
     }

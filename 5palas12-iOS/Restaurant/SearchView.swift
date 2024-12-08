@@ -63,8 +63,9 @@ struct SearchView: View {
             .onDisappear {
                 if let enterTime = enterTime {
                     let elapsedTime = Date().timeIntervalSince(enterTime)
-                    print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
-                    logTimeFirebase(viewName: "SearchView", timeSpent: elapsedTime)
+                    print("User was in the view for \(elapsedTime) seconds.")
+                    
+                    FirebaseLogger.shared.logTimeFirebase(viewName: "SearchView", timeSpent: elapsedTime)
                 }
             }
         }
@@ -95,13 +96,6 @@ struct SearchView: View {
                 .cornerRadius(8)
                 .padding()
         }
-    }
-    
-    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
-        Analytics.logEvent("view_time_spent", parameters: [
-            "view_name": viewName,
-            "time_spent": timeSpent
-        ])
     }
 }
 
