@@ -46,11 +46,11 @@ struct MapView: View {
                         locationManager.requestLocation()
                     }
                     .onDisappear {
-                        // Calcular cuánto tiempo ha estado el usuario e–n la vista
                         if let enterTime = enterTime {
                             let elapsedTime = Date().timeIntervalSince(enterTime)
-                            print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
-                            logTimeFirebase(viewName: "MapView", timeSpent: elapsedTime)
+                            print("User was in the view for \(elapsedTime) seconds.")
+                            
+                            FirebaseLogger.shared.logTimeFirebase(viewName: "MapView", timeSpent: elapsedTime)
                         }
                     }
                     .onReceive(locationManager.$lastLocation) { newLocation in
@@ -103,11 +103,4 @@ struct MapView: View {
             RestaurantDetailView(restaurant: selectedRestaurant!)
         }
     }
-    
-    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
-            Analytics.logEvent("view_time_spent", parameters: [
-                "view_name": viewName,
-                "time_spent": timeSpent
-            ])
-        }
 }

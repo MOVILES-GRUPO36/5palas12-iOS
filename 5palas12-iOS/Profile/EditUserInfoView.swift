@@ -164,8 +164,9 @@ struct EditUserInfoView: View {
         .onDisappear {
             if let enterTime = enterTime {
                 let elapsedTime = Date().timeIntervalSince(enterTime)
-                print("El usuario estuvo en la vista por \(elapsedTime) segundos.")
-                logTimeFirebase(viewName: "EditUserInfoView", timeSpent: elapsedTime)
+                print("User was in the view for \(elapsedTime) seconds.")
+                
+                FirebaseLogger.shared.logTimeFirebase(viewName: "EditUserInfoView", timeSpent: elapsedTime)
             }
         }
         .navigationBarBackButtonHidden(true)

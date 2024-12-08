@@ -12,9 +12,8 @@ import MapKit
 
 struct CreateBusinessView: View {
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var viewModel: BusinessCenterViewModel  // Injected ViewModel
+    @ObservedObject var viewModel: BusinessCenterViewModel
 
-    // Temporary properties to store form inputs
     @State private var name: String = ""
     @State private var latitude: String = ""
     @State private var longitude: String = ""
@@ -32,9 +31,9 @@ struct CreateBusinessView: View {
     
     @ObservedObject private var locationManager = LocationManager()
 
-    // State variables for location
     @State private var selectedLocation: CLLocationCoordinate2D?
     @State private var showingLocationPicker = false
+    @State private var enterTime:Date? = nil
     
     var body: some View {
         NavigationView {
@@ -49,13 +48,11 @@ struct CreateBusinessView: View {
                     TextField("Address", text: $address)
                 }
                 
-                // Location Picker Section
                 Section(header: Text("Location")) {
                     if let location = selectedLocation {
                         Text("Location Selected")
                             .foregroundColor(.green)
                         
-                        // In the CreateBusinessView
                         Map(coordinateRegion: .constant(MKCoordinateRegion(
                             center: selectedLocation ?? CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), // Default location
                             span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
@@ -65,14 +62,12 @@ struct CreateBusinessView: View {
                         .frame(height: 200)
                         .cornerRadius(10)
                         .padding(.top, 10)
-                        .disabled(true) // Disable interaction with the map
+                        .disabled(true)
                         
-                        // Display Coordinates
                         Text("Latitude: \(location.latitude), Longitude: \(location.longitude)")
                             .foregroundColor(.black)
                             .padding(.top, 5)
                         
-                        // Button to change the location
                         Button(action: { showingLocationPicker.toggle() }) {
                             Text("Change Location")
                                 .frame(maxWidth: .infinity)
@@ -121,12 +116,19 @@ struct CreateBusinessView: View {
             .navigationBarTitle("Create a Business", displayMode: .inline)
             .onAppear {
                 locationManager.requestLocation()
-                
+                enterTime = Date()
                 if let currentUser = Auth.auth().currentUser {
                     userEmail = currentUser.email ?? ""
                 }
             }
-            
+            .onDisappear {
+                if let enterTime = enterTime {
+                    let elapsedTime = Date().timeIntervalSince(enterTime)
+                    print("User was in the view for \(elapsedTime) seconds.")
+                    
+                    FirebaseLogger.shared.logTimeFirebase(viewName: "CreateBusinessView", timeSpent: elapsedTime)
+                }
+            }
             .sheet(isPresented: $showingLocationPicker) {
                 LocationPickerView(selectedLocation: $selectedLocation)
             }
@@ -167,7 +169,7 @@ struct CreateBusinessView: View {
                 userDAO.addRestaurantToUser(email: userEmail, restaurantName: name) { userResult in
                     switch userResult {
                     case .success():
-                        viewModel.businessExists = true  // Update the view model
+                        viewModel.businessExists = true
                         userVM.userData?.restaurant = restaurant!.name
                     case .failure(let error):
                         print("Failed to add restaurant to user: \(error.localizedDescription)")

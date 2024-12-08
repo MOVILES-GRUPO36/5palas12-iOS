@@ -81,26 +81,17 @@ struct OrdersListView: View {
             }
             .onAppear {
                 if let userEmail = UserDefaults.standard.string(forKey: "currentUserEmail") {
-        
-                        ordersVM.fetchOrders(byUserEmail: userEmail)
-                                        }
-
-                
-                timer = Timer.scheduledTimer(withTimeInterval: 120, repeats: true) { _ in
-                    if let remainingTime = calculateTimeRemaining() {
-                        DispatchQueue.main.async {
-                            timeRemaining = remainingTime
-                            showAlert = true
-                        }
-                    }
+                    ordersVM.fetchOrders(byUserEmail: userEmail)
                 }
+                
+                enterTime = Date()
             }
             .onDisappear {
-                timer?.invalidate()  // Stop the timer when view disappears
                 if let enterTime = enterTime {
                     let elapsedTime = Date().timeIntervalSince(enterTime)
-                    print("User was in the OrdersListView for \(elapsedTime) seconds.")
-                    logTimeFirebase(viewName: "OrdersListView", timeSpent: elapsedTime)
+                    print("User was in the view for \(elapsedTime) seconds.")
+                    
+                    FirebaseLogger.shared.logTimeFirebase(viewName: "OrderListView", timeSpent: elapsedTime)
                 }
             }
             .alert(isPresented: $showAlert) {
@@ -125,11 +116,5 @@ struct OrdersListView: View {
                 }.offset(x: 10,y: 18)
                 
             }
-    }
-    func logTimeFirebase(viewName: String, timeSpent: TimeInterval) {
-        Analytics.logEvent("view_time_spent", parameters: [
-            "view_name": viewName,
-            "time_spent": timeSpent
-        ])
     }
 }
