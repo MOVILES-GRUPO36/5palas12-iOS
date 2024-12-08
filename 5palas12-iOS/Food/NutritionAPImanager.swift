@@ -8,7 +8,7 @@
 import Foundation
 
 class NutritionAPIManager: ObservableObject {
-    @Published var nutritionData: [Nutrition] = []
+    @Published var nutritionData: [NutritionData] = []
     
     let apiKey = "+snR+xgDxCcdeJDHQEBBEw==hAw1ArEqWWiS63Ej"
     let baseURL = "https://api.api-ninjas.com/v1/nutrition"
@@ -31,19 +31,14 @@ class NutritionAPIManager: ObservableObject {
             }
             
             do {
-                // Try decoding the data as an array first
-                if let decodedArray = try? JSONDecoder().decode([Nutrition].self, from: data) {
+                // Decodificar la data
+                if let decodedArray = try? JSONDecoder().decode([NutritionData].self, from: data) {
+                    
+                    //Multithreading
                     DispatchQueue.main.async {
                         self.nutritionData = decodedArray
                     }
-                } else {
-                    // If decoding as an array fails, try decoding as a dictionary
-                    if let decodedDict = try? JSONDecoder().decode([String: String].self, from: data),
-                       let errorMessage = decodedDict["error"] {
-                        print("API Error: \(errorMessage)")
-                    } else {
-                        print("Unknown response format.")
-                    }
+                    
                 }
             } catch {
                 print("Error decoding nutrition data: \(error)")

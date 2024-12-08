@@ -55,6 +55,19 @@ struct OfflineModeView: View {
                 .cornerRadius(8)
                 .padding()
                 
+                NavigationLink(destination: NutritionView()) {
+                    Text("Food Info")
+                        .font(.title2)
+                        .bold()
+                        .foregroundColor(.white)
+                }
+                .accentColor(.fernGreen)
+                .frame(height: 46)
+                .frame(maxWidth: .infinity)
+                .background(Color(hex: "#588157"))
+                .cornerRadius(8)
+                .padding()
+                
                 NavigationLink(destination: UserSettingsView(isLoggedIn: $isLoggedIn)) {
                     Text("Settings")
                         .font(.title2)

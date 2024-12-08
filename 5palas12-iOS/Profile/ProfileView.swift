@@ -126,6 +126,8 @@ struct ProfileView: View {
         let orderDAO = OrderDAO()
         orderDAO.deleteLocalOrdersFile()
         
+        UserDefaults.standard.removeObject(forKey: "savedMenusKey")
+       
         let jsonCards = JSONCCFileManager()
         jsonCards.deleteAllCreditCards()
     }

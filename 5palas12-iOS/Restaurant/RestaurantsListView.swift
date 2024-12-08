@@ -4,6 +4,7 @@ import FirebaseAnalytics
 struct RestaurantsListView: View {
     @StateObject var locationManager = LocationManager()
     @EnvironmentObject var restaurantsVM: RestaurantViewModel
+    @EnvironmentObject var productViewModel: ProductViewModel
     @State private var selectedTab = 0
     @State private var enterTime: Date? = nil // Variable to store the time the view appears
     
