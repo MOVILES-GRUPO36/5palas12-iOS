@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct MenuDetailView: View {
     var menu: Menu
     @StateObject private var apiManager = NutritionAPIManager()
@@ -100,10 +99,12 @@ struct MenuDetailView: View {
         }
         .padding()
         .onAppear {
+            
             DispatchQueue.main.async {
                 menus = menuStorage.loadMenus()
             }
         }
+        .navigationBarHidden(true) // Ocultar el encabezado
     }
     
     // Función para eliminar el menú
